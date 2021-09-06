@@ -16,7 +16,7 @@ func _ready():
 	actor.input["forward"] = int(Input.is_action_pressed("KEY_W"));
 	actor.input["back"]   = int(Input.is_action_pressed("KEY_S"));
 	actor.input["jump"] = int(Input.is_action_pressed("KEY_SPACE"));
-	actor.input["extra_jump"] =  int(Input.is_action_pressed("KEY_SPACE"));
+	actor.input["extra_jump"] =  int(Input.is_action_just_pressed("KEY_SPACE"));
 	actor.input["crouch"] = int(Input.is_action_pressed("KEY_CTRL"));
 	actor.input["sprint"] = 0
 	
@@ -54,14 +54,21 @@ func _physics_process(delta):
 	actor.input["shoot"] = int(Input.is_action_pressed("mb_left"));
 	actor.input["reload"] = int(Input.is_action_pressed("KEY_R"));
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"));
-	actor.input["jump"] = int(Input.is_action_just_pressed("KEY_SPACE"))
 	actor.input["special"] = int(Input.is_action_just_pressed("SPECIAL"));
-	actor.input["extra_jump"] = int(Input.is_action_pressed("KEY_SPACE"))
+	actor.input["extra_jump"] = int(Input.is_action_just_pressed("KEY_SPACE"))
+
+func _jump():
+	actor.input["jump"] = true
+	yield(get_tree().create_timer(0.01), "timeout")
+	actor.input["jump"] = false
 
 func _unhandled_input(event):
 	# Calls function to switch between locked and unlocked mouse
 	_mouse_toggle();
-
+	
+	if int(Input.is_action_just_pressed("KEY_SPACE")):
+		_jump()
+		
 	if event is InputEventMouseMotion:
 		actor.input["look_y"] = event.relative.y 
 		actor.input["look_x"] = event.relative.x 

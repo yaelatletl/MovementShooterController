@@ -57,8 +57,8 @@ func _physics_process(_delta) -> void:
 	_weapon(_delta);
 	_change();
 func _process(_delta) -> void:
-	_position(_delta);
 	_rotation(_delta)
+	_position(_delta);
 
 func _weapon(_delta) -> void:
 	
@@ -93,8 +93,11 @@ func  _rotation(_delta) -> void:
 	var y_lerp = 20;
 	var x_lerp = 40;
 	if not character.input["zoom"]:
-		rotation.x = lerp_angle(rotation.x, camera.global_transform.basis.get_euler().x, y_lerp * _delta);
-		rotation.y = lerp_angle(rotation.y, camera.global_transform.basis.get_euler().y, x_lerp * _delta);
+		var quat_a = Quat(global_transform.basis)
+		var quat_b = Quat(camera.global_transform.basis)
+		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp))
+#		rotation.x = lerp_angle(rotation.x, camera.global_transform.basis.get_euler().x, y_lerp * _delta);
+#		rotation.y = lerp_angle(rotation.y, camera.global_transform.basis.get_euler().y, x_lerp * _delta);
 	else:
 		rotation = camera.global_transform.basis.get_euler();
 
