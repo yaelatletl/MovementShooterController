@@ -57,6 +57,7 @@ extents = Vector3( 250, 1, 250 )
 
 [node name="sun" type="DirectionalLight" parent="post_processing"]
 transform = Transform( 0.707107, 0.612372, -0.353553, 0, 0.5, 0.866025, 0.707107, -0.612373, 0.353553, 0, 0, 0 )
+layers = 2
 light_color = Color( 0.976471, 0.959804, 0.85098, 1 )
 shadow_enabled = true
 directional_shadow_blend_splits = true
@@ -81,6 +82,7 @@ transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 2.01321, 8.0228
 
 [node name="mesh" type="MeshInstance" parent="scenario/wall"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+layers = 3
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
@@ -109,6 +111,7 @@ transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 3.77909, 28.054
 
 [node name="mesh" type="MeshInstance" parent="scenario/wall5"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+layers = 3
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
@@ -161,7 +164,7 @@ shape = SubResource( 5 )
 [node name="wall3" type="StaticBody" parent="scenario" groups=[
 "wallk",
 ]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.06805, 6.33006, -13.4699 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.47245, 9.17323, -13.4699 )
 
 [node name="mesh" type="MeshInstance" parent="scenario/wall3"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
@@ -169,6 +172,48 @@ mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="collision" type="CollisionShape" parent="scenario/wall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall8" type="StaticBody" parent="scenario" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -25.7436 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/wall8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/wall8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall9" type="StaticBody" parent="scenario" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -45.7488 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/wall9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/wall9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall10" type="StaticBody" parent="scenario" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -65.7488 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/wall10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/wall10"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 shape = SubResource( 5 )
 
