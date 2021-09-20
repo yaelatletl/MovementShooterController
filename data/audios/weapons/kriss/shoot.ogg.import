@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/shoot.ogg-06239ff6db4c2298af139bbd28fd5b03.oggstr"
+uid="uid://cqsdiyiixn1ue"
+path="res://.godot/imported/shoot.ogg-06239ff6db4c2298af139bbd28fd5b03.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/weapons/kriss/shoot.ogg"
-dest_files=[ "res://.import/shoot.ogg-06239ff6db4c2298af139bbd28fd5b03.oggstr" ]
+dest_files=["res://.godot/imported/shoot.ogg-06239ff6db4c2298af139bbd28fd5b03.oggvorbisstr"]
 
 [params]
 

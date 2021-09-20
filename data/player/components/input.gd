@@ -1,13 +1,14 @@
 extends Component
-export(bool) var run_is_toggle : bool = false
-export(bool) var crouch_is_toggle : bool = false
+@export var run_is_toggle : bool = false
+@export var crouch_is_toggle : bool = false
 
-export(bool) var captured : bool = true; # Does not let the mouse leave the screen
+@export var captured : bool = true; # Does not let the mouse leave the screen
 
 var can_jump = true
 var jump_timer = null
 
 func _ready():
+	actor = get_parent()
 	actor.input["look_y"] = 0
 	actor.input["look_x"] = 0
 	actor.input["special"] = int(Input.is_action_pressed("SPECIAL"));
@@ -59,7 +60,7 @@ func _physics_process(delta):
 
 func _jump():
 	actor.input["jump"] = true
-	yield(get_tree().create_timer(0.01), "timeout")
+	await get_tree().create_timer(0.01).timeout
 	actor.input["jump"] = false
 
 func _unhandled_input(event):
@@ -67,7 +68,7 @@ func _unhandled_input(event):
 	_mouse_toggle();
 	
 	if int(Input.is_action_just_pressed("KEY_SPACE")):
-		_jump()
+		await _jump()
 		
 	if event is InputEventMouseMotion:
 		actor.input["look_y"] = event.relative.y 

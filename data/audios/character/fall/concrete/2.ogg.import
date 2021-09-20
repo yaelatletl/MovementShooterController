@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/2.ogg-c0fd237e64abfc6f581c76ffe521bc57.oggstr"
+uid="uid://bmmlr367aw724"
+path="res://.godot/imported/2.ogg-c0fd237e64abfc6f581c76ffe521bc57.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/character/fall/concrete/2.ogg"
-dest_files=[ "res://.import/2.ogg-c0fd237e64abfc6f581c76ffe521bc57.oggstr" ]
+dest_files=["res://.godot/imported/2.ogg-c0fd237e64abfc6f581c76ffe521bc57.oggvorbisstr"]
 
 [params]
 

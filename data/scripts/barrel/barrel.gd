@@ -1,17 +1,17 @@
-extends RigidBody
+extends RigidDynamicBody3D
 
-export var durability : int = 100;
+@export var durability : int = 100;
 var remove_decal : bool = false;
-
+var rng = RandomNumberGenerator.new()
 func _ready():
-	$timer.connect("timeout", self, "queue_free");
-	$explosion/timer.connect("timeout", self, "_explode_others");
+	$timer.timeout.connect(queue_free);
+	$explosion/timer.timeout.connect(_explode_others);
 
 func _damage(damage) -> void:
 	if durability > 0:
 		var dam_calc = durability - damage;
 		
-		$audios/impact.pitch_scale = rand_range(0.9, 1.1);
+		$audios/impact.pitch_scale = rng.randf_range(0.9, 1.1);
 		$audios/impact.play()
 		
 		if dam_calc <= 0:
@@ -40,7 +40,7 @@ func _explosion() -> void:
 	$effects/ex.emitting = true;
 	$effects/plo.emitting = true;
 	$effects/sion.emitting = true;
-	$audios/explosion.pitch_scale = rand_range(0.9, 1.1);
+	$audios/explosion.pitch_scale = rng.randf_range(0.9, 1.1);
 	$audios/explosion.play();
 	
 	remove_decal = true;

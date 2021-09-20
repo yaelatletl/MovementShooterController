@@ -1,4 +1,4 @@
-extends RigidBody
+extends RigidDynamicBody3D
 
 signal body_hit(point, body)
 func _ready():

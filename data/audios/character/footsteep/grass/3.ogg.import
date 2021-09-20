@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/3.ogg-af1a9a25fe517dc0f639ba85f699faeb.oggstr"
+uid="uid://du8laljq4b20s"
+path="res://.godot/imported/3.ogg-af1a9a25fe517dc0f639ba85f699faeb.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/character/footsteep/grass/3.ogg"
-dest_files=[ "res://.import/3.ogg-af1a9a25fe517dc0f639ba85f699faeb.oggstr" ]
+dest_files=["res://.godot/imported/3.ogg-af1a9a25fe517dc0f639ba85f699faeb.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/fall.ogg-5b12732938a59c08017aac2cfc176913.oggstr"
+uid="uid://emobajqnsqep"
+path="res://.godot/imported/fall.ogg-5b12732938a59c08017aac2cfc176913.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/character/fall/fall.ogg"
-dest_files=[ "res://.import/fall.ogg-5b12732938a59c08017aac2cfc176913.oggstr" ]
+dest_files=["res://.godot/imported/fall.ogg-5b12732938a59c08017aac2cfc176913.oggvorbisstr"]
 
 [params]
 

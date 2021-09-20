@@ -1,8 +1,7 @@
-extends Particles
+extends GPUParticles3D
 
-export(NodePath) var timer;
+@export var timer_path: NodePath;
+@onready var timer = get_node(timer);
 
 func _ready() -> void:
-	timer = get_node(timer);
-	
-	timer.connect("timeout", self, "queue_free");
+	timer.timeout.connect(queue_free);

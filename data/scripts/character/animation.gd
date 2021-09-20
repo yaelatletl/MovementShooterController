@@ -1,13 +1,13 @@
 extends AnimationPlayer;
 
 # Get character's node path
-export(NodePath) var character_path;
-export(NodePath) var camera_path;
-export(NodePath) var movement_path;
+@export var character_path : NodePath;
+@export var camera_path : NodePath;
+@export var movement_path : NodePath;
 
-onready var character = get_node(character_path)
-onready var camera = get_node(camera_path)
-onready var movement = get_node(movement_path)
+@onready var character:Node3D = get_node(character_path)
+@onready var camera:Node3D = get_node(camera_path)
+@onready var movement:Node3D = get_node(movement_path)
 
 
 func _process(_delta):

@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/explosion.ogg-1879d13561eb204fd9999e16b895a592.oggstr"
+uid="uid://4y2lxv03kinf"
+path="res://.godot/imported/explosion.ogg-1879d13561eb204fd9999e16b895a592.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/barrel/explosion.ogg"
-dest_files=[ "res://.import/explosion.ogg-1879d13561eb204fd9999e16b895a592.oggstr" ]
+dest_files=["res://.godot/imported/explosion.ogg-1879d13561eb204fd9999e16b895a592.oggvorbisstr"]
 
 [params]
 

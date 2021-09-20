@@ -1,19 +1,19 @@
-extends Spatial
+extends Node3D
 
 # Get character's node path
-export(NodePath) var character;
+@export var character_path : NodePath;
 
 # Get head's node path
-export(NodePath) var head;
+@export var head_path: NodePath;
 
 # Get camera's node path
-export(NodePath) var neck;
+@export var neck_path: NodePath;
 
 # Get camera's node path
-export(NodePath) var camera;
+@export var camera_path: NodePath;
 
 # Load weapon class for make weapons
-var weapon = load("res://data/scripts/weapon/weapon.gd");
+var weapon = preload("res://data/scripts/weapon/weapon.gd");
 
 # All weapons
 var arsenal : Dictionary;
@@ -21,21 +21,21 @@ var arsenal : Dictionary;
 # Current weapon
 var current : int = 0;
 
-
-func _ready() -> void:
-	set_as_toplevel(true);
-	
 	# Get camera node from path
-	camera = get_node(camera);
+@onready var camera:Node3D = get_node(camera_path);
 	
 	# Get neck node from path
-	neck = get_node(neck);
+@onready var neck:Node3D = get_node(neck_path);
 	
 	# Get head node from path
-	head = get_node(head);
+@onready var head:Node3D = get_node(head_path);
 	
 	# Get head node from path
-	character = get_node(character);
+@onready var character:Node3D = get_node(character_path);
+
+func _ready() -> void:
+	top_level = true;
+	
 	
 	# Class reference : 
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed;
@@ -93,8 +93,8 @@ func  _rotation(_delta) -> void:
 	var y_lerp = 20;
 	var x_lerp = 40;
 	if not character.input["zoom"]:
-		var quat_a = Quat(global_transform.basis)
-		var quat_b = Quat(camera.global_transform.basis)
+		var quat_a = Quaternion(global_transform.basis)
+		var quat_b = Quaternion(camera.global_transform.basis)
 		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp))
 #		rotation.x = lerp_angle(rotation.x, camera.global_transform.basis.get_euler().x, y_lerp * _delta);
 #		rotation.y = lerp_angle(rotation.y, camera.global_transform.basis.get_euler().y, x_lerp * _delta);

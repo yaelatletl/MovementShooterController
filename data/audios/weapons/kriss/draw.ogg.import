@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/draw.ogg-41d30dcb2179d121344abe17f249527d.oggstr"
+uid="uid://d04ubtixcmope"
+path="res://.godot/imported/draw.ogg-41d30dcb2179d121344abe17f249527d.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/weapons/kriss/draw.ogg"
-dest_files=[ "res://.import/draw.ogg-41d30dcb2179d121344abe17f249527d.oggstr" ]
+dest_files=["res://.godot/imported/draw.ogg-41d30dcb2179d121344abe17f249527d.oggvorbisstr"]
 
 [params]
 

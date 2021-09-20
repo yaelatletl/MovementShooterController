@@ -2,8 +2,8 @@ extends CanvasLayer
 
 # Screen variables
 var fullscreen : bool = false
-export(NodePath) var player : NodePath = ""
-onready var node_player = get_node(player) 
+@export var player : NodePath = ""
+@onready var node_player = get_node(player) 
 # All debug inputs
 var input : Dictionary = {};
 
@@ -65,7 +65,7 @@ func _display_framerate() -> void:
 		framerate_label.rect_position = Vector2(5, 5)
 		
 		# Changes the color of the framerate label
-		framerate_label.add_color_override("font_color", ColorN("black"))
+		framerate_label.add_color_override("font_color", Color8(0,0,0,1))
 		
 		# Adds the framerate label to the debug
 		add_child(framerate_label);

@@ -1,13 +1,12 @@
 extends CanvasLayer
 
-export(NodePath) var weapon;
-export(NodePath) var weapon_hud;
-export(NodePath) var crosshair;
+@export var weapon_path: NodePath;
+@export var weapon_hud_path: NodePath;
+@export var crosshair_path: NodePath;
+@onready var weapon = get_node(weapon);
+@onready var weapon_hud = get_node(weapon_hud);
+@onready var crosshair = get_node(crosshair);
 
-func _ready():
-	weapon = get_node(weapon);
-	weapon_hud = get_node(weapon_hud);
-	crosshair = get_node(crosshair);
 
 func _process(_delta) -> void:
 	_weapon_hud()

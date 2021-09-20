@@ -1,8 +1,8 @@
-extends RayCast
+extends RayCast3D
 
-onready var actor = get_parent()
+@onready var actor: Node3D = get_parent()
 
-export(float) var sensibility : float = 0.2;  # Mouse sensitivitys
+@export var sensibility : float = 0.2;  # Mouse sensitivitys
 
 
 

@@ -1,11 +1,9 @@
-extends Spatial
+extends Node3D
 
-export(NodePath) var ray;
-
+@export var ray_path: NodePath;
+@onready var ray = get_node(ray_path)
 var ground : bool = false;
 
-func _ready():
-	ray = get_node(ray);
 	
 func _process(delta):
 	if not ground:

@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/2.ogg-45ca6228c5868158ad2d37fa0e999b89.oggstr"
+uid="uid://cgsi46vbb8gay"
+path="res://.godot/imported/2.ogg-45ca6228c5868158ad2d37fa0e999b89.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/character/footsteep/concrete/2.ogg"
-dest_files=[ "res://.import/2.ogg-45ca6228c5868158ad2d37fa0e999b89.oggstr" ]
+dest_files=["res://.godot/imported/2.ogg-45ca6228c5868158ad2d37fa0e999b89.oggvorbisstr"]
 
 [params]
 

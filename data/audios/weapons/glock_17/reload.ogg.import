@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/reload.ogg-039b0740459ffc99ae7829b8ae10df38.oggstr"
+uid="uid://c57kpa6f0rcb2"
+path="res://.godot/imported/reload.ogg-039b0740459ffc99ae7829b8ae10df38.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/weapons/glock_17/reload.ogg"
-dest_files=[ "res://.import/reload.ogg-039b0740459ffc99ae7829b8ae10df38.oggstr" ]
+dest_files=["res://.godot/imported/reload.ogg-039b0740459ffc99ae7829b8ae10df38.oggvorbisstr"]
 
 [params]
 

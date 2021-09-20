@@ -1,12 +1,12 @@
 extends Component
 
-export(NodePath) var camera_path
-export(PackedScene) var grapple_point
-export(float) var hook_lenght = 3.0
-export(float) var hook_tolerance = 15
-export(float) var hook_stiffness = 2.5
-export(float) var hook_time = 3
-onready var camera : Camera = get_node(camera_path)
+@export(NodePath) var camera_path
+@export(PackedScene) var grapple_point
+@export(float) var hook_lenght = 3.0
+@export(float) var hook_tolerance = 15
+@export(float) var hook_stiffness = 2.5
+@export(float) var hook_time = 3
+@onready var camera : Camera = get_node(camera_path)
 
 #Hook calculation vars
 var attached_to = null
@@ -25,7 +25,7 @@ func _screen_middle() -> Vector2:
 	
 func _launch_grapple():
 	var middle = camera.project_ray_normal(_screen_middle())
-	var new_grap : RigidBody = grapple_point.instance()
+	var new_grap : RigidDynamicBody3D = grapple_point.instance()
 	new_grap.connect("body_hit", self, "_on_body_entered", [new_grap])
 	new_grap.set_as_toplevel(true)
 	new_grap.translation = camera.global_transform.origin + 1.5*middle
@@ -40,10 +40,10 @@ func _end_grapple_time():
 	force = 0
 	
 func _on_body_entered(_point : Vector3, _body : Node, grapple):
-	if _body is Spatial:
+	if _body is Node3D:
 		attached_to = _body
 		static_collision_point = _point
-		if _body is RigidBody or _body is KinematicBody:
+		if _body is RigidDynamicBody3D or _body is KinematicBody:
 			non_static_collision_point = _body.to_local(_point)
 		grapple_is_activated = true
 		get_tree().create_timer(hook_time).connect("timeout", self, "_end_grapple_time")
@@ -59,10 +59,10 @@ func _physics_process(delta):
 
 	if attached_to != null:
 	
-		if attached_to is StaticBody:
+		if attached_to is StaticBody3D:
 			direction = (static_collision_point-actor.head.global_transform.origin).normalized()
 			distance = static_collision_point.distance_to(actor.head.global_transform.origin)
-		if attached_to is RigidBody or attached_to is KinematicBody:
+		if attached_to is RigidDynamicBody3D or attached_to is KinematicBody:
 			direction = (attached_to.to_global(non_static_collision_point)-actor.head.global_transform.origin).normalized()
 			distance = (attached_to.to_global(non_static_collision_point).distance_to(actor.head.global_transform.origin))
 		
@@ -76,7 +76,7 @@ func _physics_process(delta):
 			distance = 0
 			force = 0
 		else: 
-			if attached_to is RigidBody:
+			if attached_to is RigidDynamicBody3D:
 				attached_to.apply_impulse(non_static_collision_point, force*(-direction)/attached_to.mass)
 				actor.velocity +=  (0.9*force*(direction))/attached_to.mass
 			else:

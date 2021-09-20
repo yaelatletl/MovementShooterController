@@ -1,11 +1,11 @@
-extends KinematicBody
+extends CharacterBody3D
 
 const SLIDE_MULT = 3
 const WALLRUN_MULT = 1.7
 
-export(NodePath) var head_path = ""
-export(NodePath) var feet_path = ""
-export(float) var mass = 45
+@export var head_path : NodePath = ""
+@export var feet_path : NodePath = ""
+@export_range(0,500) var mass: int = 45
 
 # All vectors
 var velocity     : = Vector3(); # Velocity vector
@@ -25,8 +25,8 @@ var multiplier : float = 1.5
 
 var components : Dictionary = {};
 var angle 
-onready var head = get_node(head_path)
-onready var feet = get_node(feet_path)
+@onready var head = get_node(head_path)
+@onready var feet = get_node(feet_path)
 
 func _get_component(_name:String) -> Node:
 	if components.has(_name):
@@ -40,12 +40,11 @@ func _register_component(_name : String, _component_self : Node) -> void:
 	else:
 		components[_name] = _component_self
 
-func _physics_process(delta):
-	
+func _physics_process(delta : float) -> void:
 	head_basis = head.global_transform.basis
 	if is_on_wall():
 		wall_normal = get_slide_collision(0)
-		yield(get_tree().create_timer(0.2), "timeout")
+		await get_tree().create_timer(0.2).timeout
 		wall_direction = wall_normal.normal
 	run_speed = Vector2(velocity.x, velocity.z).length()
 

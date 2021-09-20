@@ -1,36 +1,37 @@
 [remap]
 
 importer="texture"
-type="StreamTexture"
-path.s3tc="res://.import/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.s3tc.stex"
-path.etc2="res://.import/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.etc2.stex"
+type="StreamTexture2D"
+uid="uid://7db0o610fku4"
+path.s3tc="res://.godot/imported/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.s3tc.stex"
+path.etc2="res://.godot/imported/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.etc2.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc2" ],
+"imported_formats": ["s3tc", "etc2"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://data/models/weapons/kriss/textures/Hand_D_baseColor.png"
-dest_files=[ "res://.import/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.s3tc.stex", "res://.import/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.etc2.stex" ]
+dest_files=["res://.godot/imported/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.s3tc.stex", "res://.godot/imported/Hand_D_baseColor.png-99c6fd7e8063ea2540106e73d3eb9d9e.etc2.stex"]
 
 [params]
 
 compress/mode=2
 compress/lossy_quality=0.7
-compress/hdr_mode=0
+compress/hdr_compression=1
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=true
-flags/filter=true
-flags/mipmaps=true
-flags/anisotropic=false
-flags/srgb=1
+compress/channel_pack=0
+compress/streamed=false
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
+process/normal_map_invert_y=false
 process/HDR_as_SRGB=false
-process/invert_color=false
-stream=false
-size_limit=0
-detect_3d=false
+process/size_limit=0
+detect_3d/compress_to=0
 svg/scale=1.0

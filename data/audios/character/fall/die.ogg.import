@@ -1,13 +1,14 @@
 [remap]
 
-importer="ogg_vorbis"
+importer="oggvorbisstr"
 type="AudioStreamOGGVorbis"
-path="res://.import/die.ogg-9f423509219af9113cb1ae8284b8244d.oggstr"
+uid="uid://ckfh3m2qpvduk"
+path="res://.godot/imported/die.ogg-9f423509219af9113cb1ae8284b8244d.oggvorbisstr"
 
 [deps]
 
 source_file="res://data/audios/character/fall/die.ogg"
-dest_files=[ "res://.import/die.ogg-9f423509219af9113cb1ae8284b8244d.oggstr" ]
+dest_files=["res://.godot/imported/die.ogg-9f423509219af9113cb1ae8284b8244d.oggvorbisstr"]
 
 [params]
 

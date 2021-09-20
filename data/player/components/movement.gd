@@ -1,18 +1,18 @@
 extends Component
 # All speed variables
 
-export(float) var n_speed : float = 04; # Normal
-export(float) var s_speed : float = 12; # Sprint
-export(float) var w_speed : float = 08; # Walking
-export(float) var c_speed : float = 10; # Crouch
-export(bool) var slide_on_crouch : bool = false
-export(bool) var can_wallrun : bool = false
+@export var n_speed : float = 04; # Normal
+@export var s_speed : float = 12; # Sprint
+@export var w_speed : float = 08; # Walking
+@export var c_speed : float = 10; # Crouch
+@export var slide_on_crouch : bool = false
+@export var can_wallrun : bool = false
 # Physics variables
-export(float) var gravity      : float = 45; # Gravity force #45 is okay, don't change it 
-export(float) var friction     : float = 25; # friction
+@export var gravity      : float = 45; # Gravity force #45 is okay, don't change it 
+@export var friction     : float = 25; # friction
 
-export(NodePath) var collision : NodePath = "";
-onready var col = get_node(collision)
+@export var collision : NodePath = "";
+@onready var col = get_node(collision)
 
 
 func _physics_process(_delta) -> void:
@@ -66,7 +66,7 @@ func _movement(_delta) -> void:
 	
 	for index in actor.get_slide_count():
 		var collision = actor.get_slide_collision(index)
-		if collision.collider is RigidBody:
+		if collision.collider is RigidDynamicBody3D:
 				collision.collider.apply_central_impulse(-collision.normal * actor.run_speed/collision.collider.mass)
 	
 func _crouch(_delta) -> void:

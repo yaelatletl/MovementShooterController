@@ -1,4 +1,5 @@
 class weapon:
+	var _rng = RandomNumberGenerator.new()
 	var owner : Node;
 	var name : String;
 	var firerate : float;
@@ -8,7 +9,7 @@ class weapon:
 	var damage : int;
 	var reload_speed : float;
 	var default_fov : int = 100;
-	func _init(owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed) -> void:
+	func _init(owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed):
 		self.owner = owner;
 		self.name = name;
 		self.firerate = firerate;
@@ -58,8 +59,8 @@ class weapon:
 				bullets -= 1;
 				
 				# recoil
-				owner.camera.rotation.x = lerp(owner.camera.rotation.x, rand_range(1, 2), _delta);
-				owner.camera.rotation.y = lerp(owner.camera.rotation.y, rand_range(-1, 1), _delta);
+				owner.camera.rotation.x = lerp(owner.camera.rotation.x, _rng.rand_range(1, 2), _delta);
+				owner.camera.rotation.y = lerp(owner.camera.rotation.y, _rng.rand_range(-1, 1), _delta);
 				
 				# Shake the camera
 				owner.camera.shake_force = 0.002;
@@ -75,7 +76,7 @@ class weapon:
 				effect.get_node("smoke").emitting = true;
 				
 				# Play shoot sound
-				audio.get_node("shoot").pitch_scale = rand_range(0.9, 1.1);
+				audio.get_node("shoot").pitch_scale = _rng.rand_range(0.9, 1.1);
 				audio.get_node("shoot").play();
 				
 				# Play shoot animation using firate speed
@@ -104,10 +105,10 @@ class weapon:
 				
 				# Check raycast is colliding
 				if ray.is_colliding():
-					var local_damage = int(rand_range(damage/1.5, damage))
+					var local_damage = int(_rng.rand_range(damage/1.5, damage))
 					
 					# Do damage
-					if ray.get_collider() is RigidBody:
+					if ray.get_collider() is RigidDynamicBody3D:
 						ray.get_collider().apply_central_impulse(-ray.get_collision_normal() * (local_damage * 0.3));
 					
 					if ray.get_collider().is_in_group("prop"):
@@ -139,7 +140,7 @@ class weapon:
 		else:
 			# Play out sound
 			if not audio.get_node("out").playing:
-				audio.get_node("out").pitch_scale = rand_range(0.9, 1.1);
+				audio.get_node("out").pitch_scale = _rng.rand_range(0.9, 1.1);
 				audio.get_node("out").play();
 
 	func _reload() -> void:
