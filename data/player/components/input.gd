@@ -10,14 +10,14 @@ var jump_timer = null
 func _ready():
 	actor.input["look_y"] = 0
 	actor.input["look_x"] = 0
-	actor.input["special"] = int(Input.is_action_pressed("SPECIAL"));
-	actor.input["left"]   = int(Input.is_action_pressed("KEY_A"));
-	actor.input["right"]  = int(Input.is_action_pressed("KEY_D"));
-	actor.input["forward"] = int(Input.is_action_pressed("KEY_W"));
-	actor.input["back"]   = int(Input.is_action_pressed("KEY_S"));
-	actor.input["jump"] = int(Input.is_action_pressed("KEY_SPACE"));
-	actor.input["extra_jump"] =  int(Input.is_action_just_pressed("KEY_SPACE"));
-	actor.input["crouch"] = int(Input.is_action_pressed("KEY_CTRL"));
+	actor.input["special"] = 0
+	actor.input["left"]   = 0
+	actor.input["right"]  = 0
+	actor.input["forward"] = 0
+	actor.input["back"]   = 0
+	actor.input["jump"] = 0
+	actor.input["extra_jump"] = 0
+	actor.input["crouch"] = 0
 	actor.input["sprint"] = 0
 	
 	actor.input["shoot"] = int(Input.is_action_pressed("mb_left"));
@@ -41,6 +41,9 @@ func _mouse_toggle() -> void:
 	
 
 func _physics_process(delta):
+	if not is_network_master():
+		return
+		
 	actor.input["left"]   = int(Input.is_action_pressed("KEY_A"));
 	actor.input["right"]  = int(Input.is_action_pressed("KEY_D"));
 	actor.input["forward"] = int(Input.is_action_pressed("KEY_W"));
@@ -63,6 +66,8 @@ func _jump():
 	actor.input["jump"] = false
 
 func _unhandled_input(event):
+	if not is_network_master():
+		return
 	# Calls function to switch between locked and unlocked mouse
 	_mouse_toggle();
 	

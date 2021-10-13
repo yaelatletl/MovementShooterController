@@ -3,6 +3,10 @@ extends Camera
 export var shake_time : float;
 export var shake_force : float;
 
+func _ready() -> void:
+	if is_network_master():
+		make_current()
+
 func _process(_delta) -> void:
 	_shake(_delta);
 
