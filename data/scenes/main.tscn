@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
-[ext_resource path="res://data/player/character.tscn" type="PackedScene" id=2]
-[ext_resource path="res://data/scenes/debug.tscn" type="PackedScene" id=3]
 [ext_resource path="res://data/scenes/fade.tscn" type="PackedScene" id=4]
 [ext_resource path="res://data/scenes/barrel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://data/scenes/scenario.gd" type="Script" id=6]
 
 [sub_resource type="ProceduralSky" id=1]
 sun_latitude = 39.24
@@ -65,169 +64,13 @@ directional_shadow_blend_splits = true
 [node name="environment" type="WorldEnvironment" parent="post_processing"]
 environment = SubResource( 2 )
 
-[node name="character" parent="." instance=ExtResource( 2 )]
-transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 5.50934, 10 )
-
-[node name="debug" parent="." instance=ExtResource( 3 )]
-player = NodePath("../character")
-
 [node name="fade" parent="." instance=ExtResource( 4 )]
 
 [node name="scenario" type="Spatial" parent="."]
+script = ExtResource( 6 )
+spawn_points_parent_path = NodePath("spawnpoints")
 
-[node name="wall" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 2.01321, 8.02284 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-layers = 3
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall7" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 7.9677, 0, 0, 0, 1, 0, 0, 0, 0.368961, 1.82181, 3.93382, 2.17341 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall7"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall7"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall5" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 3.77909, 28.0547 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-layers = 3
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall6" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( -0.237304, 1.86938, 0, 0.411023, 1.07929, 0, 0, 0, 1, 1.26171, 2.90546, 28.0547 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall6"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall6"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall4" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 0.700685, 0.713471, 0, -0.713471, 0.700685, 0, 0, 0, 1, 4.15242, 3.2297, 8.02284 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall2" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.14766, 5.9187, -13.4699 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall3" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.47245, 9.17323, -13.4699 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall8" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -25.7436 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall8"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall8"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall9" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -45.7488 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall9"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall9"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="wall10" type="StaticBody" parent="scenario" groups=[
-"wallk",
-]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -65.7488 )
-
-[node name="mesh" type="MeshInstance" parent="scenario/wall10"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-
-[node name="collision" type="CollisionShape" parent="scenario/wall10"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
-
-[node name="terrain" type="StaticBody" parent="scenario" groups=[
-"concrete",
-]]
-
-[node name="mesh" type="MeshInstance" parent="scenario/terrain"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0358462, -0.01824, 0.0206671 )
-mesh = SubResource( 7 )
-material/0 = null
-
-[node name="collision" type="CollisionShape" parent="scenario/terrain"]
-shape = SubResource( 8 )
+[node name="players" type="Spatial" parent="scenario"]
 
 [node name="props" type="Spatial" parent="scenario"]
 
@@ -245,3 +88,177 @@ transform = Transform( 0.363365, -0.931647, 0, 0.931647, 0.363365, 0, 0, 0, 1, -
 
 [node name="barrel_4" parent="scenario/props" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2444, 2.26095, 10.2583 )
+
+[node name="objects" type="Spatial" parent="scenario"]
+
+[node name="wall" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 2.01321, 8.02284 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+layers = 3
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall7" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 7.9677, 0, 0, 0, 1, 0, 0, 0, 0.368961, 1.82181, 3.93382, 2.17341 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall7"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall5" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 3.77909, 28.0547 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+layers = 3
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall6" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( -0.237304, 1.86938, 0, 0.411023, 1.07929, 0, 0, 0, 1, 1.26171, 2.90546, 28.0547 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall4" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 0.700685, 0.713471, 0, -0.713471, 0.700685, 0, 0, 0, 1, 4.15242, 3.2297, 8.02284 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall2" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.14766, 5.9187, -13.4699 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall3" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.47245, 9.17323, -13.4699 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall8" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -25.7436 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall8"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall9" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -45.7488 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall9"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall10" type="StaticBody" parent="scenario/objects" groups=[
+"wallk",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -65.7488 )
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall10"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="terrain" type="StaticBody" parent="scenario/objects" groups=[
+"concrete",
+]]
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/terrain"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0358462, -0.01824, 0.0206671 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/terrain"]
+shape = SubResource( 8 )
+
+[node name="spawnpoints" type="Spatial" parent="scenario"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8912, 0 )
+
+[node name="Position3D" type="Position3D" parent="scenario/spawnpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39191, 10.524 )
+
+[node name="Position3D2" type="Position3D" parent="scenario/spawnpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6443, 5.57732, 10.524 )
+
+[node name="Position3D3" type="Position3D" parent="scenario/spawnpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6443, 7.56124, 28.9469 )
+
+[node name="Position3D4" type="Position3D" parent="scenario/spawnpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9104, 2.5739, 28.9469 )
+
+[node name="Position3D5" type="Position3D" parent="scenario/spawnpoints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9104, 2.5739, 10.9689 )
