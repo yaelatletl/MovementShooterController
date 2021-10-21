@@ -50,7 +50,8 @@ func _physics_process(delta):
 	run_speed = Vector2(velocity.x, velocity.z).length()
 
 	if get_tree().network_peer != null and is_network_master() and not get_tree().is_network_server(): 
-		rset("input", input)
+		rset_unreliable_id(1, "input", input)
+		
 func reset_wall_multi():
 	wall_multiplier = WALLRUN_MULT
 
