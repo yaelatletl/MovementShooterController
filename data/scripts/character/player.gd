@@ -14,7 +14,7 @@ var acceleration : = Vector3(); # Acceleration Vector
 var head_basis : Basis
 
 # All character inputs
-sync var input : Dictionary = {};
+remotesync var input : Dictionary = {};
 
 #Wall running and shared variables
 var wall_direction : Vector3 = Vector3.ZERO
@@ -49,8 +49,7 @@ func _physics_process(delta):
 		wall_direction = wall_normal.normal
 	run_speed = Vector2(velocity.x, velocity.z).length()
 
-	if get_tree().network_peer != null and is_network_master() and not get_tree().is_network_server(): 
-		rset_unreliable_id(1, "input", input)
+
 		
 func reset_wall_multi():
 	wall_multiplier = WALLRUN_MULT

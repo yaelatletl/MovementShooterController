@@ -1,7 +1,7 @@
 extends Component
 
 signal save_shift_pos()
-var pos_on_time = []
+sync var pos_on_time = []
 
 func _ready():
 	get_tree().create_timer(0.6).connect("timeout", self, "_on_shift_save")
