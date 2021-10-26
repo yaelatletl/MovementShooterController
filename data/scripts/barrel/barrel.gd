@@ -3,10 +3,17 @@ extends RigidBody
 export var durability : int = 100;
 var remove_decal : bool = false;
 
+puppet var on_the_net_transform := Transform()
+
 func _ready():
 	$timer.connect("timeout", self, "queue_free");
 	$explosion/timer.connect("timeout", self, "_explode_others");
-
+func _physics_process(delta: float) -> void:
+	if get_tree().has_network_peer():
+		if get_tree().is_network_server():
+			rset_unreliable("on_the_net_transform", transform)
+		else:
+			transform = on_the_net_transform
 func _damage(damage) -> void:
 	if durability > 0:
 		var dam_calc = durability - damage;
@@ -25,7 +32,13 @@ func _damage(damage) -> void:
 func _process(_delta) -> void:
 	_remove_decal();
 
-func _explosion() -> void:
+remote func _explosion(exploded_in_server : bool = false) -> void:
+	if get_tree().is_network_server():
+		for players in Gamestate.players:
+			if players != 1:
+				rpc_unreliable_id(players, "_explosion", true)
+	if (not exploded_in_server and get_tree().has_network_peer()) and not get_tree().is_network_server():
+		return
 	$collision.disabled = true;
 	
 	var main = get_tree().get_root().get_child(0);
