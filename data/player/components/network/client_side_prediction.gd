@@ -20,18 +20,6 @@ func update_server_from_client():
 	rset_unreliable_id(1, "local_net_transform", actor.global_transform.origin)
 	rset_unreliable_id(1, "local_net_height", shape.shape.height)
 	rset_unreliable_id(1, "local_net_camera_look", actor.head.rotation)
-
-
-func interpolate_reality_to_expectation(delta):
-	if get_tree().is_network_server():
-		if actor.global_transform.origin.distance_to(local_net_transform) < sync_delta * 2:
-			average_true_transform = actor.global_transform.origin.slerp(local_net_transform, delta)
-		else:
-			average_true_transform = actor.global_transform.origin
-		if abs(shape.shape.height - local_net_height) > 0.2 and local_net_height <= 2:
-			average_true_height = lerp(shape.shape.height, local_net_height, delta)
-		else:
-			average_true_height = shape.shape.height
 			
 func update_client_from_server():
 	#We send the real position (as where the player actually is for the server)
@@ -40,6 +28,18 @@ func update_client_from_server():
 		rset_unreliable("on_the_net_height", average_true_height)
 		rset_unreliable("on_the_net_camera_look", average_true_view)
 
+func interpolate_reality_to_expectation(delta):
+	if get_tree().is_network_server():
+		var transform_delta = actor.global_transform.origin.distance_to(local_net_transform)
+		var height_distance = abs(shape.shape.height - local_net_height)
+		if  transform_delta < sync_delta:
+			average_true_transform = lerp(actor.global_transform.origin, local_net_transform, delta*transform_delta)
+		else:
+			average_true_transform = actor.global_transform.origin
+		if  height_distance > 0.2 and local_net_height <= 2:
+			average_true_height = lerp(shape.shape.height, local_net_height, delta*height_distance)
+		else:
+			average_true_height = shape.shape.height
 
 func sync_from_server(delta):
 	if not get_tree().is_network_server():
@@ -51,16 +51,28 @@ func sync_from_server(delta):
 			shape.shape.height = lerp(shape.shape.height, on_the_net_height, delta)
 		else:
 			shape.shape.height = on_the_net_height
-#		actor.head.rotation.slerp(on_the_net_camera_look, delta)
 		pass
 
+func sync_rotation(delta : float) -> void:
+		
+	if get_tree().is_network_server():
+		if actor.head.rotation.angle_to(local_net_camera_look) < deg2rad(sync_delta_angle):
+			average_true_view = lerp_angles(actor.head.rotation, on_the_net_camera_look, delta)
+		else:
+			average_true_view = actor.head.rotation
+	
+	if not get_tree().is_network_server():
+		if actor.head.rotation.angle_to(on_the_net_camera_look) < deg2rad(sync_delta_angle):
+			actor.head.rotation = lerp_angles(actor.head.rotation, on_the_net_camera_look, delta)
+		else:
+			actor.head.rotation = on_the_net_camera_look
 
 
 func _physics_process(delta: float) -> void:
 	if not enabled:
 		return
 	if get_tree().is_network_server():
-		interpolate_reality_to_expectation(delta)
+		interpolate_reality_to_expectation(delta*100)
 		update_client_from_server()
 	else:
 		if is_network_master():
@@ -107,26 +119,9 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	if not enabled:
 		return
-#	var new_delta = delta * 10
-#	if on_the_net_camera_look != null:
-#		average_true_view = lerp_angles(actor.head.rotation, on_the_net_camera_look, new_delta)
-#	if average_true_view.length() > 0:
-#		actor.head.rotation = on_the_net_camera_look
+
 	sync_rotation(delta*10)
 
-func sync_rotation(delta : float) -> void:
-		
-	if get_tree().is_network_server():
-		if actor.head.rotation.angle_to(local_net_camera_look) < sync_delta_angle/2:
-			average_true_view = lerp_angles(actor.head.rotation, on_the_net_camera_look, delta)
-		else:
-			average_true_view = actor.actor.head.rotation
-	
-	if not get_tree().is_network_server():
-		if actor.head.rotation.angle_to(on_the_net_camera_look) < sync_delta_angle*2:
-			actor.head.rotation = lerp_angles(actor.head.rotation, on_the_net_camera_look, delta)
-		else:
-			actor.head.rotation = on_the_net_camera_look
 	
 
 #		else:
