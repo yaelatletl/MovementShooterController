@@ -59,11 +59,24 @@ func _physics_process(delta):
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"))
 	actor.input["special"] = int(Input.is_action_just_pressed("SPECIAL"))
 	actor.input["extra_jump"] = int(Input.is_action_just_pressed("KEY_SPACE"))
-
+	if get_tree().has_network_peer() and is_network_master() and not get_tree().is_network_server(): 
+		actor.rset_unreliable_id(1, "input", actor.input)
+#		actor.input["look_y"] = 0
+#		actor.input["look_x"] = 0
+		
 func _jump():
 	actor.input["jump"] = true
 	yield(get_tree().create_timer(0.01), "timeout")
 	actor.input["jump"] = false
+
+func mouse_move(event):
+	Input.get_last_mouse_speed()
+	if event is InputEventMouseMotion:
+		actor.input["look_y"] = event.relative.y 
+		actor.input["look_x"] = event.relative.x 
+	else:
+		actor.input["look_y"] = 0
+		actor.input["look_x"] = 0
 
 func _unhandled_input(event):
 	if not is_network_master():
@@ -73,10 +86,8 @@ func _unhandled_input(event):
 	
 	if int(Input.is_action_just_pressed("KEY_SPACE")):
 		_jump()
-		
-	if event is InputEventMouseMotion:
-		actor.input["look_y"] = event.relative.y 
-		actor.input["look_x"] = event.relative.x 
+	mouse_move(event)
+	
 
 	if run_is_toggle:
 		if Input.is_action_just_pressed("KEY_SHIFT"):

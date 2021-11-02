@@ -3,9 +3,13 @@ extends RigidBody
 export var durability : int = 100
 var remove_decal : bool = false
 
+puppet var on_the_net_transform := Transform()
+
 func _ready():
+
 	$timer.connect("timeout", self, "queue_free")
 	$explosion/timer.connect("timeout", self, "_explode_others")
+
 func _physics_process(delta: float) -> void:
 	if get_tree().has_network_peer():
 		if get_tree().is_network_server():
@@ -37,7 +41,9 @@ remote func _explosion(exploded_in_server : bool = false) -> void:
 				rpc_unreliable_id(players, "_explosion", true)
 	if (not exploded_in_server and get_tree().has_network_peer()) and not get_tree().is_network_server():
 		return
+
 	$collision.disabled = true
+
 	
 	var main = get_tree().get_root().get_child(0)
 	
