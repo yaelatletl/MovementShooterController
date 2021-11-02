@@ -24,14 +24,27 @@ config/name="Godot Engine FPS"
 run/main_scene="res://data/scenes/main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Gamestate="*res://data/singletons/gamestate.gd"
+
 [debug]
 
 gdscript/warnings/enable=false
+multirun/number_of_windows=4
+multirun/window_distance=200
+multirun/add_custom_args=true
+multirun/first_window_args="server"
+multirun/other_window_args="client"
 
 [display]
 
 window/size/width=1280
 window/size/height=720
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/multirun/plugin.cfg" )
 
 [global]
 
