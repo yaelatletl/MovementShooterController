@@ -1,9 +1,9 @@
-extends AnimationPlayer;
+extends AnimationPlayer
 
 # Get character's node path
-export(NodePath) var character_path;
-export(NodePath) var camera_path;
-export(NodePath) var movement_path;
+export(NodePath) var character_path
+export(NodePath) var camera_path
+export(NodePath) var movement_path
 
 onready var character = get_node(character_path)
 onready var camera = get_node(camera_path)
@@ -23,7 +23,7 @@ func _animation() -> void:
 		# Checks if the jump animation is active
 		if current_animation != "jump":
 			# Starts the jump animation
-			play("jump", 0.3);
+			play("jump", 0.3)
 
 	# If the character is moving
 	if character.direction:
@@ -31,15 +31,15 @@ func _animation() -> void:
 		if current_animation != "jump":
 			if character.input["sprint"]:
 				if current_animation != "sprint":
-					play("sprint", 0.3, 1.5);
+					play("sprint", 0.3, 1.5)
 			else:
 				if current_animation != "walk":
-					play("walk", 0.3);
+					play("walk", 0.3)
 	else:
 		# If the current animation is not idle
 		if current_animation != "idle" and current_animation != "jump":
 			# Starts animation with smoothing
-			play("idle", 0.3, 0.1);
+			play("idle", 0.3, 0.1)
 
 func _neck_animation(_delta) -> void:
 	# Neck rotation speed
@@ -50,7 +50,7 @@ func _neck_animation(_delta) -> void:
 	# Get the camera node
 
 	# Creates the angle based on the character's movement
-	character.angle = 2 * (character.input["right"] + -character.input["left"]);
+	character.angle = 2 * (character.input["right"] + -character.input["left"])
 	
 
 	# Apply an interpolation to neck rotation based on angle

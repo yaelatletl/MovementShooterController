@@ -8,13 +8,13 @@ export(NodePath) var feet_path = ""
 export(float) var mass = 45
 
 # All vectors
-var velocity     : = Vector3(); # Velocity vector
-var direction    : = Vector3(); # Direction Vector
-var acceleration : = Vector3(); # Acceleration Vector
+var velocity     : = Vector3() # Velocity vector
+var direction    : = Vector3() # Direction Vector
+var acceleration : = Vector3() # Acceleration Vector
 var head_basis : Basis
 
 # All character inputs
-sync var input : Dictionary = {};
+remotesync var input : Dictionary = {}
 
 #Wall running and shared variables
 var wall_direction : Vector3 = Vector3.ZERO
@@ -23,7 +23,7 @@ var run_speed : float = 0.0
 var wall_multiplier : float = 1.5
 var multiplier : float = 1.5
 
-var components : Dictionary = {};
+var components : Dictionary = {}
 var angle 
 onready var head = get_node(head_path)
 onready var feet = get_node(feet_path)
