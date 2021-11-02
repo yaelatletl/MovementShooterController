@@ -3,6 +3,7 @@ extends Component
 remotesync var on_the_net_transform : Vector3 = Vector3()
 remotesync var on_the_net_camera_look : Vector3 = Vector3()
 remotesync var on_the_net_height : float = 2.0
+remotesync var on_the_net_velocity : Vector3 = Vector3()
 
 export(NodePath) var head_path
 onready var head = get_node(head_path)
@@ -16,9 +17,11 @@ func _physics_process(delta: float) -> void:
 		rset_unreliable("on_the_net_transform", actor.global_transform.origin)
 		rset_unreliable("on_the_net_camera_look", head.rotation)
 		rset_unreliable("on_the_net_height", shape.shape.height)
+		rset_unreliable("on_the_net_velocity", actor.velocity)
 	else:
 		actor.global_transform.origin = lerp(actor.global_transform.origin, on_the_net_transform, delta*actor.global_transform.origin.distance_to(on_the_net_transform))
 		shape.shape.height = lerp(shape.shape.height, on_the_net_height, delta)
+		actor.velocity = lerp(actor.velocity, on_the_net_velocity, delta*actor.velocity.distance_to(on_the_net_velocity))
 	
 func _process(delta: float) -> void:
 	if not get_tree().has_network_peer():
