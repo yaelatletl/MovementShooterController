@@ -8,6 +8,11 @@ func _ready():
 func _on_joy_changed(device : int):
 	inputs[device]["player"]
 
+# Deletes a subdictionary when the corresponding device is disconnected
+func _on_joy_disconnected(device : int):
+	inputs.remove(device)
+
+
 
 func _input(event):
 	if inputs.has(event.device):
