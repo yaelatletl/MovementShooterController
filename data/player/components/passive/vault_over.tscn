@@ -11,6 +11,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.705654, -0.883166 )
 enabled = true
 
 [node name="vault_over2" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.705654, -0.883166 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.705654, 0.276985 )
 enabled = true
 cast_to = Vector3( 0, 0, -1.5 )
