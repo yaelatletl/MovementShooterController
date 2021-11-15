@@ -69,10 +69,15 @@ remote func register_player(peer_id):
 		players[peer_id] = create_player(peer_id)
 	emit_signal("players_changed")
 	
-func call_on_all_clients(object : Node, func_name : String , args):
+func call_on_all_clients(object : Node, func_name : String , args) -> void:
 	if not is_instance_valid(object):
+		print("Invalid object")
 		return
 	if get_tree().is_network_server():
 		for player in players:
 			if player != 1:
-				object.rpc_id(player, func_name, args)
+				print("Calling RPC on client " + str(player))
+				if args == null:
+					object.rpc_id(player, func_name)
+				else:
+					object.rpc_id(player, func_name, args)

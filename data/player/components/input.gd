@@ -58,7 +58,7 @@ func _physics_process(delta):
 	actor.input["reload"] = int(Input.is_action_pressed("KEY_R"))
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"))
 	actor.input["special"] = int(Input.is_action_just_pressed("SPECIAL"))
-	actor.input["extra_jump"] = int(Input.is_action_just_pressed("KEY_SPACE"))
+	actor.input["extra_jump"] = int(Input.is_action_pressed("KEY_SPACE"))
 	if get_tree().has_network_peer() and is_network_master() and not get_tree().is_network_server(): 
 		actor.rset_unreliable_id(1, "input", actor.input)
 #		actor.input["look_y"] = 0

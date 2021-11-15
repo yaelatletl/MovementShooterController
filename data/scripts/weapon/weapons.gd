@@ -60,20 +60,28 @@ func _process(_delta) -> void:
 	_rotation(_delta)
 	_position(_delta)
 
+remotesync func _shoot(_delta) -> void:
+	# Call weapon function
+	arsenal.values()[current]._shoot(_delta)
+	Gamestate.call_on_all_clients(self, "_shoot", _delta)
+
+remotesync func _reload() -> void:
+	arsenal.values()[current]._reload()
+	Gamestate.call_on_all_clients(self, "_reload", null)
+
 func _weapon(_delta) -> void:
 	
 	arsenal.values()[current]._sprint(character.input["sprint"] or character.input["jump"], _delta)
 	
 	if not character.input["sprint"] or not character.direction:
 		if character.input["shoot"]:
-			arsenal.values()[current]._shoot(_delta)
-			Gamestate.call_on_all_clients(arsenal.values()[current], "_shoot", [_delta])
+			_shoot(_delta)
 
 		
 		arsenal.values()[current]._zoom(character.input["zoom"], _delta)
 	
 	if character.input["reload"]:
-		arsenal.values()[current]._reload()
+		_reload()
 	
 	# Update arsenal
 	for w in range(arsenal.size()):
