@@ -55,6 +55,7 @@ func _ready() -> void:
 func _physics_process(_delta) -> void:
 	# Call weapon function
 	_weapon(_delta)
+	_handle_guns()
 	_change()
 func _process(_delta) -> void:
 	_rotation(_delta)
@@ -111,15 +112,15 @@ func  _rotation(_delta) -> void:
 	else:
 		rotation = camera.global_transform.basis.get_euler()
 
-func _unhandled_input(event):
-	if event is InputEventKey:
-		if event.pressed:
-			var anim = arsenal.values()[current].anim
-			
-			if not anim.is_playing():
-				if event.scancode == KEY_1:
-					current = 0
-				if event.scancode == KEY_2:
-					current = 1
-				if event.scancode == KEY_3:
-					current = 2
+remotesync func _change_weapon(_index) -> void:
+	current = _index
+	Gamestate.call_on_all_clients(self, "_change_weapon", _index)
+
+func _handle_guns():
+	if character.input["next_weapon"]:
+		var anim = arsenal.values()[current].anim
+		if not anim.is_playing():
+			if current + 1 < arsenal.size():
+				_change_weapon(current + 1)
+			else:
+				_change_weapon(0)

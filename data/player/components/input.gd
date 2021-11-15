@@ -19,7 +19,7 @@ func _ready():
 	actor.input["extra_jump"] = 0
 	actor.input["crouch"] = 0
 	actor.input["sprint"] = 0
-	
+	actor.input["next_weapon"] = 0
 	actor.input["shoot"] = int(Input.is_action_pressed("mb_left"))
 	actor.input["reload"] = int(Input.is_action_pressed("KEY_R"))
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"))
@@ -48,7 +48,7 @@ func _physics_process(delta):
 	actor.input["right"]  = int(Input.is_action_pressed("KEY_D"))
 	actor.input["forward"] = int(Input.is_action_pressed("KEY_W"))
 	actor.input["back"]   = int(Input.is_action_pressed("KEY_S"))
-
+	actor.input["next_weapon"] = int(Input.is_action_just_pressed("NEXT_GUN"))
 	if not crouch_is_toggle:
 		actor.input["crouch"] = int(Input.is_action_pressed("KEY_CTRL"))
 	if not run_is_toggle:
