@@ -150,6 +150,12 @@ NEXT_GUN={
  ]
 }
 
+[layer_names]
+
+3d_render/layer_1="Global"
+3d_render/layer_2="ThirdPerson Only"
+3d_render/layer_3="FirstPerson Only"
+
 [physics]
 
 common/physics_fps=90
