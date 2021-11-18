@@ -43,7 +43,7 @@ func _movement(_delta) -> void:
 		# Applies gravity
 		if (actor.is_on_wall() and actor.run_speed>12 and can_wallrun):
 			actor.velocity.y = lerp(actor.velocity.y, 0.1, 10*_delta)
-			actor.direction +=  actor.input["forward"]*(-actor.wall_direction + (-actor.input["forward"]  +  actor.input["back"]) * actor.head_basis.z)
+			actor.direction +=  (actor.input["forward"] -actor.input["back"])*(-actor.wall_direction.cross(Vector3.UP) -actor.wall_direction)# * actor.head_basis.z)
 			actor.direction = actor.direction.normalized()
 		else:
 			actor.velocity.y += -gravity * _delta
