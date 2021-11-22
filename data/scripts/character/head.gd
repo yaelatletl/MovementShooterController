@@ -1,7 +1,7 @@
 extends RayCast
 
 onready var actor = get_parent()
-
+onready var target = $neck/ViewTarget
 export(float) var sensibility : float = 0.2  # Mouse sensitivitys
 
 
