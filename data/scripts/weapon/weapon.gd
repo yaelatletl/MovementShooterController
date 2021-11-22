@@ -122,8 +122,8 @@ class weapon:
 							
 							spark.emitting = true
 						
-						if ray.get_collider().has_method("_damage"):
-							ray.get_collider()._damage(local_damage)
+					if ray.get_collider().has_method("_damage"):
+						ray.get_collider()._damage(local_damage)
 					
 					# Create a instance of decal scene
 					var decal = preload("res://data/scenes/decal.tscn").instance()

@@ -8,6 +8,7 @@ var can_jump = true
 var jump_timer = null
 
 func _ready():
+	_component_name = "input"
 	actor.input["look_y"] = 0
 	actor.input["look_x"] = 0
 	actor.input["special"] = 0
@@ -41,7 +42,7 @@ func _mouse_toggle() -> void:
 	
 
 func _physics_process(delta):
-	if not is_network_master():
+	if not is_network_master() or not enabled:
 		return
 		
 	actor.input["left"]   = int(Input.is_action_pressed("KEY_A"))
@@ -79,7 +80,7 @@ func mouse_move(event):
 		actor.input["look_x"] = 0
 
 func _unhandled_input(event):
-	if not is_network_master():
+	if not is_network_master() or not enabled:
 		return
 	# Calls function to switch between locked and unlocked mouse
 	_mouse_toggle()

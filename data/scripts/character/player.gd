@@ -12,13 +12,13 @@ var velocity     : = Vector3() # Velocity vector
 var direction    : = Vector3() # Direction Vector
 var acceleration : = Vector3() # Acceleration Vector
 var head_basis : Basis
-
 # All character inputs
 
 remotesync var input : Dictionary = {}
 
 
 #Wall running and shared variables
+remotesync var health = 100
 var wall_direction : Vector3 = Vector3.ZERO
 var wall_normal 
 var run_speed : float = 0.0
@@ -35,6 +35,8 @@ func _get_component(_name:String) -> Node:
 		return components.get(_name)
 	else:
 		return null
+
+
 
 func _register_component(_name : String, _component_self : Node) -> void:
 	if components.has(_name):
@@ -64,3 +66,15 @@ func is_far_from_floor() -> bool:
 	if feet.is_colliding():
 		return false
 	return true
+
+remotesync func _damage(amount : float):
+	if health > 0:
+		health -= amount
+	if health <= 0:
+		die()
+	Gamestate.set_in_all_clients(self, "health", health)
+		
+remotesync func die():
+	Gamestate.call_on_all_clients(self, "die", null)
+	_get_component("input").enabled = false
+	print("Player "+name+" died")

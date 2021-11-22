@@ -61,12 +61,12 @@ func _process(_delta) -> void:
 	_rotation(_delta)
 	_position(_delta)
 
-remotesync func _shoot(_delta) -> void:
+remote func _shoot(_delta) -> void:
 	# Call weapon function
 	arsenal.values()[current]._shoot(_delta)
 	Gamestate.call_on_all_clients(self, "_shoot", _delta)
 
-remotesync func _reload() -> void:
+remote func _reload() -> void:
 	arsenal.values()[current]._reload()
 	Gamestate.call_on_all_clients(self, "_reload", null)
 

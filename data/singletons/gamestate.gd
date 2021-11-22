@@ -76,8 +76,18 @@ func call_on_all_clients(object : Node, func_name : String , args) -> void:
 	if get_tree().is_network_server():
 		for player in players:
 			if player != 1:
-				print("Calling RPC on client " + str(player))
+				# print("Calling RPC on client " + str(player))
 				if args == null:
 					object.rpc_id(player, func_name)
 				else:
 					object.rpc_id(player, func_name, args)
+
+func set_in_all_clients(object : Node, property_name : String, value) -> void:
+	if not is_instance_valid(object):
+		print("Invalid object")
+		return
+	if get_tree().is_network_server():
+		for player in players:
+			if player != 1:
+				print("Setting property on client " + str(player))
+				object.rset_id(player, property_name, value)
