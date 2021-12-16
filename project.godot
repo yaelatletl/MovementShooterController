@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Component",
 "language": "GDScript",
 "path": "res://data/player/component.gd"
+}, {
+"base": "Node",
+"class": "weapon",
+"language": "GDScript",
+"path": "res://data/scripts/weapon/weapon.gd"
 } ]
 _global_script_class_icons={
-"Component": ""
+"Component": "",
+"weapon": ""
 }
 
 [application]
