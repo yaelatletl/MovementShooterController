@@ -15,7 +15,7 @@ var head_basis : Basis
 # All character inputs
 
 remotesync var input : Dictionary = {}
-
+signal died()
 
 #Wall running and shared variables
 remotesync var health = 100
@@ -36,6 +36,8 @@ func _get_component(_name:String) -> Node:
 	else:
 		return null
 
+func _ready() -> void:
+	Gamestate.start_new_sync_process(self, "health", health)
 
 
 func _register_component(_name : String, _component_self : Node) -> void:
@@ -77,4 +79,5 @@ remotesync func _damage(amount : float):
 remotesync func die():
 	Gamestate.call_on_all_clients(self, "die", null)
 	_get_component("input").enabled = false
+	emit_signal("died")
 	print("Player "+name+" died")

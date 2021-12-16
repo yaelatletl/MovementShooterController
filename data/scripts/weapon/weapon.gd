@@ -1,16 +1,17 @@
-class weapon:
-	var owner : Node
-	var name : String
-	var firerate : float
-	var bullets : int
-	var ammo : int
-	var max_bullets : int
-	var damage : int
-	var reload_speed : float
-	var default_fov : int = 100
-	func _init(owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed) -> void:
-		self.owner = owner
-		self.name = name
+extends Node
+class_name weapon
+var firerate : float
+var actor : Node
+var gun_name : String
+remote var bullets : int
+remote var ammo : int
+var max_bullets : int
+var damage : int
+var reload_speed : float
+var default_fov : int = 100
+func _init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed) -> void:
+		self.actor = actor
+		self.gun_name = gun_name
 		self.firerate = firerate
 		self.bullets = bullets
 		self.ammo = ammo
@@ -18,52 +19,58 @@ class weapon:
 		self.damage = damage
 		self.reload_speed = reload_speed
 	
-	# Get animation node
-	var anim = owner.get_node("{}/mesh/anim".format([name], "{}"))
+# Get animation node
+var anim = actor.get_node("{}/mesh/anim".format([gun_name], "{}"))
 	
-	# Get current animation
-	var animc = anim.current_animation
+# Get current animation
+var animc = anim.current_animation
 	
-	# Get animation node
-	var mesh = owner.get_node("{}".format([name], "{}"))
+# Get animation node
+var mesh = actor.get_node("{}".format([gun_name], "{}"))
+
+func _ready() -> void:
+	Gamestate.start_new_sync_process(self, "ammo", ammo)
+	Gamestate.start_new_sync_process(self, "bullets", ammo)
 	
-	func _draw() -> void:
+func _draw() -> void:
 		# Check is visible
 		if not mesh.visible:
 			# Play draw animaton
 			anim.play("Draw")
 	
-	func _hide() -> void:
+func _hide() -> void:
 		# Check is visible
 		if mesh.visible:
 			# Play hide animaton
 			anim.play("Hide")
 	
-	func _sprint(sprint, _delta) -> void:
-		if sprint and owner.character.direction:
+func _sprint(sprint, _delta) -> void:
+		if not is_instance_valid(actor):
+			return
+		if sprint and actor.character.direction:
 			mesh.rotation.x = lerp(mesh.rotation.x, -deg2rad(40), 5 * _delta)
 		else:
 			mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
 	
-	func _shoot(_delta) -> void:
+func _shoot(_delta) -> void:
 		# Get audio node
-		var audio = owner.get_node("{}/audio".format([name], "{}"))
+		var audio = actor.get_node("{}/audio".format([gun_name], "{}"))
 		
 		# Get effects node
-		var effect = owner.get_node("{}/effect".format([name], "{}"))
+		var effect = actor.get_node("{}/effect".format([gun_name], "{}"))
 		
 		if bullets > 0:
 			# Play shoot animation if not reloading
 			if animc != "Shoot" and animc != "Reload" and animc != "Draw" and animc != "Hide":
 				bullets -= 1
-				
+				Gamestate.set_in_all_clients(self, "bullets", bullets)
 				# recoil
-				owner.camera.rotation.x = lerp(owner.camera.rotation.x, rand_range(1, 2), _delta)
-				owner.camera.rotation.y = lerp(owner.camera.rotation.y, rand_range(-1, 1), _delta)
+				actor.camera.rotation.x = lerp(actor.camera.rotation.x, rand_range(1, 2), _delta)
+				actor.camera.rotation.y = lerp(actor.camera.rotation.y, rand_range(-1, 1), _delta)
 				
 				# Shake the camera
-				owner.camera.shake_force = 0.002
-				owner.camera.shake_time = 0.2
+				actor.camera.shake_force = 0.002
+				actor.camera.shake_time = 0.2
 				
 				# Change light energy
 				effect.get_node("shoot").light_energy = 2
@@ -82,10 +89,10 @@ class weapon:
 				anim.play("Shoot", 0, firerate)
 				
 				# Get barrel node
-				var barrel = owner.get_node("{}/barrel".format([name], "{}"))
+				var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
 				
 				# Get main scene
-				var main = owner.get_tree().get_root().get_child(0)
+				var main = actor.get_tree().get_root().get_child(0)
 				
 				# Create a instance of trail scene
 				var trail = preload("res://data/scenes/trail.tscn").instance()
@@ -94,13 +101,13 @@ class weapon:
 				trail.translation = barrel.global_transform.origin
 				
 				# Change trail rotation to camera rotation
-				trail.rotation = owner.camera.global_transform.basis.get_euler()
+				trail.rotation = actor.camera.global_transform.basis.get_euler()
 				
 				# Add the trail to main scene
 				main.add_child(trail)
 				
 				# Get raycast weapon range
-				var ray = owner.get_node("{}/ray".format([name], "{}"))
+				var ray = actor.get_node("{}/ray".format([gun_name], "{}"))
 				
 				# Check raycast is colliding
 				if ray.is_colliding():
@@ -142,7 +149,7 @@ class weapon:
 				audio.get_node("out").pitch_scale = rand_range(0.9, 1.1)
 				audio.get_node("out").play()
 
-	func _reload() -> void:
+func _reload() -> void:
 		if bullets < max_bullets and ammo > 0:
 			if animc != "Reload" and animc != "Shoot" and animc != "Draw" and animc != "Hide":
 				# Play reload animation
@@ -154,10 +161,13 @@ class weapon:
 					
 					if bullets >= max_bullets:
 						break
-	
-	func _zoom(input, _delta) -> void:
+				Gamestate.set_in_all_clients(self, "ammo", ammo)
+
+func _zoom(input, _delta) -> void:
+		if not is_instance_valid(actor):
+			return
 		var lerp_speed : int = 30
-		var camera = owner.camera
+		var camera = actor.camera
 		
 		if input and animc != "Reload" and animc != "Hide" and animc != "Draw":
 			camera.fov = lerp(camera.fov, default_fov-30, lerp_speed * _delta)
@@ -168,17 +178,19 @@ class weapon:
 			mesh.translation.y = lerp(mesh.translation.y, 0, lerp_speed * _delta)
 			mesh.translation.x = lerp(mesh.translation.x, 0, lerp_speed * _delta)
 	
-	func _update(_delta) -> void:
+func _update(_delta) -> void:
+		if not is_instance_valid(actor):
+			return
 		if animc != "Shoot":
-			if owner.arsenal.values()[owner.current] == self:
-				owner.camera.rotation.x = lerp(owner.camera.rotation.x, 0, 10 * _delta)
-				owner.camera.rotation.y = lerp(owner.camera.rotation.y, 0, 10 * _delta)
+			if actor.arsenal.values()[actor.current] == self:
+				actor.camera.rotation.x = lerp(actor.camera.rotation.x, 0, 10 * _delta)
+				actor.camera.rotation.y = lerp(actor.camera.rotation.y, 0, 10 * _delta)
 		
 		# Get current animation
 		animc = anim.current_animation
 		
 		# Get effect node
-		var effect = owner.get_node("{}/effect".format([name], "{}"))
+		var effect = actor.get_node("{}/effect".format([gun_name], "{}"))
 		
 		# Change light energy
 		effect.get_node("shoot").light_energy = lerp(effect.get_node("shoot").light_energy, 0, 5 * _delta)

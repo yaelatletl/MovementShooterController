@@ -9,6 +9,8 @@ export(float) var sharp_rotation_angle = 45
 var previous_rotation = deg2rad(rotation_offset)
 var target_rotation = 0
 
+func _ready() -> void:
+	actor.connect("died", self, "die")
 func angle_difference(x, y):
 	return abs(min((2 * PI) - abs(x - y), abs(x - y)))
 
@@ -25,3 +27,7 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if is_instance_valid(actor.head.target):
 		view_target.global_transform = actor.head.target.global_transform
+
+func die():
+	$ViewTarget/IK_LookAt.update_mode = 3
+	$RootNode/Skeleton.physical_bones_start_simulation()

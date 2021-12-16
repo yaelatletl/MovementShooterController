@@ -13,6 +13,25 @@ signal players_changed()
 #A central server is responsible for all the in-game calculations. 
 onready var peer = NetworkedMultiplayerENet.new()
 var players : Dictionary = {}
+var sync_threads = {}
+
+func start_new_sync_process(node, property_name, args):
+	if not get_tree().has_network_peer() or not get_tree().is_network_server():
+		return
+	var thread = Thread.new()
+	var peer_id = node.multiplayer.get_network_unique_id()
+	sync_threads[peer_id] = {}
+	sync_threads[peer_id][property_name] = thread
+	thread.start(self, "_sync_process", [peer_id, node, property_name, args])
+
+func _sync_process(args):
+	if sync_threads.has(args[0]):
+		var node = args[1]
+		var property = args[2]
+		var value = args[3]
+		Gamestate.set_in_all_clients(node, property, value)
+		yield(get_tree().create_timer(5), "timeout")
+		_sync_process(args)
 
 func _ready() -> void:
 	peer.connect("connection_succeeded", self, "_on_NetworkPeer_connection_succeeded")
@@ -40,9 +59,14 @@ func _on_NetworkPeer_server_disconnected() -> void:
 	pass
 
 func _on_NetworkPeer_peer_disconnected(peer_id) -> void:
+	var temp_threads = {}
+	for threads in sync_threads[peer_id]:
+		temp_threads[threads] = sync_threads[peer_id][threads]
+	sync_threads.erase(peer_id)
+	for threads in temp_threads:
+		temp_threads[threads].wait_to_finish()
 	players.erase(peer_id)
 	emit_signal("players_changed")
-	pass
 	
 func _on_NetworkPeer_peer_connected(peer_id : int) -> void:
 	if get_tree().is_network_server():
@@ -70,12 +94,16 @@ remote func register_player(peer_id):
 	emit_signal("players_changed")
 	
 func call_on_all_clients(object : Node, func_name : String , args) -> void:
+	var exclude = 1
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return
+	if object.is_network_master():
+		exclude = object.multiplayer.get_network_unique_id()
+	
 	if get_tree().is_network_server():
 		for player in players:
-			if player != 1:
+			if player != 1 and player != exclude:
 				# print("Calling RPC on client " + str(player))
 				if args == null:
 					object.rpc_id(player, func_name)

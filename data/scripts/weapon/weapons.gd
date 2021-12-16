@@ -12,14 +12,12 @@ export(NodePath) var neck
 # Get camera's node path
 export(NodePath) var camera
 
-# Load weapon class for make weapons
-var weapon = load("res://data/scripts/weapon/weapon.gd")
 
 # All weapons
 var arsenal : Dictionary
 
 # Current weapon
-var current : int = 0
+remotesync var current : int = 0
 
 
 func _ready() -> void:
@@ -41,15 +39,16 @@ func _ready() -> void:
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
 	
 	# Create mk 23 using weapon classs
-	arsenal["mk_23"] = weapon.weapon.new(self, "mk_23", 2.0, 12, 999, 12, 40, 1.2)
+	arsenal["mk_23"] = weapon.new(self, "mk_23", 2.0, 12, 999, 12, 40, 1.2)
 	
 	# Create glock 17 using weapon class
-	arsenal["glock_17"] = weapon.weapon.new(self, "glock_17", 3.0, 12, 999, 12, 35, 1.2)
+	arsenal["glock_17"] = weapon.new(self, "glock_17", 3.0, 12, 999, 12, 35, 1.2)
 	
 	# Create kriss using weapon class
-	arsenal["kriss"] = weapon.weapon.new(self, "kriss", 6.0, 32, 999, 33, 25, 1.5)
+	arsenal["kriss"] = weapon.new(self, "kriss", 6.0, 32, 999, 33, 25, 1.5)
 	
 	for w in arsenal:
+		add_child(arsenal[w])
 		arsenal.values()[current]._hide()
 
 func _physics_process(_delta) -> void:
@@ -114,7 +113,7 @@ func  _rotation(_delta) -> void:
 
 remotesync func _change_weapon(_index) -> void:
 	current = _index
-	Gamestate.call_on_all_clients(self, "_change_weapon", _index)
+	Gamestate.set_in_all_clients(self, "current", _index)
 
 func _handle_guns():
 	if character.input["next_weapon"]:
