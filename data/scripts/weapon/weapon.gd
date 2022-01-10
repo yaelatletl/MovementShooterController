@@ -28,9 +28,6 @@ var animc = anim.current_animation
 # Get animation node
 var mesh = actor.get_node("{}".format([gun_name], "{}"))
 
-func _ready() -> void:
-	Gamestate.start_new_sync_process(self, "ammo", ammo)
-	Gamestate.start_new_sync_process(self, "bullets", ammo)
 	
 func _draw() -> void:
 		# Check is visible

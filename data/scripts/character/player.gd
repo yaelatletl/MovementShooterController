@@ -36,9 +36,6 @@ func _get_component(_name:String) -> Node:
 	else:
 		return null
 
-func _ready() -> void:
-	Gamestate.start_new_sync_process(self, "health", health)
-
 
 func _register_component(_name : String, _component_self : Node) -> void:
 	if components.has(_name):
@@ -47,7 +44,7 @@ func _register_component(_name : String, _component_self : Node) -> void:
 		components[_name] = _component_self
 
 func _physics_process(delta):
-	
+	Gamestate.set_in_all_clients(self, "health", health)
 	head_basis = head.global_transform.basis
 	if is_on_wall():
 		wall_normal = get_slide_collision(0)

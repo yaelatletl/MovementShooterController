@@ -16,6 +16,8 @@ var players : Dictionary = {}
 var sync_threads = {}
 
 func start_new_sync_process(node, property_name, args):
+	print("DEPRECATED, called from " + node.name + "." + property_name)
+	return
 	if not get_tree().has_network_peer() or not get_tree().is_network_server():
 		return
 	var thread = Thread.new()
@@ -24,6 +26,7 @@ func start_new_sync_process(node, property_name, args):
 	sync_threads[peer_id][property_name] = thread
 	thread.start(self, "_sync_process", [peer_id, node, property_name, args])
 
+#This is a sync process, but it's not working as it should, we will try to limit thread creation to every two players
 func _sync_process(args):
 	if sync_threads.has(args[0]):
 		var node = args[1]
@@ -117,5 +120,5 @@ func set_in_all_clients(object : Node, property_name : String, value) -> void:
 	if get_tree().is_network_server():
 		for player in players:
 			if player != 1:
-				print("Setting property on client " + str(player))
+				#print("Setting property on client " + str(player))
 				object.rset_id(player, property_name, value)
