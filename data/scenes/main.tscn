@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
 [ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
-[ext_resource path="res://data/shaders/active_camo.material" type="Material" id=3]
 [ext_resource path="res://data/scenes/fade.tscn" type="PackedScene" id=4]
 [ext_resource path="res://data/scenes/barrel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://data/scenes/scenario.gd" type="Script" id=6]
@@ -259,27 +258,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6542, 0.909, 30.1602 )
 
 [node name="passive_marker_man" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84292, 1.00202, 4.04818 )
-
-[node name="MocapGuy_Eyes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="0"]
-material/0 = ExtResource( 3 )
-
-[node name="MocapGuy_EyesSpec" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="1"]
-material_override = ExtResource( 3 )
-
-[node name="MocapGuy_Caruncula" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="2"]
-material_override = ExtResource( 3 )
-
-[node name="MocapGuy_BrowsLashes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="3"]
-material_override = ExtResource( 3 )
-
-[node name="MocapGuy_Teeth" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="4"]
-material_override = ExtResource( 3 )
-
-[node name="MocapGuy_Hat" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="5"]
-material_override = ExtResource( 3 )
-
-[node name="MocapGuy_Body" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="6"]
-material_override = ExtResource( 3 )
-material/0 = ExtResource( 3 )
-
-[editable path="passive_marker_man"]

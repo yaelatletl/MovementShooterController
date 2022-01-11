@@ -21,6 +21,23 @@ remotesync var current : int = 0
 
 
 func _ready() -> void:
+	var shotgun_spread_pattern = [
+		Vector2(0, 0),
+		Vector2(1, 0),
+		Vector2(0, 1),
+		Vector2(1, 1),
+		Vector2(-1, 0),
+		Vector2(0, -1),
+		Vector2(-1, -1)
+	]
+	var mastiff_spread = [
+		Vector2(-1, 0),
+		Vector2(-0.5, 0),
+		Vector2(0, 0),
+		Vector2(0.5, 0),
+		Vector2(1, 0)
+	]
+	
 	set_as_toplevel(true)
 	
 	# Get camera node from path
@@ -46,6 +63,8 @@ func _ready() -> void:
 	
 	# Create kriss using weapon class
 	arsenal["kriss"] = weapon.new(self, "kriss", 6.0, 32, 999, 33, 25, 1.5)
+	
+	arsenal["shotgun"] = weapon.new(self, "shotgun", 0.5, 8, 999, 8, 25, 0.5, true, mastiff_spread, 20)
 	
 	for w in arsenal:
 		add_child(arsenal[w])
