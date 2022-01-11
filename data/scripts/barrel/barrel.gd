@@ -1,13 +1,13 @@
 extends RigidBody
 
-export var durability : int = 100
+export sync var health : int = 100
 var remove_decal : bool = false
 
 puppet var on_the_net_transform := Transform()
 
 func _ready():
 
-	$timer.connect("timeout", self, "queue_free")
+	$timer.connect("timeout", self, "queue_remove")
 	$explosion/timer.connect("timeout", self, "_explode_others")
 
 func _physics_process(delta: float) -> void:
@@ -17,24 +17,26 @@ func _physics_process(delta: float) -> void:
 		else:
 			transform = on_the_net_transform
 func _damage(damage) -> void:
-	if durability > 0:
-		var dam_calc = durability - damage
+	if health > 0:
+		var dam_calc = health - damage
 		
 		$audios/impact.pitch_scale = rand_range(0.9, 1.1)
 		$audios/impact.play()
 		
 		if dam_calc <= 0:
-			durability -= damage
+			health -= damage
 			_explosion()
 			$explosion/timer.start()
 			$timer.start()
 		else:
-			durability -= damage
+			health -= damage
 
 func _process(_delta) -> void:
 	_remove_decal()
 
 remote func _explosion(exploded_in_server : bool = false) -> void:
+
+	
 	if get_tree().is_network_server():
 		for players in Gamestate.players:
 			if players != 1:
@@ -62,6 +64,14 @@ remote func _explosion(exploded_in_server : bool = false) -> void:
 	
 	remove_decal = true
 
+remote func remote_queue_remove() -> void:
+	queue_free()
+
+func queue_remove() -> void:
+	if get_tree().is_network_server():
+		queue_free()
+	Gamestate.call_on_all_clients(self, "remote_queue_remove", null)
+
 func _remove_decal():
 	if remove_decal:
 		for child in get_child_count():
@@ -71,7 +81,7 @@ func _remove_decal():
 func _explode_others():
 	for bodie in $explosion.get_overlapping_bodies():
 		if bodie.has_method("_damage") and bodie != self:
-			if "durability" in bodie:
-				if bodie.durability > 0:
+			if "health" in bodie:
+				if bodie.health > 0:
 					var explosion_distance = (5 * bodie.global_transform.origin.distance_to(global_transform.origin))
 					bodie._damage(300 - explosion_distance)
