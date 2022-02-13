@@ -62,12 +62,12 @@ func _on_NetworkPeer_server_disconnected() -> void:
 	pass
 
 func _on_NetworkPeer_peer_disconnected(peer_id) -> void:
-	var temp_threads = {}
-	for threads in sync_threads[peer_id]:
-		temp_threads[threads] = sync_threads[peer_id][threads]
-	sync_threads.erase(peer_id)
-	for threads in temp_threads:
-		temp_threads[threads].wait_to_finish()
+#	var temp_threads = {}
+#	for threads in sync_threads[peer_id]:
+#		temp_threads[threads] = sync_threads[peer_id][threads]
+#	sync_threads.erase(peer_id)
+#	for threads in temp_threads:
+#		temp_threads[threads].wait_to_finish()
 	players.erase(peer_id)
 	emit_signal("players_changed")
 	
