@@ -16,4 +16,5 @@ dest_files=[ "res://.import/sign_billboard.obj-3c93cff04bbb8eb97b7305f701725447.
 generate_tangents=true
 scale_mesh=Vector3( 15, 15, 15 )
 offset_mesh=Vector3( 0, 0, 0 )
-optimize_mesh=true
+octahedral_compression=true
+optimize_mesh_flags=4286
