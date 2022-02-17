@@ -7,6 +7,9 @@ var active : bool = false
 export(float) var velocity_constant : float = 0.8
 export(float) var stim_duration : float = 5
 
+func _ready():
+	_component_name = "Stimulant"
+
 func toggle_stim(turn_off = false) -> void:
 	if not active:
 		active = true
@@ -14,8 +17,12 @@ func toggle_stim(turn_off = false) -> void:
 	if turn_off:
 		active = false
 
-func _process(delta) -> void:
-	if actor.input["special"]:
+func _physics_process(delta) -> void:
+	if enabled:
+		_functional_routine(actor.input)
+
+func _functional_routine(input: Dictionary)-> void:
+	if get_key(input,"special"):
 		toggle_stim()
 		
 	if active:

@@ -8,6 +8,15 @@ export(String) var _component_name = ""
 func _ready() -> void:
 	_start()
 	actor._register_component(_component_name, self)
-	
+
+func _functional_routine(input : Dictionary) -> void:
+	pass
+
 func _start():
 	pass
+
+func get_key(input : Dictionary, key : String) -> float:
+	if input.has(key):
+		return input[key]
+	else:
+		return 0.0

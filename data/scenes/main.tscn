@@ -1,11 +1,13 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
 [ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://data/shaders/active_camo.material" type="Material" id=3]
 [ext_resource path="res://data/scenes/fade.tscn" type="PackedScene" id=4]
 [ext_resource path="res://data/scenes/barrel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://data/scenes/scenario.gd" type="Script" id=6]
 [ext_resource path="res://data/models/player/passive_marker_man.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/SIsilicon.vfx.godrays/GodRays.gd" type="Script" id=8]
 
 [sub_resource type="ProceduralSky" id=1]
 sun_latitude = 39.24
@@ -16,7 +18,7 @@ background_mode = 2
 background_sky = SubResource( 1 )
 fog_color = Color( 0.372549, 0.372549, 0.372549, 1 )
 fog_sun_color = Color( 1, 1, 1, 1 )
-tonemap_mode = 2
+tonemap_mode = 4
 ss_reflections_enabled = true
 ssao_enabled = true
 ssao_intensity = 6.0
@@ -62,6 +64,10 @@ layers = 2
 light_color = Color( 0.976471, 0.959804, 0.85098, 1 )
 shadow_enabled = true
 directional_shadow_blend_splits = true
+
+[node name="GodRays" type="Spatial" parent="post_processing/sun"]
+script = ExtResource( 8 )
+light_size = 1.5
 
 [node name="environment" type="WorldEnvironment" parent="post_processing"]
 environment = SubResource( 2 )
@@ -258,3 +264,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6542, 0.909, 30.1602 )
 
 [node name="passive_marker_man" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84292, 1.00202, 4.04818 )
+
+[node name="MocapGuy_Eyes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="0"]
+material_override = ExtResource( 3 )
+
+[node name="MocapGuy_Body" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="6"]
+material/0 = ExtResource( 3 )
+
+[editable path="passive_marker_man"]

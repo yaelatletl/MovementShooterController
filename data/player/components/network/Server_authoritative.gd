@@ -20,14 +20,17 @@ func _physics_process(delta: float) -> void:
 		rset_unreliable("on_the_net_velocity", actor.velocity)
 	else:
 		actor.global_transform.origin = lerp(actor.global_transform.origin, on_the_net_transform, delta*actor.global_transform.origin.distance_to(on_the_net_transform))
-		shape.shape.height = lerp(shape.shape.height, on_the_net_height, delta)
+		shape.shape.height = lerp(shape.shape.height, on_the_net_height, abs(shape.shape.height-on_the_net_height)*delta)
 		actor.velocity = lerp(actor.velocity, on_the_net_velocity, delta*actor.velocity.distance_to(on_the_net_velocity))
 	
 func _process(delta: float) -> void:
 	if not get_tree().has_network_peer():
 		return
 	if not get_tree().is_network_server():
-		head.rotation = lerp_angles(head.rotation, on_the_net_camera_look, 50*delta)
+		var distance_factor = head.rotation.angle_to(on_the_net_camera_look)
+		
+		if distance_factor != null:
+			head.rotation = lerp_angles(head.rotation, on_the_net_camera_look, rad2deg(abs(distance_factor))*delta+delta)
 		
 func lerp_angles(rotation_from : Vector3, rotation_to : Vector3, delta: float) -> Vector3:
 	return Vector3(

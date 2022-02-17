@@ -170,3 +170,6 @@ common/physics_fps=90
 [rendering]
 
 environment/default_environment="res://default_env.tres"
+quality/godrays/sample_number=50
+quality/godrays/use_pcf5=false
+quality/godrays/dither_amount=1.0

@@ -122,3 +122,13 @@ func set_in_all_clients(object : Node, property_name : String, value) -> void:
 			if player != 1:
 				#print("Setting property on client " + str(player))
 				object.rset_id(player, property_name, value)
+
+func unreliable_set_in_all_clients(object : Node, property_name : String, value) -> void:
+	if not is_instance_valid(object):
+		print("Invalid object")
+		return
+	if get_tree().is_network_server():
+		for player in players:
+			if player != 1:
+				#print("Setting property on client " + str(player))
+				object.rset_unreliable_id(player, property_name, value)

@@ -4,6 +4,7 @@ signal save_shift_pos()
 sync var pos_on_time = []
 
 func _ready():
+	_component_name = "shift_pos"
 	get_tree().create_timer(0.6).connect("timeout", self, "_on_shift_save")
 	
 func _on_shift_save():
@@ -18,8 +19,12 @@ func _on_shift_save():
 			pos_on_time[3] = pos
 	get_tree().create_timer(0.6).connect("timeout", self, "_on_shift_save")
 
-func _physics_process(delta):
-	if actor.input["special"]:
+func _physics_process(delta) -> void:
+	if enabled:
+		_functional_routine(actor.input)
+
+func _functional_routine(input : Dictionary) -> void:
+	if get_key(input, "special"):
 		_move_backwards()
 
 func _move_backwards():

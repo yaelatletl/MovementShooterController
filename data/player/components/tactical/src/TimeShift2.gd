@@ -17,9 +17,13 @@ func _screen_middle() -> Vector2:
 	return get_tree().get_root().size/2
 
 func _physics_process(delta):
-	if actor.input["special"]:
+	if enabled:
+		_functional_routine(actor.input)
+		
+func _functional_routine(input : Dictionary) -> void:
+	if get_key(input, "special"):
 		_launch_teleporter()
-		 
+
 func _launch_teleporter():
 	var middle = camera.project_ray_normal(_screen_middle())
 	var new_grap : RigidBody = grapple_point.instance()

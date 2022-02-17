@@ -25,6 +25,7 @@ scale_curve = SubResource( 5 )
 [sub_resource type="SpatialMaterial" id=2]
 params_blend_mode = 1
 params_cull_mode = 2
+params_depth_draw_mode = 3
 params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1

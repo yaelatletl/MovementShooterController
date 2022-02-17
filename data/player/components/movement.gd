@@ -14,22 +14,29 @@ export(float) var friction     : float = 25 # friction
 export(NodePath) var collision : NodePath = ""
 onready var col = get_node(collision)
 
+var _delta
+func _physics_process(delta : float) -> void:
+	_delta = delta
+	if enabled:
+		_functional_routine(actor.input)
 
-func _physics_process(_delta) -> void:
+func _functional_routine(input : Dictionary) -> void:
 	# Function for movement
-	_movement(_delta)
+	if _delta == null:
+		return
+	_movement(input, _delta)
 	
 	# Function for crouch
-	_crouch(_delta)
+	_crouch(input, _delta)
 	
 
 	# Function for sprint
-	_sprint(_delta)
+	_sprint(input, _delta)
 
-func _movement(_delta) -> void:
+func _movement(input : Dictionary, _delta : float) -> void:
 	actor.direction = Vector3()
-	actor.direction += (-actor.input["left"]    + actor.input["right"]) * actor.head_basis.x
-	actor.direction += (-actor.input["forward"]  +  actor.input["back"]) * actor.head_basis.z
+	actor.direction += (-get_key(input, "left")    + get_key(input, "right")) * actor.head_basis.x
+	actor.direction += (-get_key(input, "forward")  +  get_key(input, "back")) * actor.head_basis.z
 	
 	# Check is on floor
 	if actor.is_on_floor():
@@ -37,13 +44,13 @@ func _movement(_delta) -> void:
 		actor.direction.y = 0 
 		actor.direction = actor.direction.normalized()
 		actor.direction = actor.direction.linear_interpolate(Vector3(), friction * _delta)
-#		if actor.input["crouch"]:
+#		if get_key(input, "crouch"):
 	else:
 		
 		# Applies gravity
 		if (actor.is_on_wall() and actor.run_speed>12 and can_wallrun):
 			actor.velocity.y = lerp(actor.velocity.y, 0.1, 10*_delta)
-			actor.direction +=  (actor.input["forward"] -actor.input["back"])*(-actor.wall_direction.cross(Vector3.UP) -actor.wall_direction)# * actor.head_basis.z)
+			actor.direction +=  (get_key(input, "forward") -get_key(input, "back"))*(-actor.wall_direction.cross(Vector3.UP) -actor.wall_direction)# * actor.head_basis.z)
 			actor.direction = actor.direction.normalized()
 		else:
 			actor.velocity.y += -gravity * _delta
@@ -71,7 +78,7 @@ func _movement(_delta) -> void:
 		if collision.collider is RigidBody:
 				collision.collider.apply_central_impulse(-collision.normal * actor.run_speed/collision.collider.mass)
 	
-func _crouch(_delta) -> void:
+func _crouch(input : Dictionary, _delta :float) -> void:
 	# Inputs
 	if not col:
 		return
@@ -87,20 +94,20 @@ func _crouch(_delta) -> void:
 		var shape = col.shape.height
 		
 		# Changes the shape of the character's collision
-		shape = lerp(shape, 2 - (actor.input["crouch"] * 2.1), w_speed  * _delta)
+		shape = lerp(shape, 2 - (get_key(input, "crouch") * 2.1), w_speed  * _delta)
 		
 		# Apply the new character collision shape
 		col.shape.height = shape
 
 
 
-func _sprint(_delta) -> void:
+func _sprint(input : Dictionary, _delta : float) -> void:
 	# Inputs
 	# Make the character sprint
-	if not actor.input["crouch"]: # If you are not crouching
+	if not get_key(input, "crouch"): # If you are not crouching
 		# switch between sprint and walking
 		actor.reset_slide_multi()
-		var toggle_speed : float = w_speed + ((s_speed - w_speed) * actor.input["sprint"]) #Normal Sprint Speed
+		var toggle_speed : float = w_speed + ((s_speed - w_speed) * get_key(input, "sprint")) #Normal Sprint Speed
 		
 		if actor.is_on_wall() and actor.is_far_from_floor() and actor.run_speed>12 and can_wallrun:
 			toggle_speed *= actor.wall_multiplier #On wall sprint speed
