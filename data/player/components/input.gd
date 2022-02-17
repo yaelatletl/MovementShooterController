@@ -73,6 +73,7 @@ func _jump():
 func mouse_move(event):
 	Input.get_last_mouse_speed()
 	if event is InputEventMouseMotion:
+		actor.input["look_flag"] = 1
 		actor.input["look_y"] = event.relative.y 
 		actor.input["look_x"] = event.relative.x 
 	else:

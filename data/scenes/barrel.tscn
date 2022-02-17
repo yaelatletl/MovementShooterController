@@ -63,10 +63,12 @@ scale_curve = SubResource( 8 )
 color_ramp = SubResource( 4 )
 
 [sub_resource type="SpatialMaterial" id=10]
+render_priority = 7
 flags_transparent = true
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 params_cull_mode = 2
+params_depth_draw_mode = 3
 params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -94,10 +96,12 @@ scale_curve = SubResource( 8 )
 color_ramp = SubResource( 4 )
 
 [sub_resource type="SpatialMaterial" id=13]
+render_priority = 7
 flags_transparent = true
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 params_cull_mode = 2
+params_depth_draw_mode = 3
 params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -128,10 +132,12 @@ scale_curve = SubResource( 8 )
 color_ramp = SubResource( 16 )
 
 [sub_resource type="SpatialMaterial" id=18]
+render_priority = 7
 flags_transparent = true
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 params_blend_mode = 1
+params_depth_draw_mode = 3
 params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
@@ -153,10 +159,7 @@ size = Vector2( 0.4, 0.4 )
 [sub_resource type="SphereShape" id=20]
 radius = 6.0
 
-[node name="barrel" type="RigidBody" groups=[
-"metal",
-"prop",
-]]
+[node name="barrel" type="RigidBody" groups=["metal", "network_sync", "prop"]]
 mass = 6.0
 linear_damp = 0.15
 angular_damp = 0.1

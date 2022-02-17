@@ -17,6 +17,7 @@ func _on_Gamestate_players_changed():
 			Gamestate.players[player].global_transform = current_children[spawn_point_in_turn].global_transform
 			spawn_point_in_turn += 1
 			$players.add_child(Gamestate.players[player])
+			Gamestate.serializer.update_node_mapping(Gamestate.players[player].get_path(), true)
 	for player in $players.get_children():
 		if not int(player.name) in Gamestate.players:
 			player.queue_free()

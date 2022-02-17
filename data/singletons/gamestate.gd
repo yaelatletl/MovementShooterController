@@ -4,6 +4,7 @@ const SERVER_PORT = 1337
 const MAX_PLAYERS = 8
 var SERVER_IP = "localhost"
 var player_template = preload("res://data/player/character.tscn")
+var serializer = load("res://data/scripts/networking/Serializer.gd").new()
 signal players_changed()
 #First, let's try to define what do we need our gamestate to do
 #we know that we must manage our incoming connections, check them for all players 
@@ -42,20 +43,34 @@ func _ready() -> void:
 	peer.connect("peer_connected", self, "_on_NetworkPeer_peer_connected")
 	peer.connect("peer_disconnected", self, "_on_NetworkPeer_peer_disconnected")
 	peer.connect("server_disconnected", self, "_on_NetworkPeer_server_disconnected")
+	SyncManager.connect("sync_started", self, "_on_SyncManager_sync_started")
+	SyncManager.connect("sync_stopped", self, "_on_SyncManager_sync_stopped")
+	SyncManager.connect("sync_lost", self, "_on_SyncManager_sync_lost")
+	SyncManager.connect("sync_regained", self, "_on_SyncManager_sync_regained")
+
 	for args in OS.get_cmdline_args():
 		if args == "client":
 			client_setup()
 		if args == "server":
 			server_setup()
 	peer.allow_object_decoding = true
+
 func server_setup():
 	peer.create_server(SERVER_PORT, MAX_PLAYERS)
 	get_tree().network_peer = peer
 	register_player(1)
+	SyncManager.start()
 
 func client_setup():
 	peer.create_client(IP.resolve_hostname(SERVER_IP), SERVER_PORT)
 	get_tree().network_peer = peer
+
+func _on_SyncManager_sync_started():
+	print("Sync started")
+func _on_SyncManager_sync_lost():
+	printerr("Sync lost")
+func _on_SyncManager_sync_stopped():
+	printerr("Sync stopped")
 
 func _on_NetworkPeer_server_disconnected() -> void:
 	get_tree().network_peer = null
@@ -69,6 +84,9 @@ func _on_NetworkPeer_peer_disconnected(peer_id) -> void:
 #	for threads in temp_threads:
 #		temp_threads[threads].wait_to_finish()
 	players.erase(peer_id)
+	serializer.update_node_mapping(players[peer_id].get_path(), false)
+	SyncManager.remove_peer(peer_id)
+
 	emit_signal("players_changed")
 	
 func _on_NetworkPeer_peer_connected(peer_id : int) -> void:
@@ -94,6 +112,9 @@ func create_player(id) -> KinematicBody:
 remote func register_player(peer_id):
 	if not players.has(peer_id):
 		players[peer_id] = create_player(peer_id)
+		if not peer_id == get_tree().get_network_unique_id():
+			SyncManager.add_peer(peer_id)
+			
 	emit_signal("players_changed")
 	
 func call_on_all_clients(object : Node, func_name : String , args) -> void:
