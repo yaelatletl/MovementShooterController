@@ -4,6 +4,7 @@ remotesync var on_the_net_transform : Vector3 = Vector3()
 remotesync var on_the_net_camera_look : Vector3 = Vector3()
 remotesync var on_the_net_height : float = 2.0
 remotesync var on_the_net_velocity : Vector3 = Vector3()
+remotesync var local_camera_look : Vector3 = Vector3()
 
 export(NodePath) var head_path
 onready var head = get_node(head_path)
@@ -22,15 +23,21 @@ func _physics_process(delta: float) -> void:
 		actor.global_transform.origin = lerp(actor.global_transform.origin, on_the_net_transform, delta*actor.global_transform.origin.distance_to(on_the_net_transform))
 		shape.shape.height = lerp(shape.shape.height, on_the_net_height, abs(shape.shape.height-on_the_net_height)*delta)
 		actor.velocity = lerp(actor.velocity, on_the_net_velocity, delta*actor.velocity.distance_to(on_the_net_velocity))
-	
+	if is_network_master():
+		rset_unreliable_id(1, "local_camera_look", head.rotation)
+		
 func _process(delta: float) -> void:
 	if not get_tree().has_network_peer():
 		return
-	if not get_tree().is_network_server():
+	if get_tree().is_network_server():
+		if local_camera_look != null and get_network_master() != 1:
+			head.rotation =  local_camera_look
+	elif not is_network_master():
 		var distance_factor = head.rotation.angle_to(on_the_net_camera_look)
-		
 		if distance_factor != null:
 			head.rotation = lerp_angles(head.rotation, on_the_net_camera_look, rad2deg(abs(distance_factor))*delta+delta)
+		
+
 		
 func lerp_angles(rotation_from : Vector3, rotation_to : Vector3, delta: float) -> Vector3:
 	return Vector3(
