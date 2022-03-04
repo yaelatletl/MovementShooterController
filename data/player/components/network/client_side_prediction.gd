@@ -6,16 +6,16 @@ remotesync var on_the_net_camera_look : Vector3 = Vector3()
 remotesync var on_the_net_height : float = 2.0
 puppet var local_net_transform : Vector3 = Vector3()
 puppet var local_net_velocity : Vector3 = Vector3()
-puppet var local_net_camera_look : Vector3 = Vector3(0.01,0.01,0)
+puppet var local_net_camera_look : Vector3 = Vector3()
 puppet var local_net_height : float = 2.0
 export(NodePath) var head_path
 export(float) var sync_delta : float = 1
 export(float) var sync_delta_angle : float = 15
 onready var head = get_node(head_path)
 onready var shape = actor.get_node("collision")
-var average_true_transform : Vector3 
-var average_true_velocity : Vector3 
-var average_true_view : Vector3
+var average_true_transform : Vector3 = 	Vector3()
+var average_true_velocity : Vector3 = Vector3()
+var average_true_view : Vector3 = Vector3()
 var average_true_height : float
 
 func _ready() -> void:
@@ -79,7 +79,15 @@ func sync_rotation(delta : float) -> void:
 	if local_net_camera_look == null or on_the_net_camera_look == null:
 		return	
 	if get_tree().is_network_server():
-		average_true_view =local_net_camera_look 
+		if local_net_camera_look != null and get_network_master() != 1:
+			head.rotation =  local_net_camera_look
+	elif not is_network_master():
+		var distance_factor = head.rotation.angle_to(on_the_net_camera_look)
+		if distance_factor != null:
+			head.rotation = lerp_angles(head.rotation, on_the_net_camera_look, rad2deg(abs(distance_factor))*delta+delta)
+	#if get_tree().is_network_server():
+	#	if get_tree().get_network_unique_id() != get_network_master():
+	#		actor.head.rotation = local_net_camera_look 
 		# if actor.head.rotation.angle_to(local_net_camera_look) < deg2rad(sync_delta_angle):
 		# 	average_true_view =local_net_camera_look  #lerp_angles(actor.head.rotation, local_net_camera_look, delta)
 		# else:
