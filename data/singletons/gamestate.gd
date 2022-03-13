@@ -97,6 +97,8 @@ remote func register_player(peer_id):
 	emit_signal("players_changed")
 	
 func call_on_all_clients(object : Node, func_name : String , args) -> void:
+	if not get_tree().has_network_peer():
+		return
 	var exclude = 1
 	if not is_instance_valid(object):
 		print("Invalid object")
@@ -114,6 +116,8 @@ func call_on_all_clients(object : Node, func_name : String , args) -> void:
 					object.rpc_id(player, func_name, args)
 
 func set_in_all_clients(object : Node, property_name : String, value) -> void:
+	if not get_tree().has_network_peer():
+		return
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return
@@ -124,6 +128,8 @@ func set_in_all_clients(object : Node, property_name : String, value) -> void:
 				object.rset_id(player, property_name, value)
 
 func unreliable_set_in_all_clients(object : Node, property_name : String, value) -> void:
+	if not get_tree().has_network_peer():
+		return
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return

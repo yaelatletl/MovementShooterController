@@ -42,9 +42,15 @@ func _mouse_toggle() -> void:
 	
 
 func _physics_process(delta):
-	if not is_network_master() or not enabled:
-		return
+	if get_tree().has_network_peer():
+		if not is_network_master() or not enabled:
+			return
+		else:
+			get_input()
+	else:
+		get_input()
 		
+func get_input():
 	actor.input["left"]   = int(Input.is_action_pressed("KEY_A"))
 	actor.input["right"]  = int(Input.is_action_pressed("KEY_D"))
 	actor.input["forward"] = int(Input.is_action_pressed("KEY_W"))
@@ -60,8 +66,9 @@ func _physics_process(delta):
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"))
 	actor.input["special"] = int(Input.is_action_just_pressed("SPECIAL"))
 	actor.input["extra_jump"] = int(Input.is_action_pressed("KEY_SPACE"))
-	if get_tree().has_network_peer() and is_network_master() and not get_tree().is_network_server(): 
-		actor.rset_unreliable_id(1, "input", actor.input)
+	if get_tree().has_network_peer():
+		if is_network_master() and not get_tree().is_network_server(): 
+			actor.rset_unreliable_id(1, "input", actor.input)
 #		actor.input["look_y"] = 0
 #		actor.input["look_x"] = 0
 		
@@ -80,8 +87,15 @@ func mouse_move(event):
 		actor.input["look_x"] = 0
 
 func _unhandled_input(event):
-	if not is_network_master() or not enabled:
-		return
+	if get_tree().has_network_peer():
+		if not is_network_master() or not enabled:
+			return
+		else:
+			unhandld(event)
+	else:
+		unhandld(event)
+
+func unhandld(event):
 	# Calls function to switch between locked and unlocked mouse
 	_mouse_toggle()
 	
