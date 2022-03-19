@@ -18,6 +18,7 @@ func _ready():
 	actor.input["back"]   = 0
 	actor.input["jump"] = 0
 	actor.input["extra_jump"] = 0
+	actor.input["use"] = 0
 	actor.input["crouch"] = 0
 	actor.input["sprint"] = 0
 	actor.input["next_weapon"] = 0
@@ -60,7 +61,7 @@ func get_input():
 		actor.input["crouch"] = int(Input.is_action_pressed("KEY_CTRL"))
 	if not run_is_toggle:
 		actor.input["sprint"] = int(Input.is_action_pressed("KEY_SHIFT"))
-		
+	actor.input["use"] = int(Input.is_action_pressed("USE"))
 	actor.input["shoot"] = int(Input.is_action_pressed("mb_left"))
 	actor.input["reload"] = int(Input.is_action_pressed("KEY_R"))
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"))

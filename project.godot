@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/player/component.gd"
 }, {
+"base": "Spatial",
+"class": "InteractableGeneric",
+"language": "GDScript",
+"path": "res://data/scripts/objects_gameplay/PickableGeneric.gd"
+}, {
+"base": "RigidBody",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://data/scripts/weapon/projectile.gd"
+}, {
 "base": "Node",
 "class": "weapon",
 "language": "GDScript",
@@ -21,6 +31,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Component": "",
+"InteractableGeneric": "",
+"Projectile": "",
 "weapon": ""
 }
 
@@ -140,7 +152,7 @@ KEY_Q={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
-KEY_E={
+USE={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]

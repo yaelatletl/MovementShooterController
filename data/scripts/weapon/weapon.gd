@@ -67,7 +67,21 @@ func _sprint(sprint, _delta) -> void:
 			mesh.rotation.x = lerp(mesh.rotation.x, -deg2rad(40), 5 * _delta)
 		else:
 			mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
-	
+
+func _shoot_cast()->void:
+	var ray = actor.get_node("{}/ray".format([gun_name], "{}"))
+	if ray is Position3D:
+		#Handle more than one raycast 
+		for child_ray in ray.get_children():
+			if child_ray is RayCast:
+				# Get raycast range
+				make_ray_shoot(child_ray)
+							
+				# Check raycast is colliding
+	elif ray is RayCast:
+		# Get raycast range
+		make_ray_shoot(ray)
+
 func _shoot(_delta) -> void:
 		# Get audio node
 		var audio = actor.get_node("{}/audio".format([gun_name], "{}"))
@@ -108,18 +122,7 @@ func _shoot(_delta) -> void:
 				
 				
 				# Get raycast weapon range
-				var ray = actor.get_node("{}/ray".format([gun_name], "{}"))
-				if ray is Position3D:
-					#Handle more than one raycast 
-					for child_ray in ray.get_children():
-						if child_ray is RayCast:
-							# Get raycast range
-							make_ray_shoot(child_ray)
-							
-				# Check raycast is colliding
-				elif ray is RayCast:
-					# Get raycast range
-					make_ray_shoot(ray)
+				_shoot_cast()
 		else:
 			# Play out sound
 			if not audio.get_node("out").playing:
