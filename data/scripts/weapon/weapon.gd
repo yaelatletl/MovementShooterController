@@ -1,5 +1,5 @@
 extends Node
-class_name weapon
+class_name Weapon
 
 var spark = preload("res://data/scenes/spark.tscn")
 var trail = preload("res://data/scenes/trail.tscn")

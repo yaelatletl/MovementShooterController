@@ -7,6 +7,7 @@ var players_in_local_instance : Dictionary = {}
 var spawn_point_in_turn = 0
 func _ready() -> void:
 	Gamestate.connect("players_changed", self, "_on_Gamestate_players_changed")
+	Pooling.setup_projectile_root(self)
 
 func _on_Gamestate_players_changed():
 	for player in Gamestate.players:

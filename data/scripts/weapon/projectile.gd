@@ -3,18 +3,12 @@ class_name Projectile
 
 export(float) var type : int = 0
 export(float) var damage : int = 0
-export(float) var speed : int = 0
+export(float) var speed : int = 1
+export(float) var lifetime : float = 5.0
 export(Vector3) var direction : Vector3 = Vector3(0, 0, 0)
-
-var shooter_id : int = 0
 
 signal request_destroy()
 
-func _init(type: int, damage: int, speed: float, direction: Vector3) -> void:
-	self.type = type
-	self.damage = damage
-	self.speed = speed
-	self.direction = direction
 
 func _ready() -> void:
 	connect("body_entered", self, "on_body_entered")
@@ -22,7 +16,18 @@ func _ready() -> void:
 func on_body_entered(body) -> void:
 	if body.has_method("_damage"):
 		body._damage(damage)
-		emit_signal("request_destroy")
+	stop()
 
 func network_sync() -> void:
 	Gamestate.set_in_all_clients(self, "translation", translation)
+
+func stop() -> void:
+	direction = Vector3(0, 0, 0)
+	sleeping = true
+	emit_signal("request_destroy")
+
+func move(pos, dir) -> void:
+	get_tree().create_timer(lifetime).connect("timeout", self, "stop")
+	sleeping = false
+	global_transform.origin = pos
+	apply_central_impulse(direction.normalized() * speed)

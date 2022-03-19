@@ -10,16 +10,22 @@ radius = 0.652
 height = 1.312
 
 [node name="PmBt" type="RigidBody"]
-mass = 0.02
-gravity_scale = 0.18
-contacts_reported = 1
+collision_layer = 5
+collision_mask = 4
+mass = 1.04
+gravity_scale = 0.0
+contacts_reported = 4
 contact_monitor = true
 script = ExtResource( 1 )
 type = 1.0
+damage = 5.0
+speed = 2.0
+lifetime = 2.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
 mesh = SubResource( 2 )
 material/0 = null

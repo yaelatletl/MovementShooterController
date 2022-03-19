@@ -56,16 +56,17 @@ func _ready() -> void:
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
 	
 	# Create mk 23 using weapon classs
-	arsenal["mk_23"] = weapon.new(self, "mk_23", 2.0, 12, 999, 12, 40, 1.2)
+	arsenal["mk_23"] = Weapon.new(self, "mk_23", 2.0, 12, 999, 12, 40, 1.2)
 	
 	# Create glock 17 using weapon class
-	arsenal["glock_17"] = weapon.new(self, "glock_17", 3.0, 12, 999, 12, 35, 1.2)
+	arsenal["glock_17"] = Weapon.new(self, "glock_17", 3.0, 12, 999, 12, 35, 1.2)
 	
 	# Create kriss using weapon class
-	arsenal["kriss"] = weapon.new(self, "kriss", 6.0, 32, 999, 33, 25, 1.5)
+	arsenal["kriss"] = Weapon.new(self, "kriss", 6.0, 32, 999, 33, 25, 1.5)
 	
-	arsenal["shotgun"] = weapon.new(self, "shotgun", 0.5, 8, 999, 8, 25, 0.5, true, mastiff_spread, 20)
+	arsenal["shotgun"] = Weapon.new(self, "shotgun", 0.5, 8, 999, 8, 25, 0.5, true, mastiff_spread, 20)
 	
+	arsenal["plasma"] = ProjectileWeapon.new(self, "plasma", 2.5, 8, 999, 8, 25, 1.5, true, shotgun_spread_pattern, 10, 1)
 	for w in arsenal:
 		add_child(arsenal[w])
 		arsenal.values()[current]._hide()

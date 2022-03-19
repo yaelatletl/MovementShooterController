@@ -24,8 +24,13 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/scripts/weapon/projectile.gd"
 }, {
+"base": "Weapon",
+"class": "ProjectileWeapon",
+"language": "GDScript",
+"path": "res://data/scripts/weapon/projectile_weapon.gd"
+}, {
 "base": "Node",
-"class": "weapon",
+"class": "Weapon",
 "language": "GDScript",
 "path": "res://data/scripts/weapon/weapon.gd"
 } ]
@@ -33,7 +38,8 @@ _global_script_class_icons={
 "Component": "",
 "InteractableGeneric": "",
 "Projectile": "",
-"weapon": ""
+"ProjectileWeapon": "",
+"Weapon": ""
 }
 
 [application]
@@ -45,6 +51,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Gamestate="*res://data/singletons/gamestate.gd"
+Pooling="*res://data/singletons/pooling.gd"
 
 [debug]
 
