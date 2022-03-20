@@ -8,6 +8,7 @@ var can_jump = true
 var jump_timer = null
 
 func _ready():
+	Input.set_use_accumulated_input(false)
 	_component_name = "input"
 	actor.input["look_y"] = 0
 	actor.input["look_x"] = 0

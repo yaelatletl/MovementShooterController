@@ -153,10 +153,7 @@ size = Vector2( 0.4, 0.4 )
 [sub_resource type="SphereShape" id=20]
 radius = 6.0
 
-[node name="barrel" type="RigidBody" groups=[
-"metal",
-"prop",
-]]
+[node name="barrel" type="RigidBody" groups=["metal", "prop"]]
 mass = 6.0
 linear_damp = 0.15
 angular_damp = 0.1

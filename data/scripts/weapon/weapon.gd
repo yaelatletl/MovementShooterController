@@ -134,7 +134,7 @@ func make_ray_shoot(ray : RayCast):
 	if uses_randomness:
 		ray.cast_to.x += rand_range(-ray.cast_to.x, ray.cast_to.x)
 		ray.cast_to.y += rand_range(-ray.cast_to.y, ray.cast_to.y)
-	print(ray.cast_to)
+	#print(ray.cast_to)
 	if ray.is_colliding():
 		# Get barrel node
 		var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))

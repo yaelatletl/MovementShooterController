@@ -67,6 +67,7 @@ func _ready() -> void:
 	arsenal["shotgun"] = Weapon.new(self, "shotgun", 0.5, 8, 999, 8, 25, 0.5, true, mastiff_spread, 20)
 	
 	arsenal["plasma"] = ProjectileWeapon.new(self, "plasma", 2.5, 8, 999, 8, 25, 1.5, true, shotgun_spread_pattern, 10, 1)
+	arsenal["plasma"].actor_temp = character
 	for w in arsenal:
 		add_child(arsenal[w])
 		arsenal.values()[current]._hide()

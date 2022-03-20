@@ -12,7 +12,8 @@ var projectiles_root
 func setup_projectile_root(root):
 	projectiles_root = root
 
-func add_projectile(projectile_type,translation, direction):
+func add_projectile(projectile_type,translation, direction, actor):
+#	print("Position passed to add_projectile: " + translation)
 	var found = null
 	var projectile_instance = null
 	for bullet in projectiles_waiting:
@@ -25,6 +26,7 @@ func add_projectile(projectile_type,translation, direction):
 	else:
 		projectiles_waiting.erase(found)
 		projectile_instance = found
+	projectile_instance.add_collision_exception_with(actor)
 	projectiles_active.append(projectile_instance)
 	projectiles_root.add_child(projectile_instance)
 	projectile_instance.move(translation, direction)

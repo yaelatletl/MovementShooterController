@@ -24,9 +24,9 @@ func _camera_rotation() -> void:
 		var max_angle: int = 85 # Maximum camera angle
 		rotation.x = min(rotation.x,  deg2rad(max_angle))
 		rotation.x = max(rotation.x, -deg2rad(max_angle))
-		yield(get_tree().create_timer(0.2), "timeout")
-		actor.input["look_y"] = 0
-		actor.input["look_x"] = 0
+		#yield(get_tree().create_timer(0.2), "timeout")
+		#actor.input["look_y"] = 0
+		#actor.input["look_x"] = 0
 
 func _process(delta: float) -> void:
 	# Calls the function to rotate the camera
