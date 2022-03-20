@@ -5,30 +5,26 @@ export(float) var type : int = 0
 export(float) var damage : int = 0
 export(float) var speed : int = 1
 export(float) var lifetime : float = 5.0
-export(Vector3) var direction : Vector3 = Vector3(0, 0, 0)
 
 signal request_destroy()
+
 
 func is_projectile(): # Helps avoid cyclic references
 	return true 
 
-func _ready() -> void:
-	connect("body_entered", self, "on_body_entered")
+func _init():
+	connect("body_entered", self, "_on_body_entered")
 
-func on_body_entered(body) -> void:
-	if body.has_method("is_projectile"):
-		if body.type == type:
-			return
-	if body.has_method("_damage"):
-		body._damage(damage)
-	stop()
+func add_exceptions(actor):
+	add_collision_exception_with(actor)
 
 func network_sync() -> void:
 	Gamestate.set_in_all_clients(self, "translation", translation)
 
 func stop() -> void:
-	direction = Vector3(0, 0, 0)
 	sleeping = true
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO
 	for exeptions in get_collision_exceptions():
 		remove_collision_exception_with(exeptions)
 	emit_signal("request_destroy")
@@ -39,4 +35,15 @@ func move(pos, dir) -> void:
 	sleeping = false
 	global_transform.origin = pos
 	if is_inside_tree():
-		apply_central_impulse(direction * speed)
+		apply_central_impulse(dir.normalized() * speed)
+
+
+func _on_body_entered(body) -> void:
+	if body.has_method("is_projectile"):
+		if body.type == type:
+			return
+	print("Projectile hit:", body)
+	if body.has_method("_damage"):
+		body._damage(damage)
+	stop()
+

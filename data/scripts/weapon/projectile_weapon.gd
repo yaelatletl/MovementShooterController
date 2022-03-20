@@ -31,7 +31,7 @@ func _shoot_cast()->void:
 			if child_ray is RayCast:
 				# Get raycast range
 				var origin = child_ray.global_transform.origin + child_ray.to_global(child_ray.cast_to).normalized()/2
-				Pooling.add_projectile(projectile_type, barrel.global_transform.origin, child_ray.to_global(child_ray.cast_to), actor_temp)
+				Pooling.add_projectile(projectile_type, origin, child_ray.to_global(child_ray.cast_to), actor_temp)
 				# Check raycast is colliding
 	elif ray is RayCast:
 		# Get raycast range

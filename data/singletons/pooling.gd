@@ -26,7 +26,7 @@ func add_projectile(projectile_type,translation, direction, actor):
 	else:
 		projectiles_waiting.erase(found)
 		projectile_instance = found
-	projectile_instance.add_collision_exception_with(actor)
+	projectile_instance.add_exceptions(actor)
 	projectiles_active.append(projectile_instance)
 	projectiles_root.add_child(projectile_instance)
 	projectile_instance.move(translation, direction)
