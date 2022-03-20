@@ -39,4 +39,4 @@ func move(pos, dir) -> void:
 	sleeping = false
 	global_transform.origin = pos
 	if is_inside_tree():
-		add_central_force(direction * speed)
+		apply_central_impulse(direction * speed)
