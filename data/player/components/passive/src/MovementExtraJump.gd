@@ -19,6 +19,8 @@ func _enable_jump():
 	jump_timer = null
 
 func _physics_process(delta):
+	if not enabled:
+		return
 	#We may be able to use cross product to know if the current normal is parallel
 	#to the previous to avoid jumping twice in the same wall
 	if not actor.is_far_from_floor() or (walls_add_jumps and actor.is_on_wall()):

@@ -14,7 +14,8 @@ func _toggle_jump():
 
 func _physics_process(_delta):
 		# Function for jump
-	_jump(_delta)
+	if enabled:
+		_jump(_delta)
 	
 
 func _enable_jump():

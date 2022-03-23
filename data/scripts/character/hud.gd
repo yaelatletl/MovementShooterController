@@ -7,6 +7,7 @@ export(NodePath) var weapon_hud_text
 
 export(NodePath) var crosshair
 onready var interact_board = $Layout/VerticalSections/Top/InteractionBoard
+onready var message_board = $Layout/VerticalSections/Mid/MessageBoard
 
 
 func _ready():

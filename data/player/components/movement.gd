@@ -24,14 +24,15 @@ func _functional_routine(input : Dictionary) -> void:
 	# Function for movement
 	if _delta == null:
 		return
-	_movement(input, _delta)
+	if enabled:
+		_movement(input, _delta)
 	
-	# Function for crouch
-	_crouch(input, _delta)
+		# Function for crouch
+		_crouch(input, _delta)
 	
 
-	# Function for sprint
-	_sprint(input, _delta)
+		# Function for sprint
+		_sprint(input, _delta)
 
 func _movement(input : Dictionary, _delta : float) -> void:
 	actor.direction = Vector3()
@@ -98,6 +99,7 @@ func _crouch(input : Dictionary, _delta :float) -> void:
 		
 		# Apply the new character collision shape
 		col.shape.height = shape
+		col.shape.radius = (0.61 - 0.12*get_key(input, "crouch"))
 
 
 

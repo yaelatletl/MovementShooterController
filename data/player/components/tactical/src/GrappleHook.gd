@@ -51,6 +51,8 @@ func _on_body_entered(_point : Vector3, _body : Node, grapple):
 		
 
 func _physics_process(delta):
+	if not enabled:
+		return
 	if actor.input["special"]:
 		if not grapple_is_activated:
 			_launch_grapple()
@@ -68,7 +70,6 @@ func _physics_process(delta):
 		
 		force = 0.5 *( hook_stiffness * (distance - hook_lenght))
 		
-		print(distance)
 		if distance < 2.2 or distance > hook_tolerance*hook_lenght:
 			grapple_is_activated = false
 			direction = Vector3.ZERO
