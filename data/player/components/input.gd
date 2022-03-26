@@ -84,12 +84,10 @@ func mouse_move(event):
 	if event is InputEventMouseMotion:
 		actor.input["look_y"] = event.relative.y 
 		actor.input["look_x"] = event.relative.x 
-		yield(get_tree().create_timer(0.01), "timeout") # Replace timer with a tenth of a frame quantum (From new singleton)
+		yield(get_tree().create_timer(0.001), "timeout") # Replace timer with a tenth of a frame quantum (From new singleton)
 		actor.input["look_y"] = 0
 		actor.input["look_x"] = 0
-	else:
-		actor.input["look_y"] = 0
-		actor.input["look_x"] = 0
+
 
 func _unhandled_input(event):
 	if get_tree().has_network_peer():
