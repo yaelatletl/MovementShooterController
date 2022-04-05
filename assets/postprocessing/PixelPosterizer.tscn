@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/postprocessing/Blur.gdshader" type="Shader" id=1]
+[ext_resource path="res://assets/postprocessing/Poserizer.tres" type="Material" id=2]
+[ext_resource path="res://assets/postprocessing/milky 11 - 512x512.png" type="Texture" id=3]
+[ext_resource path="res://assets/postprocessing/cracks 8 - 256x256.png" type="Texture" id=4]
+
+[sub_resource type="Shader" id=38]
+code = "shader_type canvas_item;
+render_mode blend_mix, unshaded;
+
+uniform sampler2D bkg_texture;
+uniform sampler2D bkg_texture_2;
+uniform float threshold : hint_range(0.1, 1) = 1;
+uniform vec4 bkg_color_1 : hint_color;
+uniform vec4 bkg_color_2 : hint_color;
+uniform vec4 bkg_color_3 : hint_color;
+void fragment(){
+	vec4 color = texture(SCREEN_TEXTURE, SCREEN_UV);
+	vec4 bk1 = textureLod(bkg_texture_2, 0.7*UV+TIME*0.01, 5.0);
+	vec4 bk4 = textureLod(bkg_texture_2, 0.5*UV+vec2(TIME, -TIME)*0.01, 5.0);
+	vec4 bk2 = textureLod(bkg_texture_2, 0.1*UV-TIME*0.01, 10.0);
+	vec4 bk3 = textureLod(bkg_texture_2, UV-0.01*vec2(TIME, -TIME), 10.0);
+	vec4 bkg = mix(bkg_color_1, bkg_color_2, (bk1+bk4)-(bk2+bk3))+mix(vec4(0), bkg_color_3, (bk2+bk3)-(bk1+bk4));
+	
+	COLOR = color;
+	COLOR += 0.2*mix(vec4(0), bkg, bvec4(color.r+color.g+color.b < threshold/10.0));
+	COLOR += 0.1*mix(vec4(0), bkg, bvec4(color.r+color.g+color.b < threshold/5.0));
+	
+	//COLOR = bkg;
+}"
+
+[sub_resource type="ShaderMaterial" id=39]
+shader = SubResource( 38 )
+shader_param/threshold = 0.334
+shader_param/bkg_color_1 = Color( 0, 0, 0, 1 )
+shader_param/bkg_color_2 = Color( 0.458824, 0.0196078, 0, 1 )
+shader_param/bkg_color_3 = Color( 0.215686, 0.0901961, 0.164706, 1 )
+shader_param/bkg_texture = ExtResource( 4 )
+shader_param/bkg_texture_2 = ExtResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=37]
+shader = ExtResource( 1 )
+shader_param/blur = 0.137
+
+[node name="Third" type="CanvasLayer"]
+
+[node name="Blur2" type="TextureRect" parent="."]
+material = SubResource( 39 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+stretch_mode = 2
+
+[node name="Second" type="CanvasLayer" parent="."]
+
+[node name="PixelPosterize" type="ColorRect" parent="Second"]
+material = ExtResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="First" type="CanvasLayer" parent="Second"]
+
+[node name="Blur" type="ColorRect" parent="Second/First"]
+material = SubResource( 37 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )

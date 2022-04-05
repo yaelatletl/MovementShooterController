@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
 [ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
@@ -10,6 +10,25 @@
 [ext_resource path="res://addons/SIsilicon.vfx.godrays/GodRays.gd" type="Script" id=8]
 [ext_resource path="res://data/player/character.tscn" type="PackedScene" id=9]
 [ext_resource path="res://data/pickables/Kriss.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/postprocessing/PixelPosterizer.tscn" type="PackedScene" id=11]
+[ext_resource path="res://PostProcessing/Filter1.tscn" type="PackedScene" id=12]
+[ext_resource path="res://PostProcessing/post_process_outlines.shader" type="Shader" id=13]
+
+[sub_resource type="ShaderMaterial" id=9]
+resource_local_to_scene = true
+render_priority = 2
+shader = ExtResource( 13 )
+shader_param/color_outline_scale = 3.0
+shader_param/depth_outline_scale = 2.0
+shader_param/depth_threshold = 3.0
+shader_param/depth_multiplier = 1000.0
+shader_param/edge_threshold = 0.096
+shader_param/max_edge_alpha = 0.446
+shader_param/edge_alpha_multiplier = 3.78
+shader_param/edge_color = Color( 0, 0, 0, 1 )
+shader_param/depth_use_laplace = true
+shader_param/color_use_laplace = true
+shader_param/use_bg_texture = false
 
 [sub_resource type="ProceduralSky" id=1]
 sun_latitude = 39.24
@@ -21,10 +40,17 @@ background_sky = SubResource( 1 )
 fog_color = Color( 0.372549, 0.372549, 0.372549, 1 )
 fog_sun_color = Color( 1, 1, 1, 1 )
 tonemap_mode = 4
-ss_reflections_enabled = true
 ssao_enabled = true
-ssao_intensity = 6.0
+ssao_radius = 0.6
+ssao_intensity = 12.62
+ssao_radius2 = 1.03
+ssao_intensity2 = 3.61
+ssao_bias = 0.183
+ssao_light_affect = 0.25
+ssao_ao_channel_affect = 1.0
 ssao_quality = 0
+ssao_blur = 1
+ssao_edge_sharpness = 0.0
 dof_blur_far_distance = 5.0
 dof_blur_far_transition = 50.0
 dof_blur_far_quality = 2
@@ -58,6 +84,9 @@ extents = Vector3( 250, 1, 250 )
 
 [node name="main" type="Node"]
 
+[node name="MeshInstance2" parent="." instance=ExtResource( 12 )]
+material/0 = SubResource( 9 )
+
 [node name="post_processing" type="Spatial" parent="."]
 
 [node name="sun" type="DirectionalLight" parent="post_processing"]
@@ -75,6 +104,8 @@ light_size = 1.5
 environment = SubResource( 2 )
 
 [node name="fade" parent="." instance=ExtResource( 4 )]
+
+[node name="Third" parent="." instance=ExtResource( 11 )]
 
 [node name="scenario" type="Spatial" parent="."]
 script = ExtResource( 6 )
