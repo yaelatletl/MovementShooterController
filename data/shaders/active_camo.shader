@@ -1,7 +1,7 @@
 // NOTE: Shader automatically converted from Godot Engine 3.4.stable's SpatialMaterial.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_never,cull_back,diffuse_burley,specular_schlick_ggx, unshaded;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx, unshaded;
 uniform vec4 albedo : hint_color;
 uniform sampler2D texture_albedo : hint_albedo;
 uniform float specular;

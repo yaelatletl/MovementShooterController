@@ -16,6 +16,7 @@ var head_basis : Basis
 
 remotesync var input : Dictionary = {}
 signal died()
+signal health_changed(health)
 
 #Wall running and shared variables
 remotesync var health = 100
@@ -71,6 +72,7 @@ remotesync func _damage(amount : float):
 		health -= amount
 	if health <= 0:
 		die()
+	emit_signal("health_changed", health)
 	Gamestate.set_in_all_clients(self, "health", health)
 		
 remotesync func die():

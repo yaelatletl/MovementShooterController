@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode depth_draw_never, depth_test_disable, unshaded;
+render_mode depth_draw_opaque, depth_test_disable, unshaded;
 
 uniform float color_outline_scale = 2.0; // Size of color outlines
 uniform float depth_outline_scale = 2.0; // Size of depth outlines

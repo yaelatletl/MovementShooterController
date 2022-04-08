@@ -5,9 +5,12 @@ export(NodePath) var weapon_hud_ammo
 export(NodePath) var weapon_hud_clip
 export(NodePath) var weapon_hud_text
 
+export(NodePath) var interact_board_path = "Layout/VerticalSections/Top/InteractionBoard"
+export(NodePath) var message_board_path = "Layout/VerticalSections/Mid/MessageBoard"
+
 export(NodePath) var crosshair
-onready var interact_board = $Layout/VerticalSections/Top/InteractionBoard
-onready var message_board = $Layout/VerticalSections/Mid/MessageBoard
+onready var interact_board = get_node(interact_board_path)
+onready var message_board = get_node(message_board_path)
 
 
 func _ready():
