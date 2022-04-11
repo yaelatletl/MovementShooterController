@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
 [ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://assets/postprocessing/PixelPosterizer.tscn" type="PackedScene" id=11]
 [ext_resource path="res://PostProcessing/Filter1.tscn" type="PackedScene" id=12]
 [ext_resource path="res://PostProcessing/post_process_outlines.shader" type="Shader" id=13]
+[ext_resource path="res://assets/scenario/TerrainGIS.tscn" type="PackedScene" id=14]
 
 [sub_resource type="ShaderMaterial" id=9]
 resource_local_to_scene = true
@@ -37,20 +38,27 @@ sun_curve = 0.246229
 [sub_resource type="Environment" id=2]
 background_mode = 2
 background_sky = SubResource( 1 )
-fog_color = Color( 0.372549, 0.372549, 0.372549, 1 )
-fog_sun_color = Color( 1, 1, 1, 1 )
+fog_enabled = true
+fog_color = Color( 0.266667, 0.611765, 0.866667, 0.352941 )
+fog_sun_color = Color( 1, 0.945098, 0.580392, 1 )
+fog_sun_amount = 0.85
+fog_depth_begin = 235.4
+fog_depth_end = 4000.0
+fog_depth_curve = 1.26607
+fog_transmit_enabled = true
+fog_transmit_curve = 1.6818
 tonemap_mode = 4
 ssao_enabled = true
 ssao_radius = 0.6
-ssao_intensity = 12.62
+ssao_intensity = 45.07
 ssao_radius2 = 1.03
-ssao_intensity2 = 3.61
-ssao_bias = 0.183
+ssao_intensity2 = 1.81
+ssao_bias = 0.307
 ssao_light_affect = 0.25
 ssao_ao_channel_affect = 1.0
 ssao_quality = 0
 ssao_blur = 1
-ssao_edge_sharpness = 0.0
+ssao_edge_sharpness = 32.0
 dof_blur_far_distance = 5.0
 dof_blur_far_transition = 50.0
 dof_blur_far_quality = 2
@@ -295,6 +303,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9104, 2.5739, 10.9689 )
 
 [node name="Spatial" parent="scenario" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6542, 0.909, 30.1602 )
+
+[node name="TerrainGIS" parent="scenario" instance=ExtResource( 14 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2243.97, -1268.66 )
 
 [node name="passive_marker_man" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84292, 1.00202, 4.04818 )
