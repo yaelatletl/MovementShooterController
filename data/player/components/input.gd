@@ -68,6 +68,7 @@ func get_input():
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"))
 	actor.input["special"] = int(Input.is_action_just_pressed("SPECIAL"))
 	actor.input["extra_jump"] = int(Input.is_action_pressed("KEY_SPACE"))
+	actor.input["use"] = int(Input.is_action_pressed("USE"))
 	if get_tree().has_network_peer():
 		if is_network_master() and not get_tree().is_network_server(): 
 			actor.rset_unreliable_id(1, "input", actor.input)

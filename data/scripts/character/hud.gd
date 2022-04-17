@@ -1,5 +1,15 @@
 extends Component
 
+enum BAR_LOCATIONS{
+	TOP_CENTER,
+	TOP_RIGHT,
+	MID_RIGHT,
+	BOTTOM_LEFT, 
+	BOTTOM_CENTER
+}
+
+
+
 export(NodePath) var weapon
 export(NodePath) var weapon_hud_ammo
 export(NodePath) var weapon_hud_clip
@@ -24,6 +34,9 @@ func _ready():
 func _process(_delta) -> void:
 	_weapon_hud()
 	#_crosshair()
+
+func register_progress_bar(location, name, value, min_value, max_value):
+	pass
 
 func _weapon_hud() -> void:
 	#var off = Vector2(180, 80)

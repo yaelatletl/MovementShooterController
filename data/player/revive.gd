@@ -3,10 +3,19 @@ extends Component
 export(bool) var can_self_res = false
 export(float) var revive_time = 5.0
 var knocked = false
+export(Array) var enable_exeptions = []
+export(NodePath) var collision : NodePath = ""
+
+var original_height = 0.0
+var original_width = 0.0
+
+onready var col = get_node(collision)
 
 func _ready():
 	connect("body_entered", self, "_on_body_entered")
 	connect("body_exited", self, "_on_body_exited")
+	original_height = col.shape.height
+	original_width = col.shape.radius
 	actor.connect("died", self, "_on_died")
 
 func _on_body_entered(body):
@@ -22,7 +31,7 @@ func _on_body_exited(body):
 	if body.has_method("_get_component"):
 		var inter = body._get_component("interactor")
 		if inter != null:
-			inter.stop_interact()
+			inter.clear_interact()
 	
 func _on_died():
 	knocked = true
@@ -30,8 +39,22 @@ func _on_died():
 
 func interaction_triggered():
 	if knocked:
-		actor.revive()
+		revive()
 		knocked = false
 		return true
 	else:
 		return false
+
+func revive():
+	if can_self_res:
+		var inter = actor._get_component("interactor")
+		if inter != null:
+			inter.clear_interact()
+	for component in actor.components:
+		if component in enable_exeptions:
+			actor._get_component(component).enabled = false
+		else:
+			actor._get_component(component).enabled = true
+	col.shape.height = original_height
+	col.shape.radius = original_width
+	enabled = false

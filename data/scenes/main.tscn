@@ -312,9 +312,26 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84292, 1.00202, 4.04818 )
 
 [node name="MocapGuy_Eyes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="0"]
 material_override = ExtResource( 3 )
+script = null
+
+[node name="MocapGuy_EyesSpec" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="1"]
+script = null
+
+[node name="MocapGuy_Caruncula" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="2"]
+script = null
+
+[node name="MocapGuy_BrowsLashes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="3"]
+script = null
+
+[node name="MocapGuy_Teeth" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="4"]
+script = null
+
+[node name="MocapGuy_Hat" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="5"]
+script = null
 
 [node name="MocapGuy_Body" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="6"]
 material/0 = ExtResource( 3 )
+script = null
 
 [node name="character" parent="." instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -73.0678, 6.88515, 31.8191 )
