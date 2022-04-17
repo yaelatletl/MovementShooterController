@@ -55,6 +55,7 @@ func revive():
 			actor._get_component(component).enabled = false
 		else:
 			actor._get_component(component).enabled = true
+	actor.health = 100
 	col.shape.height = original_height
 	col.shape.radius = original_width
 	enabled = false
