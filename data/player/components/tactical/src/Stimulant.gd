@@ -3,6 +3,9 @@ extends Component
 #Stimulant: Increases velocity by "velocity_constant" per phys frame during "stim_duration" 
 #numbers above 1.1 get easily out of hand, use with care. 
 
+#TODO -  refactor for the recharging system
+
+
 var active : bool = false
 export(float) var velocity_constant : float = 0.8
 export(float) var stim_duration : float = 5
