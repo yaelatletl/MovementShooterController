@@ -10,20 +10,24 @@ var active : bool = false
 export(float) var velocity_constant : float = 0.8
 export(float) var stim_duration : float = 5
 
+var timer = null
 func _ready():
 	_component_name = "Stimulant"
+	setup_charge(stim_duration)
 
 func toggle_stim(turn_off = false) -> void:
 	if not active:
 		active = true
-		get_tree().create_timer(stim_duration).connect("timeout", self, "toggle_stim", [true])
+		timer = get_tree().create_timer(stim_duration)
+		timer.connect("timeout", self, "toggle_stim", [true])
 	if turn_off:
 		active = false
 
 func _physics_process(delta) -> void:
 	if enabled:
 		_functional_routine(actor.input)
-
+		if timer != null:
+			emit_signal("charging_changed", timer.time_left)
 func _functional_routine(input: Dictionary)-> void:
 	if get_key(input,"special"):
 		toggle_stim()

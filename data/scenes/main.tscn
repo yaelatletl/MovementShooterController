@@ -278,6 +278,7 @@ collision_layer = 3
 [node name="mesh" type="MeshInstance" parent="scenario/objects/terrain"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0358462, -0.01824, 0.0206671 )
 mesh = SubResource( 7 )
+material/0 = null
 
 [node name="collision" type="CollisionShape" parent="scenario/objects/terrain"]
 shape = SubResource( 8 )
@@ -307,7 +308,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6542, 0.909, 30.1602 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2243.97, -1268.66 )
 
 [node name="passive_marker_man" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.84292, 1.00202, 4.04818 )
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.84292, 1.00202, 4.04818 )
 
 [node name="MocapGuy_Eyes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="0"]
 material_override = ExtResource( 3 )
@@ -330,6 +331,7 @@ script = null
 
 [node name="MocapGuy_Body" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="6"]
 material/0 = ExtResource( 3 )
+material/1 = ExtResource( 3 )
 script = null
 
 [node name="character" parent="." instance=ExtResource( 9 )]

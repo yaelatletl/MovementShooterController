@@ -1,10 +1,31 @@
 extends Node
 class_name Component
 
+enum CHARGE_TYPE{
+	SELF_MANAGE,
+	USE_MANAGER,
+	USE_CHARGE_POINT,
+	SPECIAL
+}
 
-onready var actor : Node = get_parent()
 export(bool) var enabled : bool = true
 export(String) var _component_name = ""
+
+onready var actor : Node = get_parent()
+
+var charging_var : float = 0
+var charging_time : float = 0
+var charging_max : float = 0
+var timer_charge : SceneTreeTimer = null
+
+var charge_type : int = CHARGE_TYPE.SELF_MANAGE
+
+signal charging_changed(charge)
+
+func setup_charge(max_charge : float):
+	charging_max = max_charge
+
+
 func _ready() -> void:
 	_start()
 	actor._register_component(_component_name, self)
