@@ -6,8 +6,8 @@ export(Color) var border = Color.black
 export(int) var border_resolution = 360
 export(int) var border_width = 1
 
-func _ready():
-	rect_size = get_parent().rect_size
+#func _ready():
+	#rect_size = get_parent().rect_size
 func _process(delta):
 	update()
 

@@ -1,5 +1,5 @@
 tool
-extends ColorRect
+extends Control
 
 export(Color) var full = Color.aliceblue
 export(Color) var empty = Color.black
@@ -11,7 +11,7 @@ export(float) var value_max = 100
 export(bool) var fills = true
 var current_color = Color.white
 func _ready():
-	rect_size = get_parent().rect_size
+	#rect_size = get_parent().rect_size
 	current_color = full
 
 func _process(delta):
