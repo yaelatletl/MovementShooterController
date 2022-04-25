@@ -51,7 +51,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot Engine FPS"
-run/main_scene="res://data/scenes/main.tscn"
+run/main_scene="res://test_scenario/TestViewportShare.tscn"
 config/icon="res://icon.png"
 
 [autoload]
