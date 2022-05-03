@@ -58,4 +58,5 @@ func revive():
 	actor.health = 100
 	col.shape.height = original_height
 	col.shape.radius = original_width
+	actor.emit_signal("health_changed", actor.health, actor.shields)
 	enabled = false

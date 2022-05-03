@@ -68,18 +68,15 @@ func _physics_process(delta):
 			direction = (attached_to.to_global(non_static_collision_point)-actor.head.global_transform.origin).normalized()
 			distance = (attached_to.to_global(non_static_collision_point).distance_to(actor.head.global_transform.origin))
 		
-		force = 0.5 *( hook_stiffness * (distance - hook_lenght))
+		force += ( hook_stiffness * (distance - hook_lenght)) 
+		force = clamp(force -(0.5/clamp(distance, 0.1, hook_lenght)*delta), 0,1000)
 		
 		if distance < 2.2 or distance > hook_tolerance*hook_lenght:
-			grapple_is_activated = false
-			direction = Vector3.ZERO
-			attached_to = null
-			distance = 0
-			force = 0
+			_end_grapple_time()
 		else: 
 			if attached_to is RigidBody:
-				attached_to.apply_impulse(non_static_collision_point, force*(-direction)/attached_to.mass)
-				actor.velocity +=  (0.9*force*(direction))/attached_to.mass
+				attached_to.linear_velocity +=  force*(-direction)/attached_to.mass
+				actor.velocity +=  (0.75*force*(direction))/attached_to.mass*delta
 			else:
-				actor.velocity +=  force*(direction) 
+				actor.velocity +=  force*(direction)*delta
 			

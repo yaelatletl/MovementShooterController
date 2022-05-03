@@ -25,5 +25,5 @@ func _draw():
 	var res_end = clamp(4 + (value/value_max * 360), 4, 360)
 	if not fills and value > 0.1:
 		res_end = clamp(4 + (value_max/value * 360), 4, 360)
-	draw_arc (rect_size/2, min(rect_size.x/3, rect_size.y/3)+offset, 0, res_end, res_end, current_color, border_width, true)
+	draw_arc (rect_size/2, min(rect_size.x/3, rect_size.y/3)+offset, 0, deg2rad(res_end), res_end, current_color, border_width, true)
 

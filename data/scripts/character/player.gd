@@ -16,10 +16,11 @@ var head_basis : Basis
 
 remotesync var input : Dictionary = {}
 signal died()
-signal health_changed(health)
+signal health_changed(health, shields)
 
 #Wall running and shared variables
 remotesync var health = 100
+remotesync var shields = 100
 var wall_direction : Vector3 = Vector3.ZERO
 var wall_normal 
 var run_speed : float = 0.0
@@ -68,11 +69,14 @@ func is_far_from_floor() -> bool:
 	return true
 
 remotesync func _damage(amount : float):
+	var temp = amount
+	amount = (amount - shields)/10
+	shields -= temp	
 	if health > 0:
 		health -= amount
 	if health <= 0:
 		die()
-	emit_signal("health_changed", health)
+	emit_signal("health_changed", health, shields)
 	Gamestate.set_in_all_clients(self, "health", health)
 		
 remotesync func die():

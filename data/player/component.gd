@@ -10,8 +10,13 @@ enum CHARGE_TYPE{
 
 export(bool) var enabled : bool = true
 export(String) var _component_name = ""
+export(PackedScene) var ui_scene = null
+export(NodePath) var ui_container = ""
 
 onready var actor : Node = get_parent()
+onready var ui_root : Node = get_node_or_null(ui_container)
+
+var charge_meter : Node = null
 
 var charging_var : float = 0
 var charging_time : float = 0
@@ -29,6 +34,9 @@ func setup_charge(max_charge : float):
 func _ready() -> void:
 	_start()
 	actor._register_component(_component_name, self)
+	if ui_root != null:
+		charge_meter = ui_scene.instance()
+		ui_root.add_child(charge_meter)
 
 func _functional_routine(input : Dictionary) -> void:
 	pass
