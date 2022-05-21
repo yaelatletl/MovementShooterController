@@ -3,11 +3,10 @@ class_name Projectile
 
 export(float) var type : int = 0
 export(float) var damage : int = 0
-export(float) var speed : int = 1
+export(float) var speed : int = 100
 export(float) var lifetime : float = 5.0
 
 signal request_destroy()
-
 
 func is_projectile(): # Helps avoid cyclic references
 	return true 
@@ -35,7 +34,9 @@ func move(pos, dir) -> void:
 	sleeping = false
 	global_transform.origin = pos
 	if is_inside_tree():
-		apply_central_impulse(dir.normalized() * speed)
+		linear_velocity = dir.normalized() * speed
+		#add_central_force(dir.normalized() * speed)
+		#apply_central_impulse(dir.normalized() * speed)
 
 
 func _on_body_entered(body) -> void:
