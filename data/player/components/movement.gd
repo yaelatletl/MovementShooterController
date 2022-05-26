@@ -95,11 +95,11 @@ func _crouch(input : Dictionary, _delta :float) -> void:
 		var shape = col.shape.height
 		
 		# Changes the shape of the character's collision
-		shape = lerp(shape, 2 - (get_key(input, "crouch") * 2.1), w_speed  * _delta)
+		shape = lerp(shape, 1.8 - (get_key(input, "crouch") * 1.7), w_speed  * _delta)
 		
 		# Apply the new character collision shape
 		col.shape.height = shape
-		col.shape.radius = (0.61 - 0.12*get_key(input, "crouch"))
+		col.shape.radius = (0.61 - 0.22*get_key(input, "crouch"))
 
 
 
