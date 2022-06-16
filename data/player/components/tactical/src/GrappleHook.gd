@@ -3,12 +3,13 @@ extends Component
 export(NodePath) var camera_path
 export(PackedScene) var grapple_point
 export(float) var hook_lenght = 3.0
-export(float) var hook_tolerance = 15
+export(float) var hook_tolerance = 1.5
 export(float) var hook_stiffness = 2.5
 export(float) var hook_time = 3
 onready var camera : Camera = get_node(camera_path)
 
 #Hook calculation vars
+var is_actor_y_aligned = false
 var attached_to = null
 var direction = Vector3.ZERO
 var distance = 0
@@ -34,6 +35,7 @@ func _launch_grapple():
 
 func _end_grapple_time():
 	grapple_is_activated = false
+	is_actor_y_aligned = false
 	direction = Vector3.ZERO
 	attached_to = null
 	distance = 0
@@ -64,14 +66,19 @@ func _physics_process(delta):
 		if attached_to is StaticBody:
 			direction = (static_collision_point-actor.head.global_transform.origin).normalized()
 			distance = static_collision_point.distance_to(actor.head.global_transform.origin)
+			if static_collision_point.y < actor.head.global_transform.origin.y:
+				is_actor_y_aligned = true
 		if attached_to is RigidBody or attached_to is KinematicBody:
 			direction = (attached_to.to_global(non_static_collision_point)-actor.head.global_transform.origin).normalized()
 			distance = (attached_to.to_global(non_static_collision_point).distance_to(actor.head.global_transform.origin))
+			if attached_to.to_global(non_static_collision_point).y < actor.head.global_transform.origin.y:
+				is_actor_y_aligned = true
 		
-		force += ( hook_stiffness * (distance - hook_lenght)) 
-		force = clamp(force -(0.5/clamp(distance, 0.1, hook_lenght)*delta), 0,1000)
+		#force += ( (hook_stiffness) * (distance - hook_lenght)) 
+		force += clamp(( (hook_stiffness) * (distance - hook_lenght)), 0, 100) 
+		#force = clamp(force -(0.5/clamp(distance, 0.1, hook_lenght)*delta), 0,1000)
 		
-		if distance < 2.2 or distance > hook_tolerance*hook_lenght:
+		if distance < 2.2 or distance > hook_tolerance*hook_lenght or is_actor_y_aligned:
 			_end_grapple_time()
 		else: 
 			if attached_to is RigidBody:
