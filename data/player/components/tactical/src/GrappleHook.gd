@@ -71,7 +71,7 @@ func _physics_process(delta):
 		if attached_to is RigidBody or attached_to is KinematicBody:
 			direction = (attached_to.to_global(non_static_collision_point)-actor.head.global_transform.origin).normalized()
 			distance = (attached_to.to_global(non_static_collision_point).distance_to(actor.head.global_transform.origin))
-			if attached_to.to_global(non_static_collision_point).y < actor.head.global_transform.origin.y:
+			if is_zero_approx(attached_to.to_global(non_static_collision_point).y-actor.head.global_transform.origin.y):
 				is_actor_y_aligned = true
 		
 		#force += ( (hook_stiffness) * (distance - hook_lenght)) 
@@ -82,7 +82,7 @@ func _physics_process(delta):
 			_end_grapple_time()
 		else: 
 			if attached_to is RigidBody:
-				attached_to.linear_velocity +=  force*(-direction)/attached_to.mass
+				attached_to.linear_velocity +=  delta*force*(-direction)/attached_to.mass
 				actor.velocity +=  (0.75*force*(direction))/attached_to.mass*delta
 			else:
 				actor.velocity +=  force*(direction)*delta
