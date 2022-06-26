@@ -66,7 +66,8 @@ func _physics_process(delta):
 		if attached_to is StaticBody:
 			direction = (static_collision_point-actor.head.global_transform.origin).normalized()
 			distance = static_collision_point.distance_to(actor.head.global_transform.origin)
-			if static_collision_point.y < actor.head.global_transform.origin.y:
+			if static_collision_point.y < actor.head.global_transform.origin.y: 
+				#won't work if we grapple to the ground, but swinging this way feels more natural
 				is_actor_y_aligned = true
 		if attached_to is RigidBody or attached_to is KinematicBody:
 			direction = (attached_to.to_global(non_static_collision_point)-actor.head.global_transform.origin).normalized()
