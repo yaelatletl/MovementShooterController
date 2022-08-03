@@ -42,9 +42,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "CircularContainer": "",
 "Component": "",
-"EnvironmentVolume": "res://addons/godot-environment-volume/environment_volume.svg",
-"FrustumAABBIntersection": "",
-"Halton": "",
 "InteractableGeneric": "",
 "Projectile": "",
 "ProjectileWeapon": "",
@@ -198,10 +195,10 @@ sync_debug={
 
 [physics]
 
-3d/smooth_trimesh_collision=true
 common/physics_fps=90
 3d/physics_engine="Bullet"
 3d/active_soft_world=false
+3d/smooth_trimesh_collision=true
 
 [rendering]
 
