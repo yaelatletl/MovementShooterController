@@ -1,6 +1,8 @@
 extends Component
 # All speed variables
 
+const DEFAULT_GRAVITY = 40
+
 export(float) var n_speed : float = 04 # Normal
 export(float) var s_speed : float = 12 # Sprint
 export(float) var w_speed : float = 08 # Walking
@@ -8,7 +10,7 @@ export(float) var c_speed : float = 10 # Crouch
 export(bool) var slide_on_crouch : bool = false
 export(bool) var can_wallrun : bool = false
 # Physics variables
-export(float) var gravity      : float = 45 # Gravity force #45 is okay, don't change it 
+export(float) var gravity      : float = 40 # Gravity force #45 is okay, don't change it 
 export(float) var friction     : float = 25 # friction
 
 export(NodePath) var collision : NodePath = ""
@@ -54,7 +56,7 @@ func _movement(input : Dictionary, _delta : float) -> void:
 			actor.direction +=  (get_key(input, "forward") -get_key(input, "back"))*(-actor.wall_direction.cross(Vector3.UP) -actor.wall_direction)# * actor.head_basis.z)
 			actor.direction = actor.direction.normalized()
 		else:
-			actor.velocity.y += -gravity * _delta
+			actor.velocity.y -= gravity * _delta
 	
 	
 	
@@ -95,11 +97,11 @@ func _crouch(input : Dictionary, _delta :float) -> void:
 		var shape = col.shape.height
 		
 		# Changes the shape of the character's collision
-		shape = lerp(shape, 1.8 - (get_key(input, "crouch") * 1.7), w_speed  * _delta)
+		shape = lerp(shape, 1.1 - (get_key(input, "crouch") * 0.9), w_speed  * _delta)
 		
 		# Apply the new character collision shape
 		col.shape.height = shape
-		col.shape.radius = (0.61 - 0.22*get_key(input, "crouch"))
+		col.shape.radius = (0.28 - 0.12*get_key(input, "crouch"))
 
 
 

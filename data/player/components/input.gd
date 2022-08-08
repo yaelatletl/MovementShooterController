@@ -8,7 +8,7 @@ var can_jump = true
 var jump_timer = null
 
 func _ready():
-	Input.set_use_accumulated_input(false)
+	#Input.set_use_accumulated_input(false)
 	_component_name = "input"
 	actor.input["look_y"] = 0
 	actor.input["look_x"] = 0
@@ -26,6 +26,7 @@ func _ready():
 	actor.input["shoot"] = int(Input.is_action_pressed("mb_left"))
 	actor.input["reload"] = int(Input.is_action_pressed("KEY_R"))
 	actor.input["zoom"] = int(Input.is_action_pressed("mb_right"))
+	get_tree().create_timer(0.01).connect("timeout", self, "functional_routine")
 
 
 
@@ -43,14 +44,17 @@ func _mouse_toggle() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 
-func _physics_process(delta):
+func functional_routine():
 	if get_tree().has_network_peer():
 		if not is_network_master() or not enabled:
 			return
 		else:
 			get_input()
+			get_tree().create_timer(0.01).connect("timeout", self, "functional_routine")
 	else:
 		get_input()
+		get_tree().create_timer(0.01).connect("timeout", self, "functional_routine")
+
 		
 func get_input():
 	actor.input["left"]   = int(Input.is_action_pressed("KEY_A"))
@@ -69,12 +73,24 @@ func get_input():
 	actor.input["special"] = int(Input.is_action_just_pressed("SPECIAL"))
 	actor.input["extra_jump"] = int(Input.is_action_pressed("KEY_SPACE"))
 	actor.input["use"] = int(Input.is_action_pressed("USE"))
+	sync_input()
+	#if get_tree().has_network_peer():
+	#	if is_network_master() and not get_tree().is_network_server(): 
+			#Gamestate.set_in_all_clients(self,"input", actor.input)
+	#		actor.rset_unreliable_id(1, "input", actor.input)
+#		actor.input["look_y"] = 0
+#		actor.input["look_x"] = 0
+#Let's sync the input each 10 ms, for that, we will create a pseudo-thread
+
+
+func sync_input():
 	if get_tree().has_network_peer():
 		if is_network_master() and not get_tree().is_network_server(): 
 			actor.rset_unreliable_id(1, "input", actor.input)
-#		actor.input["look_y"] = 0
-#		actor.input["look_x"] = 0
-		
+			Gamestate.set_in_all_clients(actor, "input", actor.input)
+
+
+
 func _jump():
 	actor.input["jump"] = true
 	yield(get_tree().create_timer(0.01), "timeout")
@@ -95,11 +111,11 @@ func _unhandled_input(event):
 		if not is_network_master() or not enabled:
 			return
 		else:
-			unhandld(event)
+			unhandled(event)
 	else:
-		unhandld(event)
+		unhandled(event)
 
-func unhandld(event):
+func unhandled(event):
 	# Calls function to switch between locked and unlocked mouse
 	_mouse_toggle()
 	
@@ -118,7 +134,10 @@ func unhandld(event):
 			actor.input["crouch"] = int(not bool(actor.input["crouch"]))
 		if Input.is_action_pressed("KEY_SHIFT") or Input.is_action_just_released("KEY_SPACE"):
 			actor.input["crouch"] = 0
-
+#	if get_tree().has_network_peer():
+#		if is_network_master() and not get_tree().is_network_server(): 
+			#Gamestate.set_in_all_clients(self,"input", actor.input)
+#			actor.rset_unreliable_id(1, "input", actor.input)
 
 #	if Input.is_action_just_released(("KEY_SPACE")) and Input.is_action_pressed("KEY_SPACE"):
 #		actor.input["jump_extra"] = 1

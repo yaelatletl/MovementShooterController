@@ -37,7 +37,7 @@ func _on_died():
 	knocked = true
 	_on_body_entered(actor)
 
-func interaction_triggered():
+func interaction_triggered(interactor_body : Spatial):
 	if knocked:
 		revive()
 		knocked = false

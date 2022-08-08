@@ -1,6 +1,6 @@
 extends Spatial
 class_name InteractableGeneric 
-var message = ""
+export(String) var message = ""
 onready var interaction_area = $PickArea
 
 
@@ -22,5 +22,5 @@ func _on_interaction_area_body_exited(body):
 	else:
 		return
 
-func interact():
+func interaction_triggered(interacting_body : Spatial):
 	pass

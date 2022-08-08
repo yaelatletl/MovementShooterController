@@ -85,9 +85,9 @@ remotesync func die():
 	emit_signal("died")
 	print("Player "+name+" died")
 
-func request_interact(interactable : Spatial, message : String):
+func request_interact(interactable : Spatial, message : String, time : float = 0.0):
 	#We need to pass the message to the HUD
-	_get_component("HUD").interact_board.show_message(message)
+	_get_component("interactor").request_interact(interactable, message, time)
 
 func stop_interact():
 	_get_component("HUD").interact_board.hide_message()

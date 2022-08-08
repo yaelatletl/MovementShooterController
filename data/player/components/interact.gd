@@ -51,6 +51,6 @@ func _physics_process(delta):
 				emit_signal("time_left_changed", current_timer.time_left)
 			if waiting_for_interaction.has_method("interaction_triggered"):
 				if interaction_time_fulfilled:
-					waiting_for_interaction.interaction_triggered()
+					waiting_for_interaction.interaction_triggered(actor)
 	else:
 		stop_interact()

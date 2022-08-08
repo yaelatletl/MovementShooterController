@@ -121,8 +121,8 @@ func _position(_delta) -> void:
 	global_transform.origin = head.global_transform.origin
 	
 func  _rotation(_delta) -> void:
-	var y_lerp = 20
-	var x_lerp = 40
+	var y_lerp = 40
+	var x_lerp = 80
 	if not character.input["zoom"]:
 		var quat_a = global_transform.basis.get_rotation_quat()
 		var quat_b = camera.global_transform.basis.get_rotation_quat()

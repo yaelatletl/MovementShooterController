@@ -58,7 +58,6 @@ config/icon="res://icon.png"
 
 Gamestate="*res://data/singletons/gamestate.gd"
 Pooling="*res://data/singletons/pooling.gd"
-EnvironmentBlender="*res://addons/godot-environment-volume/environment_blender.gd"
 
 [debug]
 
@@ -76,7 +75,7 @@ window/size/height=720
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/SIsilicon.vfx.godrays/plugin.cfg", "res://addons/godot-environment-volume/plugin.cfg", "res://addons/multirun/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/sade/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/multirun/plugin.cfg", "res://addons/sade/plugin.cfg" )
 
 [global]
 
@@ -195,10 +194,10 @@ sync_debug={
 
 [physics]
 
+3d/smooth_trimesh_collision=true
 common/physics_fps=90
 3d/physics_engine="Bullet"
 3d/active_soft_world=false
-3d/smooth_trimesh_collision=true
 
 [rendering]
 
