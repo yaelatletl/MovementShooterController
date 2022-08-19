@@ -117,7 +117,6 @@ func _change() -> void:
 			arsenal.values()[w]._draw()
 
 func _position(_delta) -> void:
-	
 	global_transform.origin = head.global_transform.origin
 	
 func  _rotation(_delta) -> void:
@@ -126,9 +125,11 @@ func  _rotation(_delta) -> void:
 	if not character.input["zoom"]:
 		var quat_a = global_transform.basis.get_rotation_quat()
 		var quat_b = camera.global_transform.basis.get_rotation_quat()
-		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp))
-#		rotation.x = lerp_angle(rotation.x, camera.global_transform.basis.get_euler().x, y_lerp * _delta)
-#		rotation.y = lerp_angle(rotation.y, camera.global_transform.basis.get_euler().y, x_lerp * _delta)
+		var angle_distance = quat_a.angle_to(quat_b)
+		#global_transform.basis = global_transform.basis.orthonormalized()
+		#global_transform.basis = global_transform.basis.slerp(Basis(quat_b), _delta*x_lerp*angle_distance)
+		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp*angle_distance))
+				
 	else:
 		rotation = camera.global_transform.basis.get_euler()
 
