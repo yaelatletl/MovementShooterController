@@ -28,6 +28,6 @@ func _jump(_delta) -> void:
 		_toggle_jump()
 		actor.reset_wall_multi()
 		if not actor.is_far_from_floor():
-			actor.velocity.y += jump_height
+			actor.linear_velocity.y += jump_height
 		if actor.is_on_wall() and jumps_from_wall:
-			actor.velocity += (-actor.input["left"] + actor.input["right"]) * actor.head_basis.x * jump_height*1.2
+			actor.linear_velocity += (-actor.input["left"] + actor.input["right"]) * actor.head_basis.x * jump_height*1.2

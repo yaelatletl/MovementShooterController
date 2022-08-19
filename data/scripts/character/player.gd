@@ -8,7 +8,7 @@ export(NodePath) var feet_path = ""
 export(float) var mass = 45
 
 # All vectors
-var velocity     : = Vector3() # Velocity vector
+var linear_velocity : = Vector3() # linear_velocity vector
 var direction    : = Vector3() # Direction Vector
 var acceleration : = Vector3() # Acceleration Vector
 var head_basis : Basis
@@ -50,9 +50,9 @@ func _physics_process(delta):
 	head_basis = head.global_transform.basis
 	if is_on_wall():
 		wall_normal = get_slide_collision(0)
-		yield(get_tree().create_timer(0.2), "timeout")
+		#yield(get_tree().create_timer(0.2), "timeout")
 		wall_direction = wall_normal.normal
-	run_speed = Vector2(velocity.x, velocity.z).length()
+	run_speed = Vector2(linear_velocity.x, linear_velocity.z).length()
 
 
 		

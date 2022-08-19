@@ -52,29 +52,29 @@ func _movement(input : Dictionary, _delta : float) -> void:
 		
 		# Applies gravity
 		if (actor.is_on_wall() and actor.run_speed>12 and can_wallrun):
-			actor.velocity.y = lerp(actor.velocity.y, 0.1, 10*_delta)
+			actor.linear_velocity.y = lerp(actor.linear_velocity.y, 0.1, 10*_delta)
 			actor.direction +=  (get_key(input, "forward") -get_key(input, "back"))*(-actor.wall_direction.cross(Vector3.UP) -actor.wall_direction)# * actor.head_basis.z)
 			actor.direction = actor.direction.normalized()
 		else:
-			actor.velocity.y -= gravity * _delta
+			actor.linear_velocity.y -= gravity * _delta
 	
 	
 	
 	# Interpolates between the current position and the future position of the character
 	actor.direction.normalized()
-	var inertia = actor.velocity.linear_interpolate(Vector3(), (0.75 * int(actor.is_on_floor()) + 1.25) *friction * _delta)
+	var inertia = actor.linear_velocity.linear_interpolate(Vector3(), (0.75 * int(actor.is_on_floor()) + 1.25) *friction * _delta)
 	if inertia.length() < 1:
 		inertia = Vector3()
 	var target = actor.direction * n_speed + inertia 
 	actor.direction.y = 0
-	var temp_velocity = actor.velocity.linear_interpolate(target, n_speed * _delta)
+	var temp_velocity = actor.linear_velocity.linear_interpolate(target, n_speed * _delta)
 	
-	# Applies interpolation to the velocity vector
-	actor.velocity.x = temp_velocity.x
-	actor.velocity.z = temp_velocity.z
+	# Applies interpolation to the linear_velocity vector
+	actor.linear_velocity.x = temp_velocity.x
+	actor.linear_velocity.z = temp_velocity.z
 	
-	# Calls the motion function by passing the velocity vector
-	actor.velocity = actor.move_and_slide(actor.velocity, Vector3(0,1,0), false, 4, PI/4, false)
+	# Calls the motion function by passing the linear_velocity vector
+	actor.linear_velocity = actor.move_and_slide(actor.linear_velocity, Vector3(0,1,0), false, 4, PI/4, false)
 	
 	for index in actor.get_slide_count():
 		var collision = actor.get_slide_collision(index)
@@ -120,7 +120,7 @@ func _sprint(input : Dictionary, _delta : float) -> void:
 		n_speed = lerp(n_speed, toggle_speed, 3 * _delta)
 	else:
 		# Create a character speed interpolation
-		actor.velocity.y -= 0.1*actor.run_speed*_delta
+		actor.linear_velocity.y -= 0.1*actor.run_speed*_delta
 		if slide_on_crouch and actor.run_speed>12 and actor.is_on_floor():
 			n_speed = lerp(n_speed, w_speed * actor.multiplier , 15* _delta)
 			actor.multiplier = lerp(actor.multiplier, 0.8, _delta*20)

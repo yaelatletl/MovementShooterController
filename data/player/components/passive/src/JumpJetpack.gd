@@ -11,7 +11,7 @@ func _physics_process(delta):
 	if not enabled:
 		return
 	if actor.input["extra_jump"] and not (not actor.is_far_from_floor() or actor.is_on_wall()) and fuel > 0:
-		actor.velocity.y = lerp(actor.velocity.y, 10, 100*delta)
+		actor.linear_velocity.y = lerp(actor.linear_velocity.y, 10, 100*delta)
 		fuel -= depleation_rate
 	elif fuel <= fuel_limit and (not actor.is_far_from_floor() or actor.is_on_wall()): 
 		fuel += refill_rate

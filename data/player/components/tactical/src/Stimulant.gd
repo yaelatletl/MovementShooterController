@@ -1,6 +1,6 @@
 extends Component
 
-#Stimulant: Increases velocity by "velocity_constant" per phys frame during "stim_duration" 
+#Stimulant: Increases linear_velocity by "velocity_constant" per phys frame during "stim_duration" 
 #numbers above 1.1 get easily out of hand, use with care. 
 
 #TODO -  refactor for the recharging system
@@ -33,4 +33,4 @@ func _functional_routine(input: Dictionary)-> void:
 		toggle_stim()
 		
 	if active:
-		actor.velocity += actor.velocity.normalized()*Vector3(1,0,1)*velocity_constant
+		actor.linear_velocity += actor.linear_velocity.normalized()*Vector3(1,0,1)*velocity_constant

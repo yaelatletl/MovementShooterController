@@ -84,7 +84,7 @@ func _physics_process(delta):
 		else: 
 			if attached_to is RigidBody:
 				attached_to.linear_velocity +=  delta*force*(-direction)/attached_to.mass
-				actor.velocity +=  (0.75*force*(direction))/attached_to.mass*delta
+				actor.linear_velocity +=  (0.75*force*(direction))/attached_to.mass*delta
 			else:
-				actor.velocity +=  force*(direction)*delta
+				actor.linear_velocity +=  force*(direction)*delta
 			

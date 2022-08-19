@@ -1,7 +1,7 @@
 extends Component
 
 #Impulse: Adds an impulse to the player's movement based on the direction vector, 
-# instead of the player's velocity.
+# instead of the player's linear_velocity.
 # We let the player use this ability twice
 
 export(float) var impulse_strength : float = 7.0
@@ -18,7 +18,7 @@ func _ready():
 
 func impulse() -> void:
 	if charges > 0 and actor.direction.length() > 0: 
-		actor.velocity += actor.direction.normalized()*impulse_strength
+		actor.linear_velocity += actor.direction.normalized()*impulse_strength
 		charges -= 1
 		timer = get_tree().create_timer(charge_time)
 		timer.connect("timeout", self, "add_charge")

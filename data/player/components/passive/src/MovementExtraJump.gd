@@ -42,6 +42,6 @@ func _physics_process(delta):
 			remaining_jumps -= 1
 			if movement != null:
 				movement.gravity /= 2
-			actor.velocity.y += jump_height
-			actor.velocity *= 1.2
+			actor.linear_velocity.y += jump_height
+			actor.linear_velocity *= 1.2
 			triggerable = false

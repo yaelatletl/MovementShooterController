@@ -49,23 +49,23 @@ func _movement(input : Dictionary, _delta : float) -> void:
 #		if get_key(input, "crouch"):
 	else:
 		# Applies gravity
-		actor.velocity.y += -gravity * _delta
+		actor.linear_velocity.y += -gravity * _delta
 	
 	# Interpolates between the current position and the future position of the character
 	actor.direction.normalized()
-	var inertia = actor.velocity.linear_interpolate(Vector3(), (0.75 * int(actor.is_on_floor()) + 1.25) *friction * _delta)
+	var inertia = actor.linear_velocity.linear_interpolate(Vector3(), (0.75 * int(actor.is_on_floor()) + 1.25) *friction * _delta)
 	if inertia.length() < 1:
 		inertia = Vector3()
 	var target = actor.direction * n_speed + inertia 
 	actor.direction.y = 0
-	var temp_velocity = actor.velocity.linear_interpolate(target, n_speed * _delta)
+	var temp_velocity = actor.linear_velocity.linear_interpolate(target, n_speed * _delta)
 	
-	# Applies interpolation to the velocity vector
-	actor.velocity.x = temp_velocity.x
-	actor.velocity.z = temp_velocity.z
+	# Applies interpolation to the linear_velocity vector
+	actor.linear_velocity.x = temp_velocity.x
+	actor.linear_velocity.z = temp_velocity.z
 	
-	# Calls the motion function by passing the velocity vector
-	actor.velocity = actor.move_and_slide(actor.velocity, Vector3(0,1,0), false, 4, PI/4, false)
+	# Calls the motion function by passing the linear_velocity vector
+	actor.linear_velocity = actor.move_and_slide(actor.linear_velocity, Vector3(0,1,0), false, 4, PI/4, false)
 	
 	for index in actor.get_slide_count():
 		var collision = actor.get_slide_collision(index)

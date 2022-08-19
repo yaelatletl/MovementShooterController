@@ -18,7 +18,7 @@ func _physics_process(delta: float) -> void:
 		rset_unreliable("on_the_net_transform", actor.global_transform.origin)
 		rset_unreliable("on_the_net_camera_look", head.rotation)
 		rset_unreliable("on_the_net_height", shape.shape.height)
-		rset_unreliable("on_the_net_velocity", actor.velocity)
+		rset_unreliable("on_the_net_velocity", actor.linear_velocity)
 	else:
 		actor.global_transform.origin = lerp(actor.global_transform.origin, 
 			on_the_net_transform, 
@@ -30,9 +30,9 @@ func _physics_process(delta: float) -> void:
 			clamp(abs(shape.shape.height-on_the_net_height)*delta, delta, 1.0)
 		)
 
-		actor.velocity = lerp(actor.velocity, 
+		actor.linear_velocity = lerp(actor.linear_velocity, 
 			on_the_net_velocity, 
-			clamp(delta*actor.velocity.distance_to(on_the_net_velocity), delta, 1.0)
+			clamp(delta*actor.linear_velocity.distance_to(on_the_net_velocity), delta, 1.0)
 		)
 	if is_network_master():
 		rset_unreliable_id(1, "local_camera_look", head.rotation)

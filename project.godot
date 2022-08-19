@@ -24,6 +24,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/scripts/objects_gameplay/PickableGeneric.gd"
 }, {
+"base": "InteractableGeneric",
+"class": "InteractableInterface",
+"language": "GDScript",
+"path": "res://data/scripts/objects_gameplay/InteractableInterface.gd"
+}, {
+"base": "RayCast",
+"class": "PortalRayCast",
+"language": "GDScript",
+"path": "res://assets/scripts/PortalRayCast.gd"
+}, {
 "base": "RigidBody",
 "class": "Projectile",
 "language": "GDScript",
@@ -43,6 +53,8 @@ _global_script_class_icons={
 "CircularContainer": "",
 "Component": "",
 "InteractableGeneric": "",
+"InteractableInterface": "",
+"PortalRayCast": "",
 "Projectile": "",
 "ProjectileWeapon": "",
 "Weapon": ""
@@ -72,6 +84,7 @@ multirun/other_window_args="client"
 
 window/size/width=1280
 window/size/height=720
+window/vsync/vsync_via_compositor=true
 
 [editor_plugins]
 

@@ -22,17 +22,17 @@ func _physics_process(delta):
 		if height_cast.get_collider() is StaticBody and character.run_speed < 12:
 			on_ledge = true
 	if on_ledge and character.is_far_from_floor() and not forward_cast.is_colliding():
-		character.velocity = -character.wall_direction*2
-		character.velocity.y += movement.gravity*delta
+		character.linear_velocity = -character.wall_direction*2
+		character.linear_velocity.y += movement.gravity*delta
 		if jump_over:
-			character.velocity += (-character.wall_direction + Vector3(0,1.5,0)) * 10
+			character.linear_velocity += (-character.wall_direction + Vector3(0,1.5,0)) * 10
 	else:
 		rotation_degrees.y = character.head.rotation_degrees.y
 		jump_over = false
 		on_ledge = false
 	if character.input["crouch"] and on_ledge:
 		on_ledge = false
-		character.velocity = character.wall_direction*2
+		character.linear_velocity = character.wall_direction*2
 	elif character.input["jump"] and on_ledge:
 		jump_over = true
 
