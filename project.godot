@@ -208,7 +208,7 @@ sync_debug={
 [physics]
 
 3d/smooth_trimesh_collision=true
-common/physics_fps=90
+common/physics_fps=120
 3d/physics_engine="Bullet"
 3d/active_soft_world=false
 

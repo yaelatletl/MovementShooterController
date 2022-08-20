@@ -51,7 +51,7 @@ func _physics_process(delta):
 	if abs(blade.rotation_degrees.y) < 25:
 		if is_zero_approx(abs(blade.linear_velocity.y)): 
 			stiffen_and_sleep()
-			print("sleeping")
+		#	print("sleeping")
 		if closing:
 			blade.linear_velocity = lerp(blade.linear_velocity, Vector3.ZERO, delta)
 			blade.angular_velocity = lerp(blade.angular_velocity, Vector3.ZERO, delta)

@@ -8,6 +8,8 @@ var interactable
 var zipline_direction = Vector3.ZERO
 
 var current_bodies = []
+var linked_bodies = []
+var area : Area
 #little struct here:
 #{
 #	body: body,
@@ -16,7 +18,7 @@ var current_bodies = []
 #}
 
 func _ready():
-	var area = Area.new()
+	area = Area.new()
 	var collision = CollisionShape.new()
 	var distance = start.global_transform.origin.distance_to(end.global_transform.origin)
 	var angle = start.global_transform.origin.angle_to(end.global_transform.origin)
@@ -44,30 +46,39 @@ func _on_interacted_successfully(body):
 		var struct = {}
 		struct["body"] = body
 		struct["zip_direction"] = body.head_basis.z.dot(zipline_direction)
+		linked_bodies.append(body)
 		current_bodies.append(struct)
 
 func _on_body_exited(body):
-	print("body exited")
+	if not body in linked_bodies:
+		return
 	for phys_body in current_bodies:
-		print(phys_body)
-		if phys_body["body"].get_rid() == body.get_rid():
-			current_bodies.erase(phys_body)
-			print("removed")
-			break
+		if phys_body["body"] == body:
+			print(phys_body)
+			_on_body_deattached(phys_body)
+			
 
 func _on_body_deattached(struct):
-	current_bodies.erase(struct)
+	for i in current_bodies.size():
+		if current_bodies[i]["body"] == struct["body"]:
+			if current_bodies[i]["body"] in linked_bodies:
+				linked_bodies.erase(current_bodies[i]["body"])
+			current_bodies.remove(i)
+			break
+
 
 func _physics_process(delta):
 	for struct in current_bodies:
+		if not area.overlaps_body(struct["body"]):
+				_on_body_deattached(struct)
+				return
 		if struct["zip_direction"] > 0:
 			if struct["body"].global_transform.origin.distance_to(start.global_transform.origin) < 1:
 				_on_body_deattached(struct)
 			else:
-				struct["body"].linear_velocity = zipline_direction * -10
+				struct["body"].linear_velocity = zipline_direction * -10 
 		else:
 			if struct["body"].global_transform.origin.distance_to(end.global_transform.origin) < 1:
 				_on_body_deattached(struct)
 			else:
-				struct["body"].linear_velocity = zipline_direction * 10
-
+				struct["body"].linear_velocity = zipline_direction * 10 
