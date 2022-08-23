@@ -7,6 +7,10 @@ onready var links := {
 }
 var cameras = []
 
+export(NodePath) var environment_path = ""
+
+onready var environment = get_node(environment_path)
+
 # Dictionary between regular bodies and their clones
 var clones := {}
 
@@ -19,6 +23,8 @@ func init_portal(portal: Node) -> void:
 	var tex := link_viewport.get_texture()
 	var mat = portal.get_node("Screen").get_node("Back").material_override
 	mat.set_shader_param("texture_albedo", tex)
+	if environment != null:
+		portal_camera.environment = environment.environment
 	cameras.append(portal_camera)
 	
 
@@ -88,6 +94,9 @@ func swap_body_clone(body: PhysicsBody, clone: PhysicsBody) -> void:
 		clone.linear_velocity = body_vel
 	var body_pos := body.global_transform
 	var clone_pos := clone.global_transform
+	if body is KinematicBody:
+		body.get_node("weapons").global_transform.basis = get_camera().global_transform.basis
+		body.linear_velocity = body.linear_velocity.rotated(Vector3.UP, PI)
 	clone.global_transform = body_pos
 	body.global_transform = clone_pos
 
@@ -111,6 +120,8 @@ func remove_cameras(node: Node) -> void:
 
 
 func handle_clones(portal: Node, body: PhysicsBody) -> void:
+	if body is StaticBody:
+		return
 	var linked: Node = links[portal]
 
 	var body_pos := body.global_transform
@@ -135,9 +146,7 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 		#clone.mode = RigidBody.MODE_KINEMATIC
 		clones[body] = clone
 		add_child(clone)
-		if clone is KinematicBody:
-			pass
-		else:
+		if clone is RigidBody:
 			clone.linear_velocity = clone.linear_velocity.rotated(up, PI)
 		clone_duplicate_material(clone)
 		remove_cameras(clone)
@@ -149,6 +158,7 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	# the portal
 	if not in_front_of_portal(portal, body_pos):
 		swap_body_clone(body, clone)
+		#yield(get_tree().create_timer(1.2), "timeout")
 
 
 func get_portal_plane(portal: Spatial) -> Plane:
@@ -162,6 +172,8 @@ func portal_plane_rel_body(portal: Spatial, body: PhysicsBody) -> Color:
 
 
 func add_clip_plane(portal: Spatial, body: PhysicsBody) -> void:
+	if body is StaticBody:
+		return
 	var plane_pos := portal_plane_rel_body(portal, body)
 	for body_child in body.get_children():
 		if body_child.has_method("get_surface_material"):
@@ -192,8 +204,9 @@ func handle_body_exit_portal(portal: Node, body: PhysicsBody) -> void:
 	if not body in clones:
 		return
 	var clone: Node = clones[body]
-	clones.erase(body)
-	clone.queue_free()
+	if is_instance_valid(clone):
+		clones.erase(body)
+		clone.queue_free()
 
 
 func _on_portal_a_body_exited(body: PhysicsBody) -> void:

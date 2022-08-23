@@ -27,8 +27,8 @@ size = Vector2( 4, 4 )
 extents = Vector3( 2, 2, 0 )
 
 [sub_resource type="CylinderShape" id=5]
-radius = 0.1
 height = 4.0
+radius = 0.1
 
 [sub_resource type="BoxShape" id=6]
 
@@ -42,31 +42,26 @@ height = 4.0
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0.5 )
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
-material/0 = null
 
 [node name="Left" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, 0, -1, 0, 1, 0, 0.125, 0, -4.37114e-08, 2, 0, 0.25 )
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
-material/0 = null
 
 [node name="Right" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, 0, 1, 0, 1, 0, -0.125, 0, -4.37114e-08, -2, 0, 0.25 )
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
-material/0 = null
 
 [node name="Bottom" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, -1, -4.37114e-08, 0, -4.37114e-08, 1, -0.125, 4.37114e-08, 1.91069e-15, 0, -2, 0.25 )
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
-material/0 = null
 
 [node name="Top" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, 1, -4.37114e-08, 0, -4.37114e-08, -1, -0.125, -4.37114e-08, 1.91069e-15, 0, 2, 0.25 )
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
-material/0 = null
 
 [node name="Viewport" type="Viewport" parent="."]
 keep_3d_linear = true
@@ -74,9 +69,7 @@ keep_3d_linear = true
 [node name="Camera" type="Camera" parent="Viewport"]
 current = true
 
-[node name="Area" type="Area" parent="." groups=[
-"portal_area",
-]]
+[node name="Area" type="Area" parent="." groups=["portal_area"]]
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 4 )
@@ -86,47 +79,59 @@ shape = SubResource( 4 )
 [node name="CollisionShapeLowFront" type="CollisionShape" parent="Border"]
 transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -2.1, 0 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="CollisionShapeLowMiddle" type="CollisionShape" parent="Border"]
 transform = Transform( 2, 0, 0, 0, 0.1, 0, 0, 0, 0.25, 0, -2.1, 0.25 )
 shape = SubResource( 6 )
+disabled = true
 
 [node name="CollisionShapeLowBack" type="CollisionShape" parent="Border"]
 transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -2.1, 0.5 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="CollisionShapeHighFront" type="CollisionShape" parent="Border"]
 transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 2.1, 0 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="CollisionShapeHighMiddle" type="CollisionShape" parent="Border"]
 transform = Transform( 2, 0, 0, 0, 0.1, 0, 0, 0, 0.25, 0, 2.1, 0.25 )
 shape = SubResource( 6 )
+disabled = true
 
 [node name="CollisionShapeHighBack" type="CollisionShape" parent="Border"]
 transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 2.1, 0.5 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="CollisionShapeLeftFront" type="CollisionShape" parent="Border"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1, 0, 0 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="CollisionShapeLeftMiddle" type="CollisionShape" parent="Border"]
 transform = Transform( 0.1, 0, 0, 0, 2, 0, 0, 0, 0.25, 2.1, 0, 0.25 )
 shape = SubResource( 6 )
+disabled = true
 
 [node name="CollisionShapeLeftBack" type="CollisionShape" parent="Border"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1, 0, 0.5 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="CollisionShapeRightFront" type="CollisionShape" parent="Border"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 0, 0 )
 shape = SubResource( 5 )
+disabled = true
 
 [node name="CollisionShapeRightMiddle" type="CollisionShape" parent="Border"]
 transform = Transform( 0.1, 0, 0, 0, 2, 0, 0, 0, 0.25, -2.1, 0, 0.25 )
 shape = SubResource( 6 )
+disabled = true
 
 [node name="CollisionShapeRightBack" type="CollisionShape" parent="Border"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, 0, 0.5 )
 shape = SubResource( 5 )
+disabled = true
