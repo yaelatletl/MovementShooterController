@@ -48,6 +48,10 @@ func _on_interacted_successfully(body):
 		var struct = {}
 		struct["body"] = body
 		struct["zip_direction"] = body.head_basis.z.dot(zipline_direction)
+		if body._get_component("movement_basic"):
+			struct["movement"] = body._get_component("movement_basic")
+		else:
+			struct["movement"] = null
 		linked_bodies.append(body)
 		current_bodies.append(struct)
 		body.global_transform.origin = get_point_to_snap(body.global_transform.origin)
@@ -61,11 +65,13 @@ func _on_body_exited(body):
 			_on_body_deattached(phys_body)
 			
 
-func _on_body_deattached(struct):
+func _on_body_deattached(struct, delta=0.0):
 	for i in current_bodies.size():
 		if current_bodies[i]["body"] == struct["body"]:
+			var body = current_bodies[i]["body"]
 			if current_bodies[i]["body"] in linked_bodies:
 				linked_bodies.erase(current_bodies[i]["body"])
+				current_bodies[i]["movement"].add_impulse(-body.head_basis.z.normalized() * body.linear_velocity.length())
 			current_bodies.remove(i)
 			break
 
@@ -86,18 +92,18 @@ func get_point_to_snap(actor_origin : Vector3):
 func _physics_process(delta):
 	for struct in current_bodies:
 		if not area.overlaps_body(struct["body"]):
-				_on_body_deattached(struct)
+				_on_body_deattached(struct, delta)
 				return
 				
 		if struct["zip_direction"] > 0:
 			if struct["body"].global_transform.origin.distance_to(start.global_transform.origin) < 1:
-				_on_body_deattached(struct)
+				_on_body_deattached(struct, delta)
 			else:
 				#struct["body"].linear_velocity = zipline_direction * -10 
 				struct["body"].linear_velocity = struct["body"].global_transform.origin.direction_to(start.global_transform.origin) * 10
 		else:
 			if struct["body"].global_transform.origin.distance_to(end.global_transform.origin) < 1:
-				_on_body_deattached(struct)
+				_on_body_deattached(struct, delta)
 			else:
 				#struct["body"].linear_velocity = zipline_direction * 10 
 				struct["body"].linear_velocity = struct["body"].global_transform.origin.direction_to(end.global_transform.origin) * 10

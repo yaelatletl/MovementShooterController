@@ -17,6 +17,8 @@ export(NodePath) var collision : NodePath = ""
 onready var col = get_node(collision)
 
 var _delta
+var impulse = Vector3.ZERO
+
 func _physics_process(delta : float) -> void:
 	_delta = delta
 	if enabled:
@@ -72,6 +74,8 @@ func _movement(input : Dictionary, _delta : float) -> void:
 	# Applies interpolation to the linear_velocity vector
 	actor.linear_velocity.x = temp_velocity.x
 	actor.linear_velocity.z = temp_velocity.z
+	
+	_impulse(_delta)
 	
 	# Calls the motion function by passing the linear_velocity vector
 	actor.linear_velocity = actor.move_and_slide(actor.linear_velocity, Vector3(0,1,0), false, 4, PI/4, false)
@@ -129,3 +133,12 @@ func _sprint(input : Dictionary, _delta : float) -> void:
 			n_speed = lerp(n_speed, c_speed, actor.multiplier*_delta)
 			actor.reset_slide_multi()
 			actor.reset_wall_multi()
+
+func _impulse(delta : float) -> void:
+	if not is_zero_approx(abs(impulse.length())):
+		actor.linear_velocity += impulse.linear_interpolate(Vector3.ZERO, delta) * delta
+		impulse -= impulse.linear_interpolate(Vector3.ZERO, delta) * delta
+
+
+func add_impulse(impulse_in : Vector3) -> void:
+	impulse += impulse_in
