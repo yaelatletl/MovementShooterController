@@ -45,7 +45,7 @@ size = Vector3( 0.451, 2.005, 0.633 )
 resource_local_to_scene = true
 code = "shader_type spatial;
 render_mode unshaded;
-uniform sampler2D texture_albedo : hint_white;
+uniform sampler2D texture_albedo : hint_albedo;
 
 void vertex() {
 }
@@ -355,7 +355,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878 )
 environment_path = NodePath("../post_processing/environment")
 
 [node name="PortalA" parent="PortalPair" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7367, 2.93793, 19.8531 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2436, 3.01983, 0 )
 
 [node name="Back" parent="PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 14 )
@@ -372,19 +372,8 @@ material_override = SubResource( 14 )
 [node name="Top" parent="PortalPair/PortalA/Screen" index="4"]
 material_override = SubResource( 14 )
 
-[node name="Viewport" parent="PortalPair/PortalA" index="2"]
-msaa = 1
-fxaa = true
-shadow_atlas_size = 256
-
-[node name="Camera" parent="PortalPair/PortalA/Viewport" index="0"]
-environment = ExtResource( 13 )
-
-[node name="CollisionShape" parent="PortalPair/PortalA/Area" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.472618 )
-
 [node name="PortalB" parent="PortalPair" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.8016, 3.06224, 14.097 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.24356, 15.1427, 0 )
 
 [node name="Back" parent="PortalPair/PortalB/Screen" index="0"]
 material_override = SubResource( 16 )
@@ -400,19 +389,6 @@ material_override = SubResource( 16 )
 
 [node name="Top" parent="PortalPair/PortalB/Screen" index="4"]
 material_override = SubResource( 16 )
-
-[node name="Viewport" parent="PortalPair/PortalB" index="2"]
-msaa = 1
-fxaa = true
-shadow_atlas_size = 256
-
-[node name="Camera" parent="PortalPair/PortalB/Viewport" index="0"]
-environment = ExtResource( 13 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.0403, 2.00811, 29.7072 )
-mesh = SubResource( 12 )
-skeleton = NodePath("../scenario/ZipLine/Start")
 
 [editable path="passive_marker_man"]
 [editable path="PortalPair"]

@@ -30,9 +30,11 @@ func stop_interact():
 		current_timer = null
 	interaction_time_fulfilled = false
 	emit_signal("time_left_changed", interaction_time)
+	clear_interact()
 
 func clear_interact():
-	actor._get_component("HUD").interact_board.hide_message()
+	if actor._get_component("HUD"):
+		actor._get_component("HUD").interact_board.hide_message()
 	if current_timer != null:
 		current_timer.disconnect("timeout", self, "interaction_time_fulfilled")
 		current_timer = null
@@ -52,5 +54,5 @@ func _physics_process(delta):
 			if waiting_for_interaction.has_method("interaction_triggered"):
 				if interaction_time_fulfilled:
 					waiting_for_interaction.interaction_triggered(actor)
-	else:
+	elif interaction_time > 0.0:
 		stop_interact()

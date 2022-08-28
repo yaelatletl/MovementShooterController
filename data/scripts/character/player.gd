@@ -87,7 +87,9 @@ remotesync func die():
 
 func request_interact(interactable : Spatial, message : String, time : float = 0.0):
 	#We need to pass the message to the HUD
-	_get_component("interactor").request_interact(interactable, message, time)
+	if	_get_component("interactor"):
+		_get_component("interactor").request_interact(interactable, message, time)
 
 func stop_interact():
-	_get_component("HUD").interact_board.hide_message()
+	if _get_component("interactor"):
+		_get_component("interactor").stop_interact()
