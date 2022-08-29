@@ -78,7 +78,10 @@ func _process(delta: float) -> void:
 # Return whether the position is in front of a portal
 func in_front_of_portal(portal: Node, pos: Transform) -> bool:
 	var portal_pos = portal.global_transform
-	return portal_pos.xform_inv(pos.origin).z < 0
+	var distance = portal_pos.xform_inv(pos.origin).z
+	var further_from_portal = distance < 0
+	var approximately_in_front = is_zero_approx(distance)
+	return further_from_portal and not approximately_in_front
 
 
 # Swap the velocities and positions of a body and its clone
@@ -127,6 +130,9 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	var body_pos := body.global_transform
 	var portal_pos = portal.global_transform
 	var linked_pos = linked.global_transform
+	var portal_direction = portal_pos.basis.z
+	var linked_direction = linked_pos.basis.z
+	var angle = portal_direction.angle_to(linked_direction)
 	var up := Vector3(0, 1, 0)
 
 	# Position of body relative to portal
@@ -137,6 +143,9 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 		clone = clones[body]
 	elif body in clones.values():
 		return
+	# Swap clone and actual if the actual object is more than halfway through 
+	# the portal
+	
 	else:
 		clone = body.duplicate(0)
 		if clone is KinematicBody:
@@ -147,18 +156,16 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 		clones[body] = clone
 		add_child(clone)
 		if clone is RigidBody:
-			clone.linear_velocity = clone.linear_velocity.rotated(up, PI)
+			clone.linear_velocity = clone.linear_velocity.rotated(up, angle)
 		clone_duplicate_material(clone)
 		remove_cameras(clone)
-
-	clone.global_transform = linked_pos \
-			* rel_pos.rotated(up, PI)
-
-	# Swap clone and actual if the actual object is more than halfway through 
-	# the portal
 	if not in_front_of_portal(portal, body_pos):
 		swap_body_clone(body, clone)
 		#yield(get_tree().create_timer(1.2), "timeout")
+	clone.global_transform = linked_pos \
+			* rel_pos.rotated(up, angle)
+
+	
 
 
 func get_portal_plane(portal: Spatial) -> Plane:

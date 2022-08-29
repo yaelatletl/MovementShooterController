@@ -1,6 +1,7 @@
 extends Spatial
 class_name InteractableGeneric 
 export(String) var message = ""
+export(bool) var toggable = false
 onready var interaction_area = $PickArea
 
 

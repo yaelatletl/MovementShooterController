@@ -32,6 +32,7 @@ func _ready():
 	debug_shape.mesh.size = collision.shape.extents*2
 	area.connect("body_exited", self, "_on_body_exited")
 	interactable = InteractableInterface.new()
+	interactable.toggable = true
 	area.add_child(collision)
 	area.add_child(debug_shape)
 	interactable.add_child(area)
@@ -44,6 +45,12 @@ func _ready():
 	interactable.connect("interacted_successfully", self, "_on_interacted_successfully")
 
 func _on_interacted_successfully(body):
+	if body in linked_bodies:
+		_on_body_exited(body)
+	else:
+		hook_on(body)
+
+func hook_on(body):
 	if body.has_method("_get_component"):
 		var struct = {}
 		struct["body"] = body

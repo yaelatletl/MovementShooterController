@@ -68,7 +68,10 @@ material_override = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0 )
 
 [node name="PortalB" parent="." instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 0 )
+
+[node name="Screen" parent="PortalB" index="1"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 
 [node name="Back" parent="PortalB/Screen" index="0"]
 material_override = SubResource( 4 )
@@ -86,7 +89,13 @@ material_override = SubResource( 4 )
 material_override = SubResource( 4 )
 
 [node name="Camera" parent="PortalB/Viewport" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4, 0, 0 )
+
+[node name="Area" parent="PortalB" index="3"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+
+[node name="Border" parent="PortalB" index="4"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 
 [connection signal="body_exited" from="PortalA/Area" to="." method="_on_portal_a_body_exited"]
 [connection signal="body_exited" from="PortalB/Area" to="." method="_on_portal_b_body_exited"]
