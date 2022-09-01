@@ -39,6 +39,7 @@ func _physics_process(delta):
 		_toggle_jump()
 	if (actor.input["jump"]) and triggerable and (remaining_jumps!=0 or jumps_before_floor == -1):
 		if actor.is_far_from_floor() or actor.is_on_wall():
+			actor.input["jump"] = 0
 			remaining_jumps -= 1
 			if movement != null:
 				movement.gravity /= 2

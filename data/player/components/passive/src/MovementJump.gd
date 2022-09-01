@@ -26,6 +26,7 @@ func _jump(_delta) -> void:
 	# Makes the player jump if he is on the ground
 	if actor.input["jump"] and can_jump:
 		_toggle_jump()
+		#actor.input["jump"] = 0 #Consumes the input
 		actor.reset_wall_multi()
 		if not actor.is_far_from_floor():
 			actor.linear_velocity.y += jump_height

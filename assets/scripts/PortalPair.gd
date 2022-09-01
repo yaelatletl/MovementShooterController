@@ -69,7 +69,10 @@ func _process(delta: float) -> void:
 			return
 		_ready()
 	for camera in cameras:
-		camera.fov = get_camera().fov
+		if not camera.is_inside_tree():
+			return
+		if get_camera() != null:
+			camera.fov = get_camera().fov
 	for portal in portals:
 		move_camera(portal)
 		sync_viewport(portal)

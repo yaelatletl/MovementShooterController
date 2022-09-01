@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
 [ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
@@ -11,7 +11,6 @@
 [ext_resource path="res://data/player/character.tscn" type="PackedScene" id=9]
 [ext_resource path="res://data/pickables/Kriss.tscn" type="PackedScene" id=10]
 [ext_resource path="res://data/prefabs/ZipLine.gd" type="Script" id=11]
-[ext_resource path="res://assets/scenes/PortalPair.tscn" type="PackedScene" id=12]
 [ext_resource path="res://default_env.tres" type="Environment" id=13]
 
 [sub_resource type="CubeMesh" id=3]
@@ -40,46 +39,6 @@ extents = Vector3( 0.203265, 1, 0.21215 )
 
 [sub_resource type="CubeMesh" id=12]
 size = Vector3( 0.451, 2.005, 0.633 )
-
-[sub_resource type="Shader" id=13]
-resource_local_to_scene = true
-code = "shader_type spatial;
-render_mode unshaded;
-uniform sampler2D texture_albedo : hint_albedo;
-
-void vertex() {
-}
-
-void fragment() {
-	vec2 base_uv = SCREEN_UV;
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = albedo_tex.rgb;
-}
-"
-
-[sub_resource type="ShaderMaterial" id=14]
-resource_local_to_scene = true
-shader = SubResource( 13 )
-
-[sub_resource type="Shader" id=15]
-resource_local_to_scene = true
-code = "shader_type spatial;
-render_mode unshaded;
-uniform sampler2D texture_albedo : hint_albedo;
-
-void vertex() {
-}
-
-void fragment() {
-	vec2 base_uv = SCREEN_UV;
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = albedo_tex.rgb;
-}
-"
-
-[sub_resource type="ShaderMaterial" id=16]
-resource_local_to_scene = true
-shader = SubResource( 15 )
 
 [node name="main" type="Node"]
 
@@ -342,55 +301,13 @@ material/0 = ExtResource( 3 )
 material/1 = ExtResource( 3 )
 script = null
 
-[node name="character" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5931, 6.09109, 30.4703 )
-
 [node name="Kriss" parent="." instance=ExtResource( 10 )]
 transform = Transform( 0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.23478, 1.00195, 7.72478 )
 
 [node name="Spatial" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878 )
 
-[node name="PortalPair" parent="." instance=ExtResource( 12 )]
-environment_path = NodePath("../post_processing/environment")
-
-[node name="PortalA" parent="PortalPair" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2436, 3.01983, 0 )
-
-[node name="Back" parent="PortalPair/PortalA/Screen" index="0"]
-material_override = SubResource( 14 )
-
-[node name="Left" parent="PortalPair/PortalA/Screen" index="1"]
-material_override = SubResource( 14 )
-
-[node name="Right" parent="PortalPair/PortalA/Screen" index="2"]
-material_override = SubResource( 14 )
-
-[node name="Bottom" parent="PortalPair/PortalA/Screen" index="3"]
-material_override = SubResource( 14 )
-
-[node name="Top" parent="PortalPair/PortalA/Screen" index="4"]
-material_override = SubResource( 14 )
-
-[node name="PortalB" parent="PortalPair" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.24356, 15.1427, 0 )
-
-[node name="Back" parent="PortalPair/PortalB/Screen" index="0"]
-material_override = SubResource( 16 )
-
-[node name="Left" parent="PortalPair/PortalB/Screen" index="1"]
-material_override = SubResource( 16 )
-
-[node name="Right" parent="PortalPair/PortalB/Screen" index="2"]
-material_override = SubResource( 16 )
-
-[node name="Bottom" parent="PortalPair/PortalB/Screen" index="3"]
-material_override = SubResource( 16 )
-
-[node name="Top" parent="PortalPair/PortalB/Screen" index="4"]
-material_override = SubResource( 16 )
+[node name="character" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.79919, 5.03176, -2.54569 )
 
 [editable path="passive_marker_man"]
-[editable path="PortalPair"]
-[editable path="PortalPair/PortalA"]
-[editable path="PortalPair/PortalB"]

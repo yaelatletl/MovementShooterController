@@ -14,12 +14,17 @@ func is_projectile(): # Helps avoid cyclic references
 func _init():
 	connect("body_entered", self, "_on_body_entered")
 
+func _ready():
+	get_tree().create_timer(0.1).connect("timeout",  self, "_network_sync")
+
 func add_exceptions(actor):
 	add_collision_exception_with(actor)
 
 func network_sync() -> void:
-	Gamestate.set_in_all_clients(self, "translation", translation)
-
+	if is_inside_tree():
+		Gamestate.set_in_all_clients(self, "translation", translation)
+	get_tree().create_timer(0.1).connect("timeout",  self, "_network_sync")
+	
 func stop() -> void:
 	sleeping = true
 	linear_velocity = Vector3.ZERO
