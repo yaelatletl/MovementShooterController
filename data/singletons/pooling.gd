@@ -5,6 +5,7 @@ var projectiles_waiting = []
 
 var projectiles = {
 	1: preload("res://data/weapons/PlasmaBolt.tscn"),
+	2: preload("res://data/weapons/Grenade.tscn"),
 }
 
 var projectiles_root 
