@@ -13,7 +13,9 @@ var max_bullets : int
 var damage : int
 var reload_speed : float
 var default_fov : int = 100
+var zoom_fov : int = 40
 var uses_randomness : bool = false
+
 func _init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed , use_randomness = false, spread_pattern = [], spread_multiplier = 0.0) -> void:
 		self.actor = actor
 		self.gun_name = gun_name
@@ -207,7 +209,7 @@ func _zoom(input, _delta) -> void:
 		var camera = actor.camera
 		
 		if input and animc != "Reload" and animc != "Hide" and animc != "Draw":
-			camera.fov = lerp(camera.fov, default_fov-30, lerp_speed * _delta)
+			camera.fov = lerp(camera.fov, zoom_fov, lerp_speed * _delta)
 			mesh.translation.y = lerp(mesh.translation.y, 0.001, lerp_speed * _delta)
 			mesh.translation.x = lerp(mesh.translation.x, -0.088, lerp_speed * _delta)
 		else:
