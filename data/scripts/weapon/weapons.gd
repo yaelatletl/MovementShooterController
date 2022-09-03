@@ -56,28 +56,35 @@ func _ready() -> void:
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
 	
 	# Create mk 23 using weapon classs
-	arsenal["mk_23"] = Weapon.new(self, "mk_23", 2.0, 12, 999, 12, 40, 1.2)
+	arsenal["mk_23"] = FormatParser.weapon_from_json("res://data/weapons/tags/mk_23.json")
+	arsenal["mk_23"].actor = self
 	
 	# Create glock 17 using weapon class
-	arsenal["glock_17"] = Weapon.new(self, "glock_17", 3.0, 12, 999, 12, 35, 1.2)
-	
+	arsenal["glock_17"] = FormatParser.weapon_from_json("res://data/weapons/tags/glock_17.json")
+	arsenal["glock_17"].actor = self
+	# Create glock 17 using weapon class
+	arsenal["shotgun"] = FormatParser.weapon_from_json("res://data/weapons/tags/shotgun.json")
+	arsenal["shotgun"].actor = self
 	# Create kriss using weapon class
-	arsenal["kriss"] = Weapon.new(self, "kriss", 6.0, 32, 999, 33, 25, 1.5)
+	arsenal["kriss"] = FormatParser.weapon_from_json("res://data/weapons/tags/kriss.json")
+	arsenal["kriss"].actor = self
 	
-	arsenal["shotgun"] = Weapon.new(self, "shotgun", 0.5, 8, 999, 8, 25, 0.5, true, mastiff_spread, 20)
 	
-	arsenal["plasma"] = ProjectileWeapon.new(self, "plasma", 2.5, 8, 999, 8, 25, 1.5, false, [], 0, 2)
+	arsenal["plasma"] = FormatParser.weapon_from_json("res://data/weapons/tags/plasma.json")
+	arsenal["plasma"].actor = self
 	arsenal["plasma"].actor_temp = character
+
+	#add actors first, then add weapons to tree, otherwise their _ready() code will break
 	for w in arsenal:
 		add_child(arsenal[w])
 		arsenal.values()[current]._hide()
-		arsenal[w].update_actor_relatives(self)
 
 func _physics_process(_delta) -> void:
 	# Call weapon function
 	_weapon(_delta)
 	_handle_guns()
 	_change()
+
 func _process(_delta) -> void:
 	_rotation(_delta)
 	_position(_delta)

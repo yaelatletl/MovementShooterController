@@ -16,7 +16,7 @@ var default_fov : int = 100
 var zoom_fov : int = 40
 var uses_randomness : bool = false
 	
-var weapon_range : int = 200
+var max_range : int = 200
 var spread_pattern : Array = []
 var spread_multiplier : float = 0
 
@@ -43,6 +43,12 @@ func _init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload
 	self.spread_multiplier = spread_multiplier
 	if use_randomness:
 		randomize()
+
+func _ready():
+	if actor == null:
+		printerr("actor must be set before adding to scene")
+		return
+	update_actor_relatives(actor)
 
 func check_relatives() -> bool:
 	if actor == null:
@@ -79,13 +85,13 @@ func update_actor_relatives(actor) -> void:
 
 func setup_spread(spread_pattern, spread_multiplier) -> void:
 	if ray is RayCast:
-		ray.cast_to.z = -weapon_range
+		ray.cast_to.z = -max_range
 	for point in spread_pattern:
 		var new_cast = RayCast.new()
 		new_cast.enabled = true
 		new_cast.cast_to.x = point.x * spread_multiplier 
 		new_cast.cast_to.y = point.y * spread_multiplier 
-		new_cast.cast_to.z = -weapon_range
+		new_cast.cast_to.z = -max_range
 		ray.add_child(new_cast)
 
 func _draw() -> void:

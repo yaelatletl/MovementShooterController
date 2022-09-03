@@ -308,6 +308,6 @@ transform = Transform( 0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878 )
 
 [node name="character" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.79919, 5.03176, -2.54569 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.80833, 5.03176, -2.54569 )
 
 [editable path="passive_marker_man"]
