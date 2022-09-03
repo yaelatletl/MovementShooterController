@@ -20,10 +20,10 @@ func _ready():
 func add_exceptions(actor):
 	add_collision_exception_with(actor)
 
-func network_sync() -> void:
+func _network_sync() -> void:
 	if is_inside_tree():
 		Gamestate.set_in_all_clients(self, "translation", translation)
-	get_tree().create_timer(0.1).connect("timeout",  self, "_network_sync")
+		get_tree().create_timer(0.1).connect("timeout",  self, "_network_sync")
 	
 func stop() -> void:
 	sleeping = true
