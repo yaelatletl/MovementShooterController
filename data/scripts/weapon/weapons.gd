@@ -21,23 +21,6 @@ remotesync var current : int = 0
 
 
 func _ready() -> void:
-	var shotgun_spread_pattern = [
-		Vector2(0, 0),
-		Vector2(1, 0),
-		Vector2(0, 1),
-		Vector2(1, 1),
-		Vector2(-1, 0),
-		Vector2(0, -1),
-		Vector2(-1, -1)
-	]
-	var mastiff_spread = [
-		Vector2(-1, 0),
-		Vector2(-0.5, 0),
-		Vector2(0, 0),
-		Vector2(0.5, 0),
-		Vector2(1, 0)
-	]
-	
 	set_as_toplevel(true)
 	
 	# Get camera node from path
@@ -54,7 +37,8 @@ func _ready() -> void:
 	
 	# Class reference : 
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
-	
+	arsenal["ma75b"] = FormatParser.weapon_from_json("res://data/weapons/tags/ma75b.json")
+	arsenal["ma75b"].actor = self
 	# Create mk 23 using weapon classs
 	arsenal["mk_23"] = FormatParser.weapon_from_json("res://data/weapons/tags/mk_23.json")
 	arsenal["mk_23"].actor = self
@@ -68,6 +52,7 @@ func _ready() -> void:
 	# Create kriss using weapon class
 	arsenal["kriss"] = FormatParser.weapon_from_json("res://data/weapons/tags/kriss.json")
 	arsenal["kriss"].actor = self
+	
 	
 	
 	arsenal["plasma"] = FormatParser.weapon_from_json("res://data/weapons/tags/plasma.json")

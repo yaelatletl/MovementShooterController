@@ -38,10 +38,11 @@ func _init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload
 	self.max_bullets = max_bullets
 	self.damage = damage
 	self.reload_speed = reload_speed
-	self.uses_randomness = use_randomness
+	self.uses_randomness = bool(use_randomness)
 	self.spread_pattern = spread_pattern
 	self.spread_multiplier = spread_multiplier
-	if use_randomness:
+	if self.uses_randomness:
+		print("RANDOM")
 		randomize()
 
 func _ready():
@@ -70,13 +71,12 @@ func check_relatives() -> bool:
 func update_actor_relatives(actor) -> void:
 	# Get animation node
 	anim = actor.get_node("{}/mesh/anim".format([gun_name], "{}"))
+	mesh = actor.get_node("{}".format([gun_name], "{}"))
+	effect = actor.get_node("{}/effect".format([gun_name], "{}"))
 	
 	# Get current animation
 	animc = anim.current_animation
 	
-	# Get animation node
-	mesh = actor.get_node("{}".format([gun_name], "{}"))
-	effect = actor.get_node("{}/effect".format([gun_name], "{}"))
 	ray = actor.get_node("{}/ray".format([gun_name], "{}"))
 	audio = actor.get_node("{}/audio".format([gun_name], "{}"))
 	if spread_pattern.size() > 0:
@@ -118,7 +118,10 @@ func _sprint(sprint, _delta) -> void:
 	else:
 		mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
 
-func _shoot_cast()->void:
+func _shoot_cast() -> void: #Implemented as a virtual method, so that it can be overriden by child classes
+	shoot_raycast()
+
+func shoot_raycast() -> void:
 	if not check_relatives():
 		return
 	if ray is Position3D:
@@ -182,9 +185,10 @@ func make_ray_shoot(ray : RayCast):
 		return
 	var original_cast_to = ray.cast_to
 	if uses_randomness:
-		ray.cast_to.x += rand_range(-ray.cast_to.x, ray.cast_to.x)
-		ray.cast_to.y += rand_range(-ray.cast_to.y, ray.cast_to.y)
-	#print(ray.cast_to)
+		ray.cast_to.x = rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
+		ray.cast_to.y = rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
+		ray.cast_to.z = -200
+	print(ray.cast_to)
 	if ray.is_colliding():
 		# Get barrel node
 		var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
@@ -193,13 +197,15 @@ func make_ray_shoot(ray : RayCast):
 				
 		# Create a instance of trail scene
 		var local_trail = trail.instance()
-		
+		#local_trail.set_as_toplevel(true)
 		# Change trail position to out of barrel position
-		local_trail.translation = barrel.global_transform.origin
+		local_trail.global_transform.origin = barrel.global_transform.origin
 		
 		# Change trail rotation to camera rotation
-		local_trail.rotation = actor.camera.global_transform.basis.get_euler()
-				
+		#local_trail.rotation = actor.camera.global_transform.basis.get_euler()
+		local_trail.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
+		#local_trail.look_at(ray.get_collision_point(), actor.camera.global_transform.basis.y)
+		#local_trail.global_rotation = actor.camera.global_transform.origin.direction_to(ray.to_global(ray.cast_to))
 		# Add the trail to main scene
 		main.add_child(local_trail)
 		var local_damage = int(rand_range(damage/1.5, damage))
@@ -234,7 +240,7 @@ func make_ray_shoot(ray : RayCast):
 		
 		# decal spins to collider normal
 		local_decal.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
-	ray.cast_to = original_cast_to
+	#ray.cast_to = original_cast_to
 
 func _reload() -> void:
 	if not check_relatives():
@@ -253,6 +259,9 @@ func _reload() -> void:
 			Gamestate.set_in_all_clients(self, "ammo", ammo)
 
 func _zoom(input, _delta) -> void:
+	make_zoom(input, _delta)
+
+func make_zoom(input, _delta) -> void:
 	if not check_relatives():
 		return
 	var lerp_speed : int = 30

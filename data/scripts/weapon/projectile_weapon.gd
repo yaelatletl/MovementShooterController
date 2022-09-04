@@ -25,9 +25,11 @@ func setup_spread(spread_pattern, spread_multiplier) -> void:
 		new_cast.cast_to.z = -200
 
 func _shoot_cast()->void:
+	shoot_projectile()
+	
+func shoot_projectile()->void:
 	if camera == null:
 		camera = actor.head.get_node("neck").get_node("camera")
-	var ray = actor.get_node("{}/ray".format([gun_name], "{}"))
 	var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
 	if ray is Position3D:
 		#Handle more than one raycast 

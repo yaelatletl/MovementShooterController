@@ -49,6 +49,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/scripts/weapon/projectile_weapon.gd"
 }, {
+"base": "ProjectileWeapon",
+"class": "SpecialWeapon",
+"language": "GDScript",
+"path": "res://data/scripts/weapon/special_weapon.gd"
+}, {
 "base": "Node",
 "class": "Weapon",
 "language": "GDScript",
@@ -63,6 +68,7 @@ _global_script_class_icons={
 "PortalRayCast": "",
 "Projectile": "",
 "ProjectileWeapon": "",
+"SpecialWeapon": "",
 "Weapon": ""
 }
 
