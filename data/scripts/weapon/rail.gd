@@ -9,4 +9,4 @@ func _ready() -> void:
 	timer.connect("timeout", self, "queue_free")
 
 func _process(_delta) -> void:
-	translation -= (global_transform.basis.z * speed) * _delta
+	global_transform.origin -= (global_transform.basis.z * speed) * _delta

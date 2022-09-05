@@ -197,17 +197,16 @@ func make_ray_shoot(ray : RayCast):
 				
 		# Create a instance of trail scene
 		var local_trail = trail.instance()
-		#local_trail.set_as_toplevel(true)
 		# Change trail position to out of barrel position
 		local_trail.global_transform.origin = barrel.global_transform.origin
 		
-		# Change trail rotation to camera rotation
-		#local_trail.rotation = actor.camera.global_transform.basis.get_euler()
-		local_trail.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
-		#local_trail.look_at(ray.get_collision_point(), actor.camera.global_transform.basis.y)
-		#local_trail.global_rotation = actor.camera.global_transform.origin.direction_to(ray.to_global(ray.cast_to))
+
 		# Add the trail to main scene
 		main.add_child(local_trail)
+		# Change trail rotation to match bullet hit
+		#TODO: Show trails even if the bullet doesn't hit anything
+		local_trail.look_at(ray.get_collision_point(),Vector3(0, 1, 0))
+
 		var local_damage = int(rand_range(damage/1.5, damage))
 		
 		# Do damage
@@ -240,6 +239,7 @@ func make_ray_shoot(ray : RayCast):
 		
 		# decal spins to collider normal
 		local_decal.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
+
 	#ray.cast_to = original_cast_to
 
 func _reload() -> void:
