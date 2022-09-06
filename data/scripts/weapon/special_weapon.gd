@@ -30,10 +30,6 @@ var secondary_spread_pattern = []
 var secondary_spread_multiplier = 0
 var secondary_max_range = 0
 
-func _init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed , use_randomness = false, spread_pattern = [], spread_multiplier = 0.0, projectile = 0).(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier) -> void:
-	._init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier)
-	projectile_type = projectile
-	
 func _ready() -> void:
 	._ready()
 	setup_secondary_spread(secondary_spread_pattern, secondary_spread_multiplier)

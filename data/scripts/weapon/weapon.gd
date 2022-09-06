@@ -19,7 +19,8 @@ var uses_randomness : bool = false
 var max_range : int = 200
 var spread_pattern : Array = []
 var spread_multiplier : float = 0
-
+var max_random_spread_x = 1.0
+var max_random_spread_y = 1.0
 	
 # Get effect node
 var effect = null
@@ -29,23 +30,9 @@ var mesh = null
 var ray = null
 var audio = null
 
-func _init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed , use_randomness = false, spread_pattern = [], spread_multiplier = 0.0) -> void:
-	self.actor = actor
-	self.gun_name = gun_name
-	self.firerate = firerate
-	self.bullets = bullets
-	self.ammo = ammo
-	self.max_bullets = max_bullets
-	self.damage = damage
-	self.reload_speed = reload_speed
-	self.uses_randomness = bool(use_randomness)
-	self.spread_pattern = spread_pattern
-	self.spread_multiplier = spread_multiplier
-	if self.uses_randomness:
-		print("RANDOM")
-		randomize()
-
 func _ready():
+	if uses_randomness:
+		randomize()
 	if actor == null:
 		printerr("actor must be set before adding to scene")
 		return
@@ -185,10 +172,9 @@ func make_ray_shoot(ray : RayCast):
 		return
 	var original_cast_to = ray.cast_to
 	if uses_randomness:
-		ray.cast_to.x = rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
-		ray.cast_to.y = rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
-		ray.cast_to.z = -200
-	print(ray.cast_to)
+		ray.cast_to.x = max_random_spread_x* rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
+		ray.cast_to.y = max_random_spread_y* rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
+		ray.cast_to.z = -max_range
 	if ray.is_colliding():
 		# Get barrel node
 		var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
@@ -198,11 +184,10 @@ func make_ray_shoot(ray : RayCast):
 		# Create a instance of trail scene
 		var local_trail = trail.instance()
 		# Change trail position to out of barrel position
+		main.add_child(local_trail)
 		local_trail.global_transform.origin = barrel.global_transform.origin
 		
-
 		# Add the trail to main scene
-		main.add_child(local_trail)
 		# Change trail rotation to match bullet hit
 		#TODO: Show trails even if the bullet doesn't hit anything
 		local_trail.look_at(ray.get_collision_point(),Vector3(0, 1, 0))

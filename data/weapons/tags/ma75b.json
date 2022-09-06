@@ -27,6 +27,7 @@
 	"secondarySpreadPattern" : [],
 	"secondarySpreadMultiplier" : 0,
 	"secondaryProjectileIndex" : 2,
-	"secondaryRange" : 250
+	"secondaryRange" : 250,
+	"randomSpread" : [0.5,0.8]
 
 }

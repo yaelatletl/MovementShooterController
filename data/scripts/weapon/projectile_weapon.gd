@@ -4,10 +4,8 @@ var projectile_type
 var actor_temp
 var camera = null
 
-func _init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed , use_randomness = false, spread_pattern = [], spread_multiplier = 0.0, projectile = 0).(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier) -> void:
-	._init(actor, gun_name, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier)
-	projectile_type = projectile
-	
+func set_projectile(type):
+	projectile_type = type
 
 func setup_spread(spread_pattern, spread_multiplier) -> void:
 	var ray = actor.get_node("{}/ray".format([gun_name], "{}"))

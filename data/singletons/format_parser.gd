@@ -20,48 +20,15 @@ static func weapon_from_json( path : String ) -> Weapon:
 		var type = int(data.type) # 0 = melee, 1 = raycast, 2 = projectile 
 		match type:
 			0:
-				pass
+				result = Weapon.new() #Change to melee (Using cones I guess.)
 			1:
-				result = Weapon.new(
-					null, 
-					data.name, 
-					data.fireRate, 
-					data.bullets, 
-					data.ammo, 
-					data.maxBullets, 
-					data.damage, 
-					data.reloadSpeed, 
-					bool(data.randomness), 
-					parse_spread_pattern(data.spreadPattern), 
-					data.spreadMultiplier) 
+				result = Weapon.new()
 			2:
-				result = ProjectileWeapon.new(
-					null, 
-					data.name, 
-					data.fireRate, 
-					data.bullets, 
-					data.ammo, 
-					data.maxBullets, 
-					data.damage, 
-					data.reloadSpeed, 
-					bool(data.randomness), 
-					parse_spread_pattern(data.spreadPattern), 
-					data.spreadMultiplier,
-					int(data.projectileIndex)) 
+				result = ProjectileWeapon.new()
+				result.set_projectile(int(data.projectileIndex)) 
 			3:
-				result = SpecialWeapon.new(
-					null, 
-					data.name, 
-					data.fireRate, 
-					data.bullets, 
-					data.ammo, 
-					data.maxBullets, 
-					data.damage, 
-					data.reloadSpeed, 
-					bool(data.randomness), 
-					parse_spread_pattern(data.spreadPattern), 
-					data.spreadMultiplier,
-					int(data.projectileIndex))
+				result = SpecialWeapon.new()
+				result.set_projectile(int(data.projectileIndex)) 
 				result.setup_secondary_fire(
 					int(data.secondaryFireMode),
 					data.secondaryFireRate, 
@@ -77,10 +44,21 @@ static func weapon_from_json( path : String ) -> Weapon:
 				result.right_click_mode = int(data.specialType)
 				result.primary_fire_mode = int(data.primaryFireMode)	
 				result.secondary_max_range = int(data.secondaryRange)
+
+		result.actor = null
+		result.gun_name = data.name
+		result.firerate = data.fireRate
+		result.bullets = data.bullets
+		result.ammo = data.ammo
+		result.max_bullets = data.maxBullets
+		result.damage = data.damage
+		result.reload_speed = data.reloadSpeed
+		result.uses_randomness = bool(data.randomness)
+		result.spread_pattern = parse_spread_pattern(data.spreadPattern)
+		result.spread_multiplier = data.spreadMultiplier
+		result.max_random_spread_x = data.randomSpread[0]
+		result.max_random_spread_y = data.randomSpread[1]
 		result.zoom_fov = data.defaultZoomFOV
 		result.max_range = data.range
-
-	
-
 
 	return result

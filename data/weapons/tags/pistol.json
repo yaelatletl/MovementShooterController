@@ -14,7 +14,7 @@
 	"zoomLevels": [ 60, 30 ],
 	"range" : 200,
 	"clipSize" : 30,
-	"ammoType" : "SMG"
+	"ammoType" : "SMG",
+	"randomSpread" : [0,0]
 
 }
-arsenal["glock_17"] = Weapon.new(self, "glock_17", 3.0, 12, 999, 12, 35, 1.2)

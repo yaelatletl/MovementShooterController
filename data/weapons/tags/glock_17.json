@@ -14,5 +14,6 @@
 	"defaultZoomFOV": 60,
 	"zoomLevels": [ 60, 30 ],
 	"range" : 200,
-	"ammoType" : "SMG"
+	"ammoType" : "SMG",
+	"randomSpread" : [0,0]
 }

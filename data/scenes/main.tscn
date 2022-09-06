@@ -40,7 +40,7 @@ extents = Vector3( 0.203265, 1, 0.21215 )
 [sub_resource type="CubeMesh" id=12]
 size = Vector3( 0.451, 2.005, 0.633 )
 
-[node name="main" type="Node"]
+[node name="main" type="Spatial"]
 
 [node name="post_processing" type="Spatial" parent="."]
 
