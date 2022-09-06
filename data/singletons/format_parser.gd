@@ -9,7 +9,7 @@ static func parse_spread_pattern(pattern) -> Array:
 		result.append(Vector2(pair[0], pair[1]))
 	return result
 
-static func weapon_from_json( path : String ) -> Weapon: 
+static func weapon_from_json( path : String, actor : Node ) -> Weapon: 
 	var result = null
 	var file : File = File.new()
 	var temp = file.open(path, File.READ)
@@ -45,7 +45,7 @@ static func weapon_from_json( path : String ) -> Weapon:
 				result.primary_fire_mode = int(data.primaryFireMode)	
 				result.secondary_max_range = int(data.secondaryRange)
 
-		result.actor = null
+		result.actor = actor
 		result.gun_name = data.name
 		result.firerate = data.fireRate
 		result.bullets = data.bullets
