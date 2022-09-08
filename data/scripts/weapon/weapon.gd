@@ -117,11 +117,11 @@ func _sprint(sprint, _delta) -> void:
 		mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
 
 func shoot(delta) -> void: #Implemented as a virtual method, so that it can be overriden by child classes
-	_shoot(delta, bullets, max_bullets, ammo, reload_speed, firerate, "", "ammo", "bullets", true)
+	_shoot(self, delta, bullets, max_bullets, ammo, reload_speed, firerate, "", "ammo", "bullets", true)
 
 var shooting_cooldown = false
 
-func _shoot(_delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate, relative_node = "", ammo_name ="ammo", bullets_name = "bullets",tied_to_animation = true) -> void:
+func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate, relative_node = "", ammo_name ="ammo", bullets_name = "bullets",tied_to_animation = true) -> void:
 	if not check_relatives():
 		return
 	var can_shoot = true
@@ -132,8 +132,8 @@ func _shoot(_delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate
 	if l_bullets > 0:
 		# Play shoot animation if not reloading
 		if can_shoot and animc != "Reload" and animc != "Draw" and animc != "Hide":
-			l_bullets -= 1
-			Gamestate.set_in_all_clients(self, bullets_name, l_bullets)
+			node_in.set_deferred(bullets_name, l_bullets - 1)
+			Gamestate.set_in_all_clients(node_in, bullets_name, l_bullets)
 			# recoil
 			actor.camera.rotation.x = lerp(actor.camera.rotation.x, rand_range(1, 2), _delta)
 			actor.camera.rotation.y = lerp(actor.camera.rotation.y, rand_range(-1, 1), _delta)
@@ -174,7 +174,7 @@ func _shoot(_delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate
 			audio.get_node("out").pitch_scale = rand_range(0.9, 1.1)
 			audio.get_node("out").play()
 		if GlobalSettings.auto_reload:
-			_reload(l_bullets, l_max_bullets, l_ammo, ammo_name, l_reload_speed)
+			_reload(node_in, l_bullets, l_max_bullets, l_ammo, ammo_name, bullets_name, l_reload_speed)
 
 func _shoot_cast(relative_node) -> void: 
 	shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range, relative_node)
@@ -262,24 +262,26 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 
 
 func reload() -> void:
-	_reload(bullets, max_bullets, ammo, "ammo", reload_speed)
+	_reload(self, bullets, max_bullets, ammo, "ammo", "bullets", reload_speed)
 
 
-func _reload(bullets, max_bullets, ammo, ammo_variable_name, reload_speed) -> void:
+func _reload(node_in, bullets, max_bullets, ammo, ammo_variable_name, bullets_variable_name, reload_speed) -> void:
 	if not check_relatives():
 		return
 	if bullets < max_bullets and ammo > 0:
 		if animc != "Reload" and animc != "Shoot" and animc != "Draw" and animc != "Hide":
 			# Play reload animation
 			anim.play("Reload", 0.2, reload_speed)
-			
-			for b in ammo:
+			print(bullets, " from ",ammo, " until ", max_bullets)
+			for b in range(0, ammo):
 				bullets += 1
 				ammo -= 1
+				node_in.set_deferred(bullets_variable_name, bullets)
+				node_in.set_deferred(ammo_variable_name, ammo)
 				
 				if bullets >= max_bullets:
 					break
-			Gamestate.set_in_all_clients(self, ammo_variable_name, ammo)
+			Gamestate.set_in_all_clients(node_in, ammo_variable_name, ammo)
 
 func _zoom(input, _delta) -> void:
 	make_zoom(input, _delta)

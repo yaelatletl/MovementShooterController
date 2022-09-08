@@ -64,7 +64,10 @@ func _zoom(input, _delta) -> void:
 				secondary_fire(_delta)
 			
 func secondary_fire(delta) -> void:
-	_shoot(delta, secondary_ammo, secondary_max_bullets, secondary_ammo, secondary_reload_speed, secondary_firerate, "secondary", "secondary_ammo", "secondary_bullets", false)
+	if uses_separate_ammo:
+		_shoot(self, delta, secondary_bullets, secondary_max_bullets, secondary_ammo, secondary_reload_speed, secondary_firerate, "secondary", "secondary_ammo", "secondary_bullets", false)
+	else:
+		_shoot(self, delta, bullets, max_bullets, ammo, secondary_reload_speed, secondary_firerate, "secondary", "ammo", "bullets", false)
 
 func _shoot_cast(relative_node = "")-> void:
 	if relative_node == "secondary":
@@ -85,4 +88,7 @@ func _shoot_cast(relative_node = "")-> void:
 				pass
 
 func secondary_reload() -> void:
-	_reload(secondary_bullets, secondary_max_bullets, secondary_ammo, "secondary_ammo", secondary_reload_speed) 
+	if uses_separate_ammo:
+		_reload(self, secondary_bullets, secondary_max_bullets, secondary_ammo, "secondary_ammo", "secondary_bullets", secondary_reload_speed) 
+	else:
+		_reload(self, bullets, max_bullets, ammo, "ammo", "bullets", secondary_reload_speed) 

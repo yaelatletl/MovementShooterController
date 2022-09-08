@@ -28,7 +28,7 @@
 		[-1,0],
 		[1,0]
 	],
-	"secondarySpreadMultiplier" : 30,
+	"secondarySpreadMultiplier" : 70,
 	"secondaryProjectileIndex" : 1,
 	"secondaryRange" : 250,
 	"randomSpread" : [0.0,0.0],
