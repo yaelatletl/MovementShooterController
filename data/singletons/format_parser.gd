@@ -46,6 +46,7 @@ static func weapon_from_json( path : String, actor : Node ) -> Weapon:
 				result.secondary_max_range = int(data.secondaryRange)
 				result.secondary_max_random_spread_x = data.secondaryRandomSpread[0]
 				result.secondary_max_random_spread_y = data.secondaryRandomSpread[1]
+				result.uses_separate_ammo = data.usesSecondaryAmmo
 
 		result.actor = actor
 		result.gun_name = data.name

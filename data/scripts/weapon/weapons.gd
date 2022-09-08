@@ -67,11 +67,11 @@ func _process(_delta) -> void:
 
 remote func _shoot(_delta) -> void:
 	# Call weapon function
-	arsenal.values()[current]._shoot(_delta)
+	arsenal.values()[current].shoot(_delta)
 	Gamestate.call_on_all_clients(self, "_shoot", _delta)
 
 remote func _reload() -> void:
-	arsenal.values()[current]._reload()
+	arsenal.values()[current].reload()
 	Gamestate.call_on_all_clients(self, "_reload", null)
 
 func _weapon(_delta) -> void:

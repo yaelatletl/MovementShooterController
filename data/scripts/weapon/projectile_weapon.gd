@@ -7,8 +7,8 @@ var character = null
 func set_projectile(type):
 	projectile_type = type
 
-func _shoot_cast()->void:
-	shoot_projectile()
+func _shoot_cast(relative_node = "")->void:
+	shoot_projectile(relative_node)
 	
 func shoot_projectile(separator_name = "")->void:
 	var active = ray

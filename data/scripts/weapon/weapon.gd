@@ -78,7 +78,6 @@ func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_
 		ray.cast_to.z = -max_range
 		original_cast_to = ray.cast_to
 
-
 	if separator_name != "":
 		separator = Position3D.new()
 		separator.name = separator_name
@@ -117,17 +116,24 @@ func _sprint(sprint, _delta) -> void:
 	else:
 		mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
 
+func shoot(delta) -> void: #Implemented as a virtual method, so that it can be overriden by child classes
+	_shoot(delta, bullets, max_bullets, ammo, reload_speed, firerate, "", "ammo", "bullets", true)
 
+var shooting_cooldown = false
 
-func _shoot(_delta) -> void:
+func _shoot(_delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate, relative_node = "", ammo_name ="ammo", bullets_name = "bullets",tied_to_animation = true) -> void:
 	if not check_relatives():
 		return
-
-	if bullets > 0:
+	var can_shoot = true
+	if tied_to_animation:
+		can_shoot = animc != "Shoot" 
+	else:
+		can_shoot = not shooting_cooldown
+	if l_bullets > 0:
 		# Play shoot animation if not reloading
-		if animc != "Shoot" and animc != "Reload" and animc != "Draw" and animc != "Hide":
-			bullets -= 1
-			Gamestate.set_in_all_clients(self, "bullets", bullets)
+		if can_shoot and animc != "Reload" and animc != "Draw" and animc != "Hide":
+			l_bullets -= 1
+			Gamestate.set_in_all_clients(self, bullets_name, l_bullets)
 			# recoil
 			actor.camera.rotation.x = lerp(actor.camera.rotation.x, rand_range(1, 2), _delta)
 			actor.camera.rotation.y = lerp(actor.camera.rotation.y, rand_range(-1, 1), _delta)
@@ -149,22 +155,29 @@ func _shoot(_delta) -> void:
 			audio.get_node("shoot").pitch_scale = rand_range(0.9, 1.1)
 			audio.get_node("shoot").play()
 			
+			var anim_speed = l_firerate
+
 			# Play shoot animation using firate speed
-			anim.play("Shoot", 0, firerate)
-			
-			
-			
+			if tied_to_animation:
+				anim.play("Shoot", 0, anim_speed)
 			
 			# Get raycast weapon range
-			_shoot_cast()
+			_shoot_cast(relative_node)
+			if not tied_to_animation:
+				shooting_cooldown = true
+				anim_speed = anim.get_animation("Shoot").length / l_firerate
+				yield(get_tree().create_timer(anim_speed), "timeout")
+				shooting_cooldown = false
 	else:
 		# Play out sound
 		if not audio.get_node("out").playing:
 			audio.get_node("out").pitch_scale = rand_range(0.9, 1.1)
 			audio.get_node("out").play()
+		if GlobalSettings.auto_reload:
+			_reload(l_bullets, l_max_bullets, l_ammo, ammo_name, l_reload_speed)
 
-func _shoot_cast() -> void: #Implemented as a virtual method, so that it can be overriden by child classes
-	shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
+func _shoot_cast(relative_node) -> void: 
+	shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range, relative_node)
 
 func shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range, relative_node = "") -> void:
 	if not check_relatives():
@@ -247,7 +260,12 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 	if not uses_randomness:
 			ray.cast_to = original_cast_to
 
-func _reload() -> void:
+
+func reload() -> void:
+	_reload(bullets, max_bullets, ammo, "ammo", reload_speed)
+
+
+func _reload(bullets, max_bullets, ammo, ammo_variable_name, reload_speed) -> void:
 	if not check_relatives():
 		return
 	if bullets < max_bullets and ammo > 0:
@@ -261,7 +279,7 @@ func _reload() -> void:
 				
 				if bullets >= max_bullets:
 					break
-			Gamestate.set_in_all_clients(self, "ammo", ammo)
+			Gamestate.set_in_all_clients(self, ammo_variable_name, ammo)
 
 func _zoom(input, _delta) -> void:
 	make_zoom(input, _delta)

@@ -82,6 +82,7 @@ config/icon="res://icon.png"
 
 Gamestate="*res://data/singletons/gamestate.gd"
 Pooling="*res://data/singletons/pooling.gd"
+GlobalSettings="*res://data/singletons/global_settings.gd"
 
 [debug]
 
