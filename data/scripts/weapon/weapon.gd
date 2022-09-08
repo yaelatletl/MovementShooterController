@@ -76,6 +76,8 @@ func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_
 	if ray is RayCast:
 		#Setup main range
 		ray.cast_to.z = -max_range
+		original_cast_to = ray.cast_to
+
 
 	if separator_name != "":
 		separator = Position3D.new()
@@ -188,8 +190,8 @@ var original_cast_to = Vector3.FORWARD
 func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_random_spread_y, max_range) -> void:
 	if not check_relatives():
 		return
+	
 	if uses_randomness:
-		original_cast_to = ray.cast_to
 		ray.cast_to.x = max_random_spread_x* rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
 		ray.cast_to.y = max_random_spread_y* rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
 		ray.cast_to.z = -max_range
@@ -243,7 +245,7 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 		# decal spins to collider normal
 		local_decal.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
 	if not uses_randomness:
-		ray.cast_to = original_cast_to
+			ray.cast_to = original_cast_to
 
 func _reload() -> void:
 	if not check_relatives():
