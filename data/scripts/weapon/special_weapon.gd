@@ -8,8 +8,10 @@ enum FIRE_MODE{
 }
 enum FUNCTION_MODE{
 	ZOOM, 
-	SPREAD_TOGGLE,
-	SECONDARY_FIRE
+	TOGGLE_SPREAD,
+	SECONDARY_FIRE,
+	TOGGLE_SETTINGS,
+	ZOOM_TOGGLE_SETTINGS
 }
 
 var right_click_mode = FUNCTION_MODE.ZOOM
@@ -29,10 +31,12 @@ var secondary_projectile_type = 0
 var secondary_spread_pattern = []
 var secondary_spread_multiplier = 0
 var secondary_max_range = 0
+var secondary_max_random_spread_x = 0
+var secondary_max_random_spread_y = 0
 
 func _ready() -> void:
 	._ready()
-	setup_secondary_spread(secondary_spread_pattern, secondary_spread_multiplier)
+	setup_spread(secondary_spread_pattern, secondary_spread_multiplier, secondary_max_range, "secondary")
 
 func setup_secondary_fire(mode, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier, projectile) -> void:
 	projectile_type = projectile
@@ -48,35 +52,18 @@ func setup_secondary_fire(mode, firerate, bullets, ammo, max_bullets, damage, re
 	secondary_reload_speed = reload_speed
 	secondary_use_randomness = use_randomness
 
-
-func setup_secondary_spread(spread_pattern, spread_multiplier) -> void:
-	var ray = actor.get_node("{}/ray".format([gun_name], "{}"))
-	var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
-	camera = actor.head.get_node("neck").get_node("camera")
-	for point in spread_pattern:
-		var new_cast = RayCast.new()
-		ray.add_child(new_cast)
-		new_cast.global_transform.origin = barrel.global_transform.origin 
-		new_cast.translation.y += point.y
-		new_cast.translation.x += point.x
-		new_cast.enabled = true
-		new_cast.cast_to.x = point.x * spread_multiplier 
-		new_cast.cast_to.y = point.y * spread_multiplier 
-		new_cast.cast_to.z = -secondary_max_range
-
-
 func _zoom(input, _delta) -> void:
 	if input:
 		match right_click_mode:
 			FUNCTION_MODE.ZOOM:
 				make_zoom(input, _delta)
-			FUNCTION_MODE.SPREAD_TOGGLE:
+			FUNCTION_MODE.TOGGLE_SPREAD:
 				pass
 			FUNCTION_MODE.SECONDARY_FIRE:
 				_secondary_shoot(_delta,secondary_fire_mode)
 			
 var secondary_shooting = false
-func _secondary_shoot(_delta, mode):
+func _secondary_shoot(_delta, mode, recoil_force_multiplier = 1) -> void:
 	if not check_relatives():
 		return
 
@@ -90,7 +77,7 @@ func _secondary_shoot(_delta, mode):
 			actor.camera.rotation.y = lerp(actor.camera.rotation.y, rand_range(-1, 1), _delta)
 			
 			# Shake the camera
-			actor.camera.shake_force = 0.002
+			actor.camera.shake_force = 0.002 * recoil_force_multiplier
 			actor.camera.shake_time = 0.2
 			
 			# Change light energy
@@ -114,9 +101,9 @@ func _secondary_shoot(_delta, mode):
 					#shoot_area()
 					pass
 				FIRE_MODE.RAYCAST:
-					shoot_raycast()
+					shoot_raycast(secondary_use_randomness, secondary_max_random_spread_x, secondary_max_random_spread_y, secondary_max_range, "secondary")
 				FIRE_MODE.PROJECTILE:
-					shoot_projectile()
+					shoot_projectile("secondary")
 			secondary_shooting = true
 			# Play shoot animation using firate speed
 			yield(get_tree().create_timer(1/secondary_firerate), "timeout")
@@ -132,7 +119,7 @@ func _secondary_shoot(_delta, mode):
 func _shoot_cast()-> void:
 	match primary_fire_mode:
 		FIRE_MODE.RAYCAST:
-			shoot_raycast()
+			shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
 		FIRE_MODE.PROJECTILE:
 			shoot_projectile()
 		FIRE_MODE.AREA:

@@ -44,6 +44,8 @@ static func weapon_from_json( path : String, actor : Node ) -> Weapon:
 				result.right_click_mode = int(data.specialType)
 				result.primary_fire_mode = int(data.primaryFireMode)	
 				result.secondary_max_range = int(data.secondaryRange)
+				result.secondary_max_random_spread_x = data.secondaryRandomSpread[0]
+				result.secondary_max_random_spread_y = data.secondaryRandomSpread[1]
 
 		result.actor = actor
 		result.gun_name = data.name

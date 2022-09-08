@@ -3,46 +3,33 @@ class_name ProjectileWeapon
 var projectile_type
 var camera = null
 var character = null
+
 func set_projectile(type):
 	projectile_type = type
-
-func setup_spread(spread_pattern, spread_multiplier) -> void:
-	var ray = actor.get_node("{}/ray".format([gun_name], "{}"))
-	var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
-	camera = actor.head.get_node("neck").get_node("camera")
-	for point in spread_pattern:
-		var new_cast = RayCast.new()
-		ray.add_child(new_cast)
-		new_cast.global_transform.origin = barrel.global_transform.origin 
-		new_cast.translation.y += point.y
-		new_cast.translation.x += point.x
-		new_cast.enabled = true
-		new_cast.cast_to.x = point.x * spread_multiplier 
-		new_cast.cast_to.y = point.y * spread_multiplier 
-		new_cast.cast_to.z = -200
 
 func _shoot_cast()->void:
 	shoot_projectile()
 	
-func shoot_projectile()->void:
+func shoot_projectile(separator_name = "")->void:
+	var active = ray
+	if separator_name != "":
+		active = ray.get_node(separator_name)
+	var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
+	if active is Position3D or active is RayCast:
+		#Handle more than one raycast 
+		for child_ray in active.get_children():
+			if child_ray is RayCast:
+				make_projectile_shoot(child_ray.global_transform.origin, child_ray.cast_to)
+	if active is RayCast:
+		# Shoot form main barrel 
+		make_projectile_shoot(barrel.global_transform.origin, ray.cast_to)
+	
+func make_projectile_shoot(origin, offset):
 	if character == null:
 		character = actor.get_parent()
 	if camera == null:
 		camera = actor.head.get_node("neck").get_node("camera")
-	var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
-	if ray is Position3D:
-		#Handle more than one raycast 
-		for child_ray in ray.get_children():
-			if child_ray is RayCast:
-				# Get raycast range
-				var origin = child_ray.global_transform.origin + child_ray.to_global(child_ray.cast_to).normalized()/2
-				Pooling.add_projectile(projectile_type, origin, child_ray.to_global(child_ray.cast_to), character)
-				# Check raycast is colliding
-	elif ray is RayCast:
-		var direction = camera.to_global(Vector3.ZERO) - camera.to_global(Vector3(0,0,100))
-		# Get raycast range
-		Pooling.add_projectile(projectile_type, barrel.global_transform.origin, direction, character) #direction was ray.get_parent().to_global(ray.cast_to)
-		print("origin: ", barrel.global_transform.origin, "global from parent: ", ray.get_parent().to_global(ray.cast_to), "global from ray: ", ray.to_global(ray.cast_to))
-		print("ray info: CAST TO: ", ray.cast_to, "ORIGIN (Global, local): ", ray.global_transform.origin, ray.translation)
-		
-	
+	offset = Vector3(offset.x, offset.y, 0)
+	var direction = camera.to_global(Vector3.ZERO) - camera.to_global(Vector3(0,0,100) + offset)
+	# Add the projectile to the scene through pooling
+	Pooling.add_projectile(projectile_type, origin, direction, character) 

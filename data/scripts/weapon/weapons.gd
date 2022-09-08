@@ -37,6 +37,7 @@ func _ready() -> void:
 	
 	# Class reference : 
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
+	arsenal["plasma"] = FormatParser.weapon_from_json("res://data/weapons/tags/alien_gun.json", self)
 	arsenal["ma75b"] = FormatParser.weapon_from_json("res://data/weapons/tags/ma75b.json", self)
 	# Create mk 23 using weapon classs
 	arsenal["mk_23"] = FormatParser.weapon_from_json("res://data/weapons/tags/mk_23.json", self)
@@ -48,7 +49,6 @@ func _ready() -> void:
 	# Create kriss using weapon class
 	arsenal["kriss"] = FormatParser.weapon_from_json("res://data/weapons/tags/kriss.json", self)
 	
-	arsenal["plasma"] = FormatParser.weapon_from_json("res://data/weapons/tags/plasma.json", self)
 
 	#add actors first, then add weapons to tree, otherwise their _ready() code will break
 	for w in arsenal:
