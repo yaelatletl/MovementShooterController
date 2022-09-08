@@ -34,14 +34,11 @@ func stop() -> void:
 	emit_signal("request_destroy")
 
 func move(pos, dir) -> void:
-	#print("Position passed to move:", pos)
 	get_tree().create_timer(lifetime).connect("timeout", self, "stop")
 	sleeping = false
 	global_transform.origin = pos
 	if is_inside_tree():
 		linear_velocity = dir.normalized() * speed
-		#add_central_force(dir.normalized() * speed)
-		#apply_central_impulse(dir.normalized() * speed)
 
 
 func _on_body_entered(body) -> void:

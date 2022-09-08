@@ -110,8 +110,6 @@ func  _rotation(_delta) -> void:
 		var quat_a = global_transform.basis.get_rotation_quat()
 		var quat_b = camera.global_transform.basis.get_rotation_quat()
 		var angle_distance = quat_a.angle_to(quat_b)
-		#global_transform.basis = global_transform.basis.orthonormalized()
-		#global_transform.basis = global_transform.basis.slerp(Basis(quat_b), _delta*x_lerp*angle_distance)
 		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp*angle_distance))
 				
 	else:

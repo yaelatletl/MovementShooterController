@@ -272,7 +272,6 @@ func _reload(node_in, bullets, max_bullets, ammo, ammo_variable_name, bullets_va
 		if animc != "Reload" and animc != "Shoot" and animc != "Draw" and animc != "Hide":
 			# Play reload animation
 			anim.play("Reload", 0.2, reload_speed)
-			print(bullets, " from ",ammo, " until ", max_bullets)
 			for b in range(0, ammo):
 				bullets += 1
 				ammo -= 1
