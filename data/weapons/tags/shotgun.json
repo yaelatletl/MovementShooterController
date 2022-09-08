@@ -7,7 +7,7 @@
 	"maxBullets" : 8,
 	"damage" : 25,
 	"reloadSpeed" : 0.5,
-	"randomness" : 1,
+	"randomness" : 0,
 	"spreadPattern" : [
 		[-1, 0],
 		[-0.5, 0],

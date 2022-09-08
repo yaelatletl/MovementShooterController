@@ -49,7 +49,6 @@ func _ready() -> void:
 	arsenal["kriss"] = FormatParser.weapon_from_json("res://data/weapons/tags/kriss.json", self)
 	
 	arsenal["plasma"] = FormatParser.weapon_from_json("res://data/weapons/tags/plasma.json", self)
-	arsenal["plasma"].actor_temp = character
 
 	#add actors first, then add weapons to tree, otherwise their _ready() code will break
 	for w in arsenal:
