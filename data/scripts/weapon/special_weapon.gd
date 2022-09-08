@@ -92,6 +92,8 @@ func _secondary_shoot(_delta, mode, recoil_force_multiplier = 1) -> void:
 			# Play shoot sound
 			audio.get_node("shoot").pitch_scale = rand_range(0.9, 1.1)
 			audio.get_node("shoot").play()
+
+			var anim_speed = anim.get_animation("Shoot").length / secondary_firerate
 			
 			#anim.play("Shoot", 0, secondary_firerate)
 	
@@ -106,7 +108,7 @@ func _secondary_shoot(_delta, mode, recoil_force_multiplier = 1) -> void:
 					shoot_projectile("secondary")
 			secondary_shooting = true
 			# Play shoot animation using firate speed
-			yield(get_tree().create_timer(1/secondary_firerate), "timeout")
+			yield(get_tree().create_timer(anim_speed), "timeout")
 			secondary_shooting = false
 	else:
 		# Play out sound

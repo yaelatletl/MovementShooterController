@@ -19,10 +19,10 @@
 	"secondaryFireMode" : 2,
 	"secondaryFireRate" : 2.0,
 	"secondaryDamage" : 25,
-	"secondaryBullets" : 7,
+	"secondaryBullets" : 52,
 	"secondaryAmmo" : 300,
-	"secondaryMaxBullets" : 7,
-	"secondaryReloadSpeed" : 2.0,
+	"secondaryMaxBullets" : 52,
+	"secondaryReloadSpeed" : 1.5,
 	"secondaryRandomness" : 0,
 	"secondarySpreadPattern" : [
 		[-1,0],
