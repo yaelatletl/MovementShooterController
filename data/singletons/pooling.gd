@@ -1,5 +1,13 @@
 extends Node
 
+enum DAMAGE_TYPE {
+	KINECTIC, 
+	ENERGY, 
+	SLOWING,
+	FIRE,
+	EXPLOSIVE 
+} 
+
 var projectiles_active = []
 var projectiles_waiting = []
 

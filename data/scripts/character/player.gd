@@ -68,7 +68,7 @@ func is_far_from_floor() -> bool:
 		return false
 	return true
 
-remotesync func _damage(amount : float):
+remotesync func _damage(amount : float, type):
 	var temp = amount
 	amount = (amount - shields)/10
 	shields -= temp	

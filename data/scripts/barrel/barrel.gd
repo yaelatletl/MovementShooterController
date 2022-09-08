@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 			rset_unreliable("on_the_net_transform", transform)
 		else:
 			transform = on_the_net_transform
-func _damage(damage) -> void:
+func _damage(damage, type) -> void:
 	if health > 0:
 		var dam_calc = health - damage
 		

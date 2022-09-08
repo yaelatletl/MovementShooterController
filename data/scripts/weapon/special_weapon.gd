@@ -34,10 +34,18 @@ var secondary_max_random_spread_x = 0
 var secondary_max_random_spread_y = 0
 
 var uses_separate_ammo = true
+var switch = false
 
 func _ready() -> void:
 	._ready()
 	setup_spread(secondary_spread_pattern, secondary_spread_multiplier, secondary_max_range, "secondary")
+func _physics_process(delta):
+	if character == null:
+		return
+	if character.input["zoom"] and right_click_mode == FUNCTION_MODE.ZOOM_TOGGLE_SETTINGS:
+		switch = true
+	elif right_click_mode == FUNCTION_MODE.ZOOM_TOGGLE_SETTINGS:
+		switch = false
 
 func setup_secondary_fire(mode, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier, projectile) -> void:
 	projectile_type = projectile
@@ -62,7 +70,13 @@ func _zoom(input, _delta) -> void:
 				pass
 			FUNCTION_MODE.SECONDARY_FIRE:
 				secondary_fire(_delta)
-			
+			FUNCTION_MODE.TOGGLE_SETTINGS:
+				switch = not switch
+			FUNCTION_MODE.ZOOM_TOGGLE_SETTINGS:
+				make_zoom(input, _delta)
+			FUNCTION_MODE.TOGGLE_SPREAD:
+				switch = not switch
+				
 func secondary_fire(delta) -> void:
 	if uses_separate_ammo:
 		_shoot(self, delta, secondary_bullets, secondary_max_bullets, secondary_ammo, secondary_reload_speed, secondary_firerate, "secondary", "secondary_ammo", "secondary_bullets", false)
@@ -70,7 +84,9 @@ func secondary_fire(delta) -> void:
 		_shoot(self, delta, bullets, max_bullets, ammo, secondary_reload_speed, secondary_firerate, "secondary", "ammo", "bullets", false)
 
 func _shoot_cast(relative_node = "")-> void:
-	if relative_node == "secondary":
+
+
+	if relative_node == "secondary" or (right_click_mode != FUNCTION_MODE.TOGGLE_SPREAD and switch):
 		match secondary_fire_mode:
 			FIRE_MODE.RAYCAST:
 				shoot_raycast(secondary_use_randomness, secondary_max_random_spread_x, secondary_max_random_spread_y, secondary_max_range, relative_node)
@@ -79,6 +95,8 @@ func _shoot_cast(relative_node = "")-> void:
 			FIRE_MODE.AREA:
 				pass
 	else:
+		if right_click_mode == FUNCTION_MODE.TOGGLE_SPREAD and switch:
+			relative_node = "secondary"
 		match primary_fire_mode:
 			FIRE_MODE.RAYCAST:
 				shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range, relative_node)

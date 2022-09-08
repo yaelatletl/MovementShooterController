@@ -4,6 +4,9 @@ class_name Weapon
 var spark = preload("res://data/scenes/spark.tscn")
 var trail = preload("res://data/scenes/trail.tscn")
 var decal = preload("res://data/scenes/decal.tscn")
+
+
+var damage_type : int = Pooling.DAMAGE_TYPE.KINECTIC
 var firerate : float
 var actor : Node = null
 var gun_name : String
@@ -29,6 +32,9 @@ var animc = null
 var mesh = null	
 var ray = null
 var audio = null
+
+
+
 
 func _ready():
 	if uses_randomness:
@@ -244,7 +250,7 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 				local_spark.emitting = true
 			
 		if ray.get_collider().has_method("_damage"):
-			ray.get_collider()._damage(local_damage)
+			ray.get_collider()._damage(local_damage, damage_type)
 		
 		# Create a instance of decal scene
 		var local_decal = decal.instance()
