@@ -1,6 +1,8 @@
 extends RigidBody
 class_name Projectile
 
+var damage_type = Pooling.DAMAGE_TYPE.KINECTIC
+
 export(float) var type : int = 0
 export(float) var damage : int = 0
 export(float) var speed : int = 100
@@ -47,6 +49,6 @@ func _on_body_entered(body) -> void:
 			return
 	print("Projectile hit:", body)
 	if body.has_method("_damage"):
-		body._damage(damage)
+		body._damage(damage, damage_type)
 	stop()
 

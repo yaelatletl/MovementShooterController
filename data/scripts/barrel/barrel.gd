@@ -84,4 +84,4 @@ func _explode_others():
 			if "health" in bodie:
 				if bodie.health > 0:
 					var explosion_distance = (5 * bodie.global_transform.origin.distance_to(global_transform.origin))
-					bodie._damage(300 - explosion_distance)
+					bodie._damage(300 - explosion_distance, Pooling.DAMAGE_TYPE.EXPLOSIVE)
