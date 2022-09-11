@@ -77,6 +77,7 @@ remotesync func _damage(amount : float, type):
 		die()
 	emit_signal("health_changed", health, shields)
 	Gamestate.set_in_all_clients(self, "health", health)
+	Gamestate.set_in_all_clients(self, "shields", shields)
 		
 remotesync func die():
 	Gamestate.call_on_all_clients(self, "die", null)
