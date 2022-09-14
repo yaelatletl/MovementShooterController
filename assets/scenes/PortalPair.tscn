@@ -94,7 +94,9 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0
 [node name="Border" parent="PortalB" index="4"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
 
+[connection signal="body_entered" from="PortalA/Area" to="." method="_on_portal_a_body_entered"]
 [connection signal="body_exited" from="PortalA/Area" to="." method="_on_portal_a_body_exited"]
+[connection signal="body_entered" from="PortalB/Area" to="." method="_on_portal_b_body_entered"]
 [connection signal="body_exited" from="PortalB/Area" to="." method="_on_portal_b_body_exited"]
 
 [editable path="PortalA"]

@@ -97,7 +97,6 @@ multirun/other_window_args="client"
 
 window/size/width=1280
 window/size/height=720
-window/vsync/vsync_via_compositor=true
 
 [editor_plugins]
 

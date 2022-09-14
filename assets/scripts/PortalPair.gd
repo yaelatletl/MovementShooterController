@@ -13,7 +13,10 @@ onready var environment = get_node(environment_path)
 
 # Dictionary between regular bodies and their clones
 var clones := {}
-
+onready var bodies := {
+	$PortalA: [],
+	$PortalB: []
+	}
 
 func init_portal(portal: Node) -> void:
 	# Connect the mesh material shader to the viewport of the linked portal
@@ -79,11 +82,12 @@ func _process(delta: float) -> void:
 
 
 # Return whether the position is in front of a portal
-func in_front_of_portal(portal: Node, pos: Transform) -> bool:
+func in_front_of_portal(portal: Spatial, pos: Transform) -> bool:
 	var portal_pos = portal.global_transform
 	var distance = portal_pos.xform_inv(pos.origin).z
 	var further_from_portal = distance < 0
-	var approximately_in_front = is_zero_approx(distance)
+	#var approximately_in_front = is_zero_approx(distance)
+	var approximately_in_front = distance > 0
 	return further_from_portal and not approximately_in_front
 
 
@@ -208,8 +212,9 @@ func _physics_process(delta: float) -> void:
 
 	# Check for bodies overlapping portals
 	for portal in portals:
-		for body in portal.get_node("Area").get_overlapping_bodies():
+		for body in bodies[portal]:
 			handle_body_overlap_portal(portal, body)
+
 
 
 func handle_body_exit_portal(portal: Node, body: PhysicsBody) -> void:
@@ -220,10 +225,17 @@ func handle_body_exit_portal(portal: Node, body: PhysicsBody) -> void:
 		clones.erase(body)
 		clone.queue_free()
 
+func _on_portal_a_body_entered(body: PhysicsBody) -> void:
+	bodies[$PortalA].append(body)
+
+func _on_portal_b_body_entered(body: PhysicsBody) -> void:
+	bodies[$PortalB].append(body)
 
 func _on_portal_a_body_exited(body: PhysicsBody) -> void:
 	handle_body_exit_portal($PortalA, body)
+	bodies[$PortalA].erase(body)
 
 
 func _on_portal_b_body_exited(body: PhysicsBody) -> void:
 	handle_body_exit_portal($PortalB, body)
+	bodies[$PortalB].erase(body)
