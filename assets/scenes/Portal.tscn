@@ -24,7 +24,7 @@ shader = SubResource( 1 )
 size = Vector2( 4, 4 )
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 2, 2, 0 )
+extents = Vector3( 2, 2, 0.13558 )
 
 [sub_resource type="CylinderShape" id=5]
 height = 4.0
