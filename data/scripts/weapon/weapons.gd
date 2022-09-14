@@ -106,10 +106,11 @@ func _position(_delta) -> void:
 func  _rotation(_delta) -> void:
 	var y_lerp = 40
 	var x_lerp = 80
-	if not character.input["zoom"]:
-		var quat_a = global_transform.basis.get_rotation_quat()
-		var quat_b = camera.global_transform.basis.get_rotation_quat()
-		var angle_distance = quat_a.angle_to(quat_b)
+	var quat_a = global_transform.basis.get_rotation_quat()
+	var quat_b = camera.global_transform.basis.get_rotation_quat()
+	var angle_distance = quat_a.angle_to(quat_b)
+	if not character.input["zoom"] and angle_distance < PI/2:
+		
 		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp*angle_distance))
 				
 	else:
