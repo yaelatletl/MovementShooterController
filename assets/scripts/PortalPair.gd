@@ -142,7 +142,6 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	var portal_direction = portal_pos.basis.z
 	var linked_direction = linked_pos.basis.z
 	var angle = portal_direction.angle_to(linked_direction)
-	var up := Vector3(0, 1, 0)
 
 	# Position of body relative to portal
 	var rel_pos = portal_pos.inverse() * body_pos
@@ -158,6 +157,7 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	else:
 		clone = body.duplicate(0)
 		if clone is KinematicBody:
+			clone.get_node("passive_marker_man").visible = false
 			clone.collision_layer = 0
 			clone.collision_mask = 0
 			
@@ -165,19 +165,23 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 		clones[body] = clone
 		add_child(clone)
 		if clone is RigidBody:
-			clone.linear_velocity = clone.linear_velocity.rotated(up, PI)
+			clone.linear_velocity = clone.linear_velocity.rotated(Vector3.UP, PI)
 		clone_duplicate_material(clone)
 		remove_cameras(clone)
 	if not in_front_of_portal(portal, body_pos):
 		swap_body_clone(body, clone)
 		#yield(get_tree().create_timer(1.2), "timeout")
 	clone.global_transform = linked_pos \
-			* rel_pos.rotated(up, PI)
+			* rel_pos.rotated(Vector3.UP, PI)
 	
 	
 
 
 func get_portal_plane(portal: Spatial) -> Plane:
+	#var global_portal_plane = Plane(portal.to_global(Vector3(0, 0, 1)), 0)
+	#return portal.global_transform.xform(global_portal_plane)
+	# Fix rotation first
+
 	return portal.global_transform.xform(Plane.PLANE_XY)
 
 

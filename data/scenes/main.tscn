@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
 [ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
@@ -41,6 +41,46 @@ extents = Vector3( 0.203265, 1, 0.21215 )
 [sub_resource type="CubeMesh" id=12]
 size = Vector3( 0.451, 2.005, 0.633 )
 
+[sub_resource type="Shader" id=13]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode unshaded;
+uniform sampler2D texture_albedo : hint_albedo;
+
+void vertex() {
+}
+
+void fragment() {
+	vec2 base_uv = SCREEN_UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo_tex.rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=14]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+
+[sub_resource type="Shader" id=15]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode unshaded;
+uniform sampler2D texture_albedo : hint_albedo;
+
+void vertex() {
+}
+
+void fragment() {
+	vec2 base_uv = SCREEN_UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo_tex.rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=16]
+resource_local_to_scene = true
+shader = SubResource( 15 )
+
 [node name="main" type="Spatial"]
 
 [node name="post_processing" type="Spatial" parent="."]
@@ -67,7 +107,7 @@ spawn_points_parent_path = NodePath("spawnpoints")
 [node name="props" type="Spatial" parent="scenario"]
 
 [node name="barrel_0" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -10.2631, 2.25286, 10.3244 )
+transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -29.5943, 2.65163, -3.42753 )
 
 [node name="barrel_1" parent="scenario/props" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2841, 2.25325, 8.92728 )
@@ -278,6 +318,42 @@ disabled = true
 [node name="PortalPair" parent="scenario" instance=ExtResource( 12 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.11115, 3.00473, 0 )
 
+[node name="PortalA" parent="scenario/PortalPair" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.038, 17.6227, -4.2254 )
+
+[node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
+material_override = SubResource( 14 )
+
+[node name="Left" parent="scenario/PortalPair/PortalA/Screen" index="1"]
+material_override = SubResource( 14 )
+
+[node name="Right" parent="scenario/PortalPair/PortalA/Screen" index="2"]
+material_override = SubResource( 14 )
+
+[node name="Bottom" parent="scenario/PortalPair/PortalA/Screen" index="3"]
+material_override = SubResource( 14 )
+
+[node name="Top" parent="scenario/PortalPair/PortalA/Screen" index="4"]
+material_override = SubResource( 14 )
+
+[node name="PortalB" parent="scenario/PortalPair" index="1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.917, 0, 0 )
+
+[node name="Back" parent="scenario/PortalPair/PortalB/Screen" index="0"]
+material_override = SubResource( 16 )
+
+[node name="Left" parent="scenario/PortalPair/PortalB/Screen" index="1"]
+material_override = SubResource( 16 )
+
+[node name="Right" parent="scenario/PortalPair/PortalB/Screen" index="2"]
+material_override = SubResource( 16 )
+
+[node name="Bottom" parent="scenario/PortalPair/PortalB/Screen" index="3"]
+material_override = SubResource( 16 )
+
+[node name="Top" parent="scenario/PortalPair/PortalB/Screen" index="4"]
+material_override = SubResource( 16 )
+
 [node name="passive_marker_man" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.84292, 1.00202, 4.04818 )
 
@@ -312,6 +388,9 @@ transform = Transform( 0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878 )
 
 [node name="character" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.80833, 5.03176, -2.54569 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.1338, 5.03176, -7.40396 )
 
+[editable path="scenario/PortalPair"]
+[editable path="scenario/PortalPair/PortalA"]
+[editable path="scenario/PortalPair/PortalB"]
 [editable path="passive_marker_man"]
