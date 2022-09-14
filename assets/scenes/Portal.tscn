@@ -65,6 +65,7 @@ mesh = SubResource( 3 )
 
 [node name="Viewport" type="Viewport" parent="."]
 keep_3d_linear = true
+shadow_atlas_size = 256
 
 [node name="Camera" type="Camera" parent="Viewport"]
 current = true

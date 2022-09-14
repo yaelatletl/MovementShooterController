@@ -103,6 +103,8 @@ func swap_body_clone(body: PhysicsBody, clone: PhysicsBody) -> void:
 	if body is KinematicBody:
 		body.get_node("weapons").global_transform.basis = get_camera().global_transform.basis
 		body.linear_velocity = body.linear_velocity.rotated(Vector3.UP, PI)
+		body.global_transform.basis.rotated(Vector3.UP, PI)
+
 	clone.global_transform = body_pos
 	body.global_transform = clone_pos
 
@@ -159,15 +161,15 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 		clones[body] = clone
 		add_child(clone)
 		if clone is RigidBody:
-			clone.linear_velocity = clone.linear_velocity.rotated(up, angle)
+			clone.linear_velocity = clone.linear_velocity.rotated(up, PI)
 		clone_duplicate_material(clone)
 		remove_cameras(clone)
 	if not in_front_of_portal(portal, body_pos):
 		swap_body_clone(body, clone)
 		#yield(get_tree().create_timer(1.2), "timeout")
 	clone.global_transform = linked_pos \
-			* rel_pos.rotated(up, angle)
-
+			* rel_pos.rotated(up, PI)
+	
 	
 
 
