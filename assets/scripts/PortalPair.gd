@@ -29,6 +29,10 @@ func init_portal(portal: Node) -> void:
 	if environment != null:
 		portal_camera.environment = environment.environment
 	cameras.append(portal_camera)
+	var plane_normal = get_portal_plane(portal).normal
+	print("The normal of the portal plane is: ", plane_normal)
+	print("The normal of the portal is ", portal.transform.basis.z)
+
 	
 
 
@@ -50,10 +54,12 @@ func get_camera() -> Camera:
 # rotating it pi radians
 func move_camera(portal: Node) -> void:
 	var linked: Node = links[portal]
+	var portal_direction = portal.global_transform.basis.z
+	var linked_direction = linked.global_transform.basis.z
+	var angle = portal_direction.angle_to(linked_direction)
 	var trans: Transform = linked.global_transform.inverse() \
 			* get_camera().global_transform
-	var up := Vector3(0, 1, 0)
-	trans = trans.rotated(up, PI)
+	trans = trans.rotated(Vector3.UP, angle)
 	portal.get_node("CameraHolder").transform = trans
 	var cam_pos: Transform = portal.get_node("CameraHolder").global_transform
 	portal.get_node("Viewport/Camera").global_transform = cam_pos
@@ -87,12 +93,13 @@ func in_front_of_portal(portal: Spatial, pos: Transform) -> bool:
 	var distance = portal_pos.xform_inv(pos.origin).z
 	var further_from_portal = distance < 0
 	#var approximately_in_front = is_zero_approx(distance)
-	var approximately_in_front = distance > 0
+	#var approximately_in_front = distance > 0
+	var approximately_in_front = get_portal_plane(portal).is_point_over(pos.origin)
 	return further_from_portal and not approximately_in_front
 
-
+#Swapping is inconsistent with relative positions
 # Swap the velocities and positions of a body and its clone
-func swap_body_clone(body: PhysicsBody, clone: PhysicsBody) -> void:
+func swap_body_clone(body: PhysicsBody, clone: PhysicsBody, angle : float) -> void:
 	var body_vel: Vector3 = Vector3.ZERO
 	var clone_vel: Vector3 =  Vector3.ZERO
 	if body is RigidBody:
@@ -106,8 +113,8 @@ func swap_body_clone(body: PhysicsBody, clone: PhysicsBody) -> void:
 	var clone_pos := clone.global_transform
 	if body is KinematicBody:
 		body.get_node("weapons").global_transform.basis = get_camera().global_transform.basis
-		body.linear_velocity = body.linear_velocity.rotated(Vector3.UP, PI)
-		body.global_transform.basis.rotated(Vector3.UP, PI)
+		body.linear_velocity = body.linear_velocity.rotated(Vector3.UP, angle)
+		body.global_transform.basis.rotated(Vector3.UP, angle)
 
 	clone.global_transform = body_pos
 	body.global_transform = clone_pos
@@ -142,18 +149,18 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	var portal_direction = portal_pos.basis.z
 	var linked_direction = linked_pos.basis.z
 	var angle = portal_direction.angle_to(linked_direction)
+	print("degrees: ", rad2deg(angle))
+	if angle == PI:
+		print("YEP YEP YEP")
 
 	# Position of body relative to portal
 	var rel_pos = portal_pos.inverse() * body_pos
-
 	var clone: PhysicsBody
+	
 	if body in clones.keys():
 		clone = clones[body]
 	elif body in clones.values():
-		return
-	# Swap clone and actual if the actual object is more than halfway through 
-	# the portal
-	
+		return	
 	else:
 		clone = body.duplicate(0)
 		if clone is KinematicBody:
@@ -161,18 +168,19 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 			clone.collision_layer = 0
 			clone.collision_mask = 0
 			
-		#clone.mode = RigidBody.MODE_KINEMATIC
 		clones[body] = clone
 		add_child(clone)
 		if clone is RigidBody:
-			clone.linear_velocity = clone.linear_velocity.rotated(Vector3.UP, PI)
+			clone.linear_velocity = clone.linear_velocity.rotated(Vector3.UP, angle)
 		clone_duplicate_material(clone)
 		remove_cameras(clone)
+	
+	# Swap clone and actual if the actual object is more than halfway through 
+	# the portal
 	if not in_front_of_portal(portal, body_pos):
-		swap_body_clone(body, clone)
-		#yield(get_tree().create_timer(1.2), "timeout")
+		swap_body_clone(body, clone, angle)
 	clone.global_transform = linked_pos \
-			* rel_pos.rotated(Vector3.UP, PI)
+			* rel_pos.rotated(Vector3.UP, angle)
 	
 	
 
