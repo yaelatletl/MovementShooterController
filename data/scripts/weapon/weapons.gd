@@ -72,8 +72,7 @@ func _process(_delta) -> void:
 func _weapon(_delta) -> void:
 	
 	arsenal.values()[current]._sprint(character.input["sprint"] or character.input["jump"], _delta)
-	
-	if not character.input["sprint"] or not character.direction:
+	if int(character.input["sprint"]) == 0 or character.direction == null:
 		if character.input["shoot"]:
 			_shoot(_delta)
 

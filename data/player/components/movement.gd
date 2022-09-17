@@ -92,7 +92,7 @@ func _movement(input : Dictionary, _delta : float) -> void:
 	for index in actor.get_slide_collision_count():
 		var collision = actor.get_slide_collision(index)
 		if collision.get_collider(0) is RigidBody3D:
-				collision.get_collider(0).apply_central_impulse(-collision.normal * actor.run_speed/collision.collider.mass)
+				collision.get_collider(0).apply_central_impulse(-collision.get_normal(0) * actor.run_speed/collision.get_collider(0).mass)
 	
 func _crouch(input : Dictionary, _delta :float) -> void:
 	# Inputs
@@ -110,11 +110,11 @@ func _crouch(input : Dictionary, _delta :float) -> void:
 		var shape = col.shape.height
 		
 		# Changes the shape of the character's collision
-		shape = lerp(shape, 1.1 - (get_key(input, "crouch") * 0.9), w_speed  * _delta)
+		shape = lerp(shape, 1.7 - (get_key(input, "crouch") * 1.2), w_speed  * _delta)
 		
 		# Apply the new character collision shape
 		col.shape.height = shape
-		col.shape.radius = (0.28 - 0.12*get_key(input, "crouch"))
+		col.shape.radius = (0.24 - 0.12*get_key(input, "crouch"))
 
 
 

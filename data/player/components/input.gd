@@ -29,7 +29,6 @@ func _ready():
 	get_tree().create_timer(0.01).connect("timeout",Callable(self,"functional_routine"))
 
 
-
 func _mouse_toggle() -> void:
 	# Function to lock or unlock the mouse in the center of the screen
 	if Input.is_action_just_pressed("KEY_ESCAPE"):
@@ -57,6 +56,7 @@ func functional_routine():
 
 		
 func get_input():
+	
 	actor.input["left"]   = int(Input.is_action_pressed("KEY_A"))
 	actor.input["right"]  = int(Input.is_action_pressed("KEY_D"))
 	actor.input["forward"] = int(Input.is_action_pressed("KEY_W"))
@@ -74,6 +74,7 @@ func get_input():
 	actor.input["extra_jump"] = int(Input.is_action_pressed("KEY_SPACE"))
 	actor.input["use"] = int(Input.is_action_pressed("USE"))
 	sync_input()
+	
 	#if get_tree().get_multiplayer().has_multiplayer_peer():
 	#	if is_multiplayer_authority() and not get_tree().is_server(): 
 			#Gamestate.set_in_all_clients(self,"input", actor.input)
@@ -86,7 +87,7 @@ func get_input():
 func sync_input():
 	if get_tree().get_multiplayer().has_multiplayer_peer():
 		if is_multiplayer_authority() and not get_tree().is_server(): 
-			actor.rset_unreliable_id(1, "input", actor.input)
+			#actor.rset_unreliable_id(1, "input", actor.input)
 			Gamestate.set_in_all_clients(actor, "input", actor.input)
 
 

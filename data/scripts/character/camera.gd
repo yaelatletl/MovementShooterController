@@ -31,9 +31,9 @@ func _tilt(_delta : float) -> void:
 		if not is_zero_approx(rotation_angle):
 			
 			if rotation_angle < 0:
-				rotation.z = lerp(rotation.z, 2, _delta)
+				rotation.z = lerp(rotation.z, 2.0, _delta)
 			else:
-				rotation.z  = lerp(rotation.z, -2, _delta)
+				rotation.z  = lerp(rotation.z, -2.0, _delta)
 	elif shake_time <= 0:
 		rotation.z = lerp(rotation.z, 0.0, _delta) 
 
