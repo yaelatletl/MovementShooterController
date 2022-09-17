@@ -14,7 +14,7 @@ func _physics_process(delta: float) -> void:
 	if not get_tree().get_multiplayer().has_multiplayer_peer():
 		return
 	
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		rset_unreliable("on_the_net_transform", actor.global_transform.origin)
 		rset_unreliable("on_the_net_camera_look", head.rotation)
 		rset_unreliable("on_the_net_height", shape.shape.height)
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	if not get_tree().get_multiplayer().has_multiplayer_peer():
 		return
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		if local_camera_look != null and get_multiplayer_authority() != 1:
 			head.rotation =  local_camera_look
 	elif not is_multiplayer_authority():

@@ -5,7 +5,7 @@ extends Node3D
 	get:
 		return skeleton_path # TODOConverter40 Non existent get function 
 	set(mod_value):
-		mod_value  # TODOConverter40 Copy here content of _set_skeleton_path
+		skeleton_path = mod_value  # TODOConverter40 Copy here content of _set_skeleton_path
 @export var bone_name: String = ""
 @export var update_mode = 0 
 @export var look_at_axis = 1 # (int, "X-up", "Y-up", "Z-up")
@@ -115,7 +115,8 @@ func update_skeleton():
 		rest_euler.z = self_euler.z
 	
 	# Make a new basis with the, potentially, changed euler angles.
-	rest.basis = Basis(rest_euler)
+	
+	rest.basis = Basis(Quaternion(rest_euler))
 	
 	# Apply additional rotation stored in additional_rotation to the bone.
 	if additional_rotation != Vector3.ZERO:

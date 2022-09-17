@@ -18,7 +18,7 @@ var sync_threads = {}
 func start_new_sync_process(node, property_name, args):
 	print("DEPRECATED, called from " + node.name + "." + property_name)
 	return
-	if not get_tree().get_multiplayer().has_multiplayer_peer() or not get_tree().is_server():
+	if not get_tree().get_multiplayer().has_multiplayer_peer() or not get_tree().get_multiplayer().is_server():
 		return
 	var thread = Thread.new()
 	var peer_id = node.multiplayer.get_unique_id()
@@ -72,7 +72,7 @@ func _on_NetworkPeer_peer_disconnected(peer_id) -> void:
 	emit_signal("players_changed")
 	
 func _on_NetworkPeer_peer_connected(peer_id : int) -> void:
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		register_player(peer_id)
 		for peers in players:
 			for player in players:
@@ -107,7 +107,7 @@ func call_on_all_clients(object : Node, func_name : String , args) -> void:
 	if object.is_multiplayer_authority():
 		exclude = object.multiplayer.get_unique_id()
 	
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		for player in players:
 			if player != 1 and player != exclude:
 				# print("Calling RPC checked client " + str(player))
@@ -122,7 +122,7 @@ func set_in_all_clients(object : Node, property_name : String, value) -> void:
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		for player in players:
 			if player != 1:
 				#print("Setting property checked client " + str(player))
@@ -134,7 +134,7 @@ func unreliable_set_in_all_clients(object : Node, property_name : String, value)
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		for player in players:
 			if player != 1:
 				#print("Setting property checked client " + str(player))

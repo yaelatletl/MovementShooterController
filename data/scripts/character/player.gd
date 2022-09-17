@@ -49,7 +49,7 @@ func _physics_process(delta):
 	if is_on_wall():
 		wall_normal = get_slide_collision(0)
 		#await get_tree().create_timer(0.2).timeout
-		wall_direction = wall_normal.normal
+		wall_direction = wall_normal.get_normal(0)
 	run_speed = Vector2(linear_velocity.x, linear_velocity.z).length()
 
 

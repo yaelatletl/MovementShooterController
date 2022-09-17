@@ -144,12 +144,12 @@ func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l
 			node_in.set_deferred(bullets_name, l_bullets - 1)
 			Gamestate.set_in_all_clients(node_in, bullets_name, l_bullets)
 			# recoil
-			actor.camera.rotation.x = lerp(actor.camera.rotation.x, randf_range(1, 2), _delta)
-			actor.camera.rotation.y = lerp(actor.camera.rotation.y, randf_range(-1, 1), _delta)
+			actor.camera_node.rotation.x = lerp(actor.camera_node.rotation.x, randf_range(1, 2), _delta)
+			actor.camera_node.rotation.y = lerp(actor.camera_node.rotation.y, randf_range(-1, 1), _delta)
 			
-			# Shake the camera
-			actor.camera.shake_force = 0.002
-			actor.camera.shake_time = 0.2
+			# Shake the camera_node
+			actor.camera_node.shake_force = 0.002
+			actor.camera_node.shake_time = 0.2
 			
 			# Change light energy
 			effect.get_node("shoot").light_energy = 2
@@ -298,14 +298,14 @@ func make_zoom(input, _delta) -> void:
 	if not check_relatives():
 		return
 	var lerp_speed : int = 30
-	var camera = actor.camera
+	var camera_node = actor.camera_node
 	
 	if input and animc != "Reload" and animc != "Hide" and animc != "Draw":
-		camera.fov = lerp(camera.fov, zoom_fov, lerp_speed * _delta)
+		camera_node.fov = lerp(camera_node.fov, zoom_fov, lerp_speed * _delta)
 		mesh.position.y = lerp(mesh.position.y, 0.001, lerp_speed * _delta)
 		mesh.position.x = lerp(mesh.position.x, -0.088, lerp_speed * _delta)
 	else:
-		camera.fov = lerp(camera.fov, default_fov, lerp_speed * _delta)
+		camera_node.fov = lerp(camera_node.fov, default_fov, lerp_speed * _delta)
 		mesh.position.y = lerp(mesh.position.y, 0, lerp_speed * _delta)
 		mesh.position.x = lerp(mesh.position.x, 0, lerp_speed * _delta)
 	

@@ -105,7 +105,6 @@ func mouse_move(event):
 		actor.input["look_y"] = 0
 		actor.input["look_x"] = 0
 
-
 func _unhandled_input(event):
 	if get_tree().get_multiplayer().has_multiplayer_peer():
 		if not is_multiplayer_authority() or not enabled:

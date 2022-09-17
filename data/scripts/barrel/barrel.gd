@@ -12,7 +12,7 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	if get_tree().get_multiplayer().has_multiplayer_peer():
-		if get_tree().is_server():
+		if get_tree().get_multiplayer().is_server():
 			Gamestate.set_in_all_clients(self, "on_the_net_transform", transform)
 		else:
 			transform = on_the_net_transform
@@ -37,9 +37,9 @@ func _process(_delta) -> void:
 @rpc(any_peer) func _explosion(exploded_in_server : bool = false) -> void:
 
 	
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		Gamestate.call_on_all_clients(self, "_explosion",[true])
-	if (not exploded_in_server and get_tree().get_multiplayer().has_multiplayer_peer()) and not get_tree().is_server():
+	if (not exploded_in_server and get_tree().get_multiplayer().has_multiplayer_peer()) and not get_tree().get_multiplayer().is_server():
 		return
 
 	$collision.disabled = true
@@ -47,7 +47,7 @@ func _process(_delta) -> void:
 	
 	var main = get_tree().get_root().get_child(0)
 	
-	var burnt_ground = preload("res://data/scenes/burnt_ground.tscn").instantiate()
+	var burnt_ground = load("res://data/scenes/burnt_ground.tscn").instantiate()
 	main.add_child(burnt_ground)
 	burnt_ground.position = global_transform.origin
 	
@@ -66,7 +66,7 @@ func _process(_delta) -> void:
 	queue_free()
 
 func queue_remove() -> void:
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		queue_free()
 	Gamestate.call_on_all_clients(self, "remote_queue_remove", null)
 

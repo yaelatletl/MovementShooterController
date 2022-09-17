@@ -19,6 +19,8 @@ const DEFAULT_GRAVITY = 40
 var _delta
 var impulse = Vector3.ZERO
 
+
+
 func _physics_process(delta : float) -> void:
 	_delta = delta
 	if enabled:
@@ -84,13 +86,13 @@ func _movement(input : Dictionary, _delta : float) -> void:
 	actor.set_max_slides(4)
 	actor.set_floor_max_angle(PI/4)
 	# TODOConverter40 infinite_inertia were removed in Godot 4.0 - previous value `false`
-	actor.move_and_slide()
 	actor.linear_velocity = actor.velocity
+	actor.move_and_slide()
 	
 	for index in actor.get_slide_collision_count():
 		var collision = actor.get_slide_collision(index)
-		if collision.collider is RigidBody3D:
-				collision.collider.apply_central_impulse(-collision.normal * actor.run_speed/collision.collider.mass)
+		if collision.get_collider(0) is RigidBody3D:
+				collision.get_collider(0).apply_central_impulse(-collision.normal * actor.run_speed/collision.collider.mass)
 	
 func _crouch(input : Dictionary, _delta :float) -> void:
 	# Inputs

@@ -52,13 +52,13 @@ func get_camera_3d() -> Camera3D:
 # Move the camera to a location near the linked portal; this is done by
 # taking the position of the player relative to the linked portal, and
 # rotating it pi radians
-func move_camera(portal: Node) -> void:
-	var linked: Node = links[portal]
+func move_camera(portal: Node3D) -> void:
+	var linked: Node3D = links[portal]
 	var portal_direction = portal.global_transform.basis.z
 	var linked_direction = linked.global_transform.basis.z
 	var angle = portal_direction.angle_to(linked_direction)
-	var trans: Transform3D = linked.global_transform.inverse() \
-			* get_camera_3d().global_transform
+	var trans: Transform3D = linked.global_transform.inverse() 
+			#* get_camera_3d().global_transform
 	trans = trans.rotated(Vector3.UP, angle)
 	portal.get_node("CameraHolder").transform = trans
 	var cam_pos: Transform3D = portal.get_node("CameraHolder").global_transform
@@ -82,6 +82,8 @@ func _process(delta: float) -> void:
 			return
 		if get_camera_3d() != null:
 			camera.fov = get_camera_3d().fov
+	if portals.size()<2:
+		return
 	for portal in portals:
 		move_camera(portal)
 		sync_viewport(portal)
@@ -195,7 +197,7 @@ func get_portal_plane(portal: Node3D) -> Plane:
 
 func portal_plane_rel_body(portal: Node3D, body: PhysicsBody3D) -> Color:
 	var global_plane := get_portal_plane(portal)
-	var plane: Plane = -body.global_transform.inverse() * global_plane
+	var plane: Plane = body.global_transform.inverse() * global_plane
 	return Color(plane.x, plane.y, plane.z, plane.d)
 
 

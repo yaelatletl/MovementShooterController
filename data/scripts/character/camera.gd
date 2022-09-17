@@ -26,7 +26,7 @@ func _tilt(_delta : float) -> void:
 
 	#given a wall normal, tilt the camera to the opposite side of the wall
 	if actor.wall_normal != null and actor.is_on_wall() and actor.linear_velocity.length() > 5 and actor.is_far_from_floor():
-		var rotation_angle = global_transform.basis.z.cross(actor.wall_normal.normal*10).y
+		var rotation_angle = global_transform.basis.z.cross(actor.wall_direction*10).y
 
 		if not is_zero_approx(rotation_angle):
 			

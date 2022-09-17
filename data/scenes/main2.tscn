@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://civf153nj7m6r"]
+
+[ext_resource type="PackedScene" uid="uid://bbhcbstenbai5" path="res://data/scenes/scenario.tscn" id="1_g0h83"]
+[ext_resource type="PackedScene" uid="uid://dy5p2vf4pams" path="res://data/player/character.tscn" id="2_8cxl2"]
+
+[node name="Node3d" type="Node3D"]
+
+[node name="scenario" parent="." instance=ExtResource("1_g0h83")]
+
+[node name="character" parent="." instance=ExtResource("2_8cxl2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.07, 6.48206, 0.820884)
+motion_mode = 1

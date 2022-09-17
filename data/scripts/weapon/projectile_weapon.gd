@@ -28,7 +28,7 @@ func make_projectile_shoot(origin, offset):
 	if character == null:
 		character = actor.get_parent()
 	if camera == null:
-		camera = actor.head.get_node("neck").get_node("camera")
+		camera = actor.head_node.get_node("neck").get_node("camera")
 	offset = Vector3(offset.x, offset.y, 0)
 	var direction = camera.to_global(Vector3.ZERO) - camera.to_global(Vector3(0,0,100) + offset)
 	# Add the projectile to the scene through pooling

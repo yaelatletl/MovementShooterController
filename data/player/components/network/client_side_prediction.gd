@@ -32,14 +32,14 @@ func update_server_from_client():
 			
 func update_client_from_server():
 	#We send the real position (as where the player actually is for the server)
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		Gamestate.unreliable_set_in_all_clients(self, "on_the_net_transform", average_true_transform )
 		Gamestate.unreliable_set_in_all_clients(self, "on_the_net_height", average_true_height)
 		Gamestate.unreliable_set_in_all_clients(self, "on_the_net_camera_look", average_true_view)
 		Gamestate.unreliable_set_in_all_clients(self, "on_the_net_velocity", actor.linear_velocity)
 
 func interpolate_reality_to_expectation(delta):
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		var transform_delta = actor.global_transform.origin.distance_to(local_net_transform)
 		var height_distance = abs(shape.shape.height - local_net_height)
 		var velocity_delta = actor.linear_velocity.distance_to(local_net_velocity)
@@ -60,7 +60,7 @@ func interpolate_reality_to_expectation(delta):
 func sync_from_server(delta):
 	if on_the_net_transform == null or local_net_transform == null:
 		return
-	if not get_tree().is_server():
+	if not get_tree().get_multiplayer().is_server():
 		
 		if actor.global_transform.origin.distance_to(on_the_net_transform) < sync_delta * 2:
 			
@@ -79,14 +79,14 @@ func sync_from_server(delta):
 func sync_rotation(delta : float) -> void:
 	if local_net_camera_look == null or on_the_net_camera_look == null:
 		return	
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		if local_net_camera_look != null and get_multiplayer_authority() != 1:
 			head.rotation =  local_net_camera_look
 	elif not is_multiplayer_authority():
 		var distance_factor = head.rotation.angle_to(on_the_net_camera_look)
 		if distance_factor != null:
 			head.rotation = lerp_angles(head.rotation, on_the_net_camera_look, rad_to_deg(abs(distance_factor))*delta+delta)
-	#if get_tree().is_server():
+	#if get_tree().get_multiplayer().is_server():
 	#	if get_tree().get_unique_id() != get_multiplayer_authority():
 	#		actor.head.rotation = local_net_camera_look 
 		# if actor.head.rotation.angle_to(local_net_camera_look) < deg_to_rad(sync_delta_angle):
@@ -94,7 +94,7 @@ func sync_rotation(delta : float) -> void:
 		# else:
 		# 	average_true_view = actor.head.rotation
 	
-	# if not get_tree().is_server():
+	# if not get_tree().get_multiplayer().is_server():
 	# 	if actor.head.rotation.angle_to(on_the_net_camera_look) < deg_to_rad(sync_delta_angle):
 	# 		actor.head.rotation = lerp_angles(actor.head.rotation, on_the_net_camera_look, delta)
 	# 	else:
@@ -104,7 +104,7 @@ func sync_rotation(delta : float) -> void:
 func _physics_process(delta: float) -> void:
 	if not enabled:
 		return
-	if get_tree().is_server():
+	if get_tree().get_multiplayer().is_server():
 		interpolate_reality_to_expectation(delta*100)
 		update_client_from_server()
 	else:
