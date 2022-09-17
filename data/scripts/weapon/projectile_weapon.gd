@@ -19,10 +19,10 @@ func shoot_projectile(separator_name = "")->void:
 		#Handle more than one raycast 
 		for child_ray in active.get_children():
 			if child_ray is RayCast3D:
-				make_projectile_shoot(child_ray.global_transform.origin, child_ray.cast_to)
+				make_projectile_shoot(child_ray.global_transform.origin, child_ray.target_position)
 	if active is RayCast3D:
 		# Shoot form main barrel 
-		make_projectile_shoot(barrel.global_transform.origin, ray.cast_to)
+		make_projectile_shoot(barrel.global_transform.origin, ray.target_position)
 	
 func make_projectile_shoot(origin, offset):
 	if character == null:

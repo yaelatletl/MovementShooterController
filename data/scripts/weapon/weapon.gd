@@ -1,17 +1,17 @@
 extends Node
 class_name Weapon
 
-var spark = preload("res://data/scenes/spark.tscn")
-var trail = preload("res://data/scenes/trail.tscn")
-var decal = preload("res://data/scenes/decal.tscn")
+var spark = load("res://data/scenes/spark.tscn")
+var trail = load("res://data/scenes/trail.tscn")
+var decal = load("res://data/scenes/decal.tscn")
 
 
 var damage_type : int = Pooling.DAMAGE_TYPE.KINECTIC
 var firerate : float
 var actor : Node = null
 var gun_name : String
-remote var bullets : int
-remote var ammo : int
+var bullets : int
+var ammo : int
 var max_bullets : int
 var damage : int
 var reload_speed : float
@@ -33,8 +33,11 @@ var mesh = null
 var ray = null
 var audio = null
 
+@rpc(call_local) func set_bullets(bullets_in:int) -> void:
+	bullets = bullets_in
 
-
+@rpc(call_local) func set_ammo(ammo_in:int) -> void:
+	ammo = ammo_in
 
 func _ready():
 	if uses_randomness:
@@ -81,8 +84,8 @@ func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_
 	var parent = ray
 	if ray is RayCast3D:
 		#Setup main range
-		ray.cast_to.z = -max_range
-		original_cast_to = ray.cast_to
+		ray.target_position.z = -max_range
+		original_target_position = ray.target_position
 
 	if separator_name != "":
 		separator = Marker3D.new()
@@ -93,9 +96,9 @@ func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_
 	for point in spread_pattern:
 		var new_cast = RayCast3D.new()
 		new_cast.enabled = true
-		new_cast.cast_to.x = point.x * spread_multiplier 
-		new_cast.cast_to.y = point.y * spread_multiplier 
-		new_cast.cast_to.z = -max_range
+		new_cast.target_position.x = point.x * spread_multiplier 
+		new_cast.target_position.y = point.y * spread_multiplier 
+		new_cast.target_position.z = -max_range
 		parent.add_child(new_cast)
 
 func _draw() -> void:
@@ -118,9 +121,9 @@ func _sprint(sprint, _delta) -> void:
 	if not check_relatives():
 		return
 	if sprint and actor.character.direction:
-		mesh.rotation.x = lerp(mesh.rotation.x, -deg_to_rad(40), 5 * _delta)
+		mesh.rotation.x = lerp(float(mesh.rotation.x), -deg_to_rad(40), 5 * _delta)
 	else:
-		mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
+		mesh.rotation.x = lerp(float(mesh.rotation.x), 0.0, 5.0 * _delta)
 
 func shoot(delta) -> void: #Implemented as a virtual method, so that it can be overriden by child classes
 	_shoot(self, delta, bullets, max_bullets, ammo, reload_speed, firerate, "", "ammo", "bullets", true)
@@ -205,15 +208,15 @@ func shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, ma
 		# Get raycast range
 		make_ray_shoot(ray, uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
 
-var original_cast_to = Vector3.FORWARD
+var original_target_position = Vector3.FORWARD
 func make_ray_shoot(ray : RayCast3D, uses_randomness, max_random_spread_x, max_random_spread_y, max_range) -> void:
 	if not check_relatives():
 		return
 	
 	if uses_randomness:
-		ray.cast_to.x = max_random_spread_x* randf_range(-ray.cast_to.z/2, ray.cast_to.z/2)
-		ray.cast_to.y = max_random_spread_y* randf_range(-ray.cast_to.z/2, ray.cast_to.z/2)
-		ray.cast_to.z = -max_range
+		ray.target_position.x = max_random_spread_x* randf_range(-ray.target_position.z/2, ray.target_position.z/2)
+		ray.target_position.y = max_random_spread_y* randf_range(-ray.target_position.z/2, ray.target_position.z/2)
+		ray.target_position.z = -max_range
 	if ray.is_colliding():
 		# Get barrel node
 		var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
@@ -264,7 +267,7 @@ func make_ray_shoot(ray : RayCast3D, uses_randomness, max_random_spread_x, max_r
 		# decal spins to collider normal
 		local_decal.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
 	if not uses_randomness:
-			ray.cast_to = original_cast_to
+			ray.target_position = original_target_position
 
 
 func reload() -> void:
@@ -311,14 +314,14 @@ func _update(_delta) -> void:
 		return
 	if animc != "Shoot":
 		if actor.arsenal.values()[actor.current] == self:
-			actor.camera.rotation.x = lerp(actor.camera.rotation.x, 0, 10 * _delta)
-			actor.camera.rotation.y = lerp(actor.camera.rotation.y, 0, 10 * _delta)
+			actor.camera_node.rotation.x = lerp(actor.camera_node.rotation.x, 0.0, 10.0 * _delta)
+			actor.camera_node.rotation.y = lerp(actor.camera_node.rotation.y, 0.0, 10.0 * _delta)
 	
 	# Get current animation
 	animc = anim.current_animation
 	
 	# Change light energy
-	effect.get_node("shoot").light_energy = lerp(effect.get_node("shoot").light_energy, 0, 5 * _delta)
+	effect.get_node("shoot").light_energy = lerp(effect.get_node("shoot").light_energy, 0.0, 5.0 * _delta)
 	
 	# Remove recoil
-	mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
+	mesh.rotation.x = lerp(mesh.rotation.x, 0.0, 5.0 * _delta)

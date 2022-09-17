@@ -9,6 +9,16 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "Container",
+"class": &"CircularContainer",
+"language": &"GDScript",
+"path": "res://data/UI/layout/CircularContainer.gd"
+}, {
+"base": "Node",
+"class": &"Component",
+"language": &"GDScript",
+"path": "res://data/player/component.gd"
+}, {
 "base": "Node",
 "class": &"FormatParser",
 "language": &"GDScript",
@@ -29,17 +39,37 @@ _global_script_classes=[{
 "language": &"GDScript",
 "path": "res://assets/scripts/PortalRayCast.gd"
 }, {
+"base": "RigidBody3D",
+"class": &"Projectile",
+"language": &"GDScript",
+"path": "res://data/scripts/weapon/projectile.gd"
+}, {
 "base": "Weapon",
 "class": &"ProjectileWeapon",
 "language": &"GDScript",
 "path": "res://data/scripts/weapon/projectile_weapon.gd"
+}, {
+"base": "ProjectileWeapon",
+"class": &"SpecialWeapon",
+"language": &"GDScript",
+"path": "res://data/scripts/weapon/special_weapon.gd"
+}, {
+"base": "Node",
+"class": &"Weapon",
+"language": &"GDScript",
+"path": "res://data/scripts/weapon/weapon.gd"
 }]
 _global_script_class_icons={
+"CircularContainer": "",
+"Component": "",
 "FormatParser": "",
 "InteractableGeneric": "",
 "InteractableInterface": "",
 "PortalRayCast": "",
-"ProjectileWeapon": ""
+"Projectile": "",
+"ProjectileWeapon": "",
+"SpecialWeapon": "",
+"Weapon": ""
 }
 
 [application]

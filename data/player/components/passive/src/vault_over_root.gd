@@ -27,7 +27,7 @@ func _physics_process(delta):
 		if jump_over:
 			character.linear_velocity += (-character.wall_direction + Vector3(0,1.5,0)) * 10
 	else:
-		rotation_degrees.y = character.head.rotation_degrees.y
+		rotation.y = character.head.rotation.y
 		jump_over = false
 		on_ledge = false
 	if character.input["crouch"] and on_ledge:

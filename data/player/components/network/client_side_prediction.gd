@@ -1,18 +1,18 @@
 extends Component
 
-remotesync var on_the_net_transform : Vector3 = Vector3()
-remotesync var on_the_net_velocity : Vector3 = Vector3()
-remotesync var on_the_net_camera_look : Vector3 = Vector3()
-remotesync var on_the_net_height : float = 2.0
-puppet var local_net_transform : Vector3 = Vector3()
-puppet var local_net_velocity : Vector3 = Vector3()
-puppet var local_net_camera_look : Vector3 = Vector3()
-puppet var local_net_height : float = 2.0
+var on_the_net_transform : Vector3 = Vector3()
+var on_the_net_velocity : Vector3 = Vector3()
+var on_the_net_camera_look : Vector3 = Vector3()
+var on_the_net_height : float = 2.0
+var local_net_transform : Vector3 = Vector3()
+var local_net_velocity : Vector3 = Vector3()
+var local_net_camera_look : Vector3 = Vector3()
+var local_net_height : float = 2.0
 @export var head_path: NodePath
-@export var sync_delta: float : float = 1
-@export var sync_delta_angle: float : float = 15
+@export var sync_delta: float  = 1
+@export var sync_delta_angle: float = 15
 @onready var head = get_node(head_path)
-@onready var shape = actor.get_node("collision")
+@onready var shape = get_parent().get_node("collision")
 var average_true_transform : Vector3 = 	Vector3()
 var average_true_velocity : Vector3 = Vector3()
 var average_true_view : Vector3 = Vector3()
@@ -23,11 +23,12 @@ func _ready() -> void:
 	local_net_transform = head.rotation
 
 func update_server_from_client():
+	pass
 	#We update here where the player thinks they are. 
-	rset_unreliable_id(1, "local_net_transform", actor.global_transform.origin)
-	rset_unreliable_id(1, "local_net_height", shape.shape.height)
-	rset_unreliable_id(1, "local_net_camera_look", actor.head.rotation)
-	rset_unreliable_id(1, "local_net_velocity", actor.linear_velocity)
+#	rset_unreliable_id(1, "local_net_transform", actor.global_transform.origin)
+#	rset_unreliable_id(1, "local_net_height", shape.shape.height)
+#	rset_unreliable_id(1, "local_net_camera_look", actor.head.rotation)
+#	rset_unreliable_id(1, "local_net_velocity", actor.linear_velocity)
 			
 func update_client_from_server():
 	#We send the real position (as where the player actually is for the server)

@@ -3,7 +3,7 @@ extends Node
 const SERVER_PORT = 1337
 const MAX_PLAYERS = 8
 var SERVER_IP = "localhost"
-var player_template = preload("res://data/player/character.tscn")
+var player_template = load("res://data/player/character.tscn")
 signal players_changed()
 #First, let's try to define what do we need our gamestate to do
 #we know that we must manage our incoming connections, check them for all players 
@@ -18,7 +18,7 @@ var sync_threads = {}
 func start_new_sync_process(node, property_name, args):
 	print("DEPRECATED, called from " + node.name + "." + property_name)
 	return
-	if not get_tree().has_multiplayer_peer() or not get_tree().is_server():
+	if not get_tree().get_multiplayer().has_multiplayer_peer() or not get_tree().is_server():
 		return
 	var thread = Thread.new()
 	var peer_id = node.multiplayer.get_unique_id()
@@ -47,7 +47,7 @@ func _ready() -> void:
 			client_setup()
 		if args == "server":
 			server_setup()
-	peer.allow_object_decoding = true
+	#peer.allow_object_decoding = true
 func server_setup():
 	peer.create_server(SERVER_PORT, MAX_PLAYERS)
 	get_tree().network_peer = peer
@@ -96,8 +96,9 @@ func create_player(id) -> CharacterBody3D:
 		players[peer_id] = create_player(peer_id)
 	emit_signal("players_changed")
 	
+@rpc(unreliable) 
 func call_on_all_clients(object : Node, func_name : String , args) -> void:
-	if not get_tree().has_multiplayer_peer():
+	if not get_tree().get_multiplayer().has_multiplayer_peer():
 		return
 	var exclude = 1
 	if not is_instance_valid(object):
@@ -116,7 +117,7 @@ func call_on_all_clients(object : Node, func_name : String , args) -> void:
 					object.rpc_id(player, func_name, args)
 
 func set_in_all_clients(object : Node, property_name : String, value) -> void:
-	if not get_tree().has_multiplayer_peer():
+	if not get_tree().get_multiplayer().has_multiplayer_peer():
 		return
 	if not is_instance_valid(object):
 		print("Invalid object")
@@ -128,7 +129,7 @@ func set_in_all_clients(object : Node, property_name : String, value) -> void:
 				object.rset_id(player, property_name, value)
 
 func unreliable_set_in_all_clients(object : Node, property_name : String, value) -> void:
-	if not get_tree().has_multiplayer_peer():
+	if not get_tree().get_multiplayer().has_multiplayer_peer():
 		return
 	if not is_instance_valid(object):
 		print("Invalid object")

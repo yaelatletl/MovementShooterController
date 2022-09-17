@@ -8,7 +8,7 @@ func _ready():
 	get_tree().create_timer(0.6).connect("timeout",Callable(self,"_on_shift_save"))
 	
 func _on_shift_save():
-	var pos = [actor.position, actor.head.rotation_degrees]
+	var pos = [actor.position, actor.head.rotation]
 	if pos_on_time.size() < 4:
 		pos_on_time.append(pos)
 	else:
@@ -31,4 +31,4 @@ func _move_backwards():
 	if pos_on_time.size()>1:
 		await get_tree().create_timer(0.1).timeout
 		actor.position = pos_on_time[0][0]
-		actor.head.rotation_degrees = pos_on_time[0][1]
+		actor.head.rotation = pos_on_time[0][1]

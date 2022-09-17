@@ -4,7 +4,7 @@ extends Camera3D
 @export var shake_force : float
 @onready var actor = $"../../../"
 func _ready() -> void:
-	if get_tree().has_multiplayer_peer():
+	if get_tree().get_multiplayer().has_multiplayer_peer():
 		if is_multiplayer_authority():
 			make_current()
 
@@ -35,5 +35,5 @@ func _tilt(_delta : float) -> void:
 			else:
 				rotation.z  = lerp(rotation.z, -2, _delta)
 	elif shake_time <= 0:
-		rotation.z = lerp(rotation.z, 0, _delta) 
+		rotation.z = lerp(rotation.z, 0.0, _delta) 
 

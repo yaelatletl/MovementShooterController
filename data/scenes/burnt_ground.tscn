@@ -24,4 +24,4 @@ material/0 = null
 
 [node name="ray" type="RayCast3D" parent="."]
 enabled = true
-cast_to = Vector3( 0, -100, 0 )
+target_position = Vector3( 0, -100, 0 )

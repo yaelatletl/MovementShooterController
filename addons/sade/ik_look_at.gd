@@ -7,7 +7,7 @@ extends Node3D
 	set(mod_value):
 		mod_value  # TODOConverter40 Copy here content of _set_skeleton_path
 @export var bone_name: String = ""
-@export var update_mode = 0 setget _set_update # (int, "_process", "_physics_process", "_notification", "none")
+@export var update_mode = 0 
 @export var look_at_axis = 1 # (int, "X-up", "Y-up", "Z-up")
 @export var use_our_rotation_x: bool = false
 @export var use_our_rotation_y: bool = false
@@ -39,7 +39,7 @@ func _ready():
 		if debug_messages:
 			print(name, " - IK_LookAt: Unknown update mode. NOT updating skeleton")
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		_setup_for_editor()
 
 

@@ -9,9 +9,9 @@ movement_path = NodePath("../Movement")
 [node name="vault_over" type="RayCast3D" parent="."]
 transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.705654, -0.419547 )
 enabled = true
-cast_to = Vector3( 0, -0.5, 0 )
+target_position = Vector3( 0, -0.5, 0 )
 
 [node name="vault_over2" type="RayCast3D" parent="."]
 transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.705654, 0.276985 )
 enabled = true
-cast_to = Vector3( 0, 0, -0.8 )
+target_position = Vector3( 0, 0, -0.8 )

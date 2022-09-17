@@ -3,8 +3,8 @@ extends Component
 var jump_timer = null
 var can_jump = true
 
-@export var jump_height: float  : float = 15 # Jump height
-@export var jumps_from_wall: bool : bool = false
+@export var jump_height: float = 15 # Jump height
+@export var jumps_from_wall: bool = false
 
 func _toggle_jump():
 	can_jump = false

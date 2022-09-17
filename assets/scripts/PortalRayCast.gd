@@ -23,13 +23,13 @@ func _basic_cast_ray(from: Vector3, to: Vector3) -> Dictionary:
 			collide_with_bodies, true)
 
 
-# Same as _basic_cast_ray(), but it uses the RayCast3D position and `cast_to` and
+# Same as _basic_cast_ray(), but it uses the RayCast3D position and `target_position` and
 # properly handles portals. If a portal intersects the ray, the raycasting
 # continues at the other portal.
 # TODO: fix this
 func _get_collision_info() -> Dictionary:
 	var start_pos := global_transform.origin
-	var end_pos = global_transform * cast_to
+	var end_pos = global_transform * target_position
 	var through_portal := false
 	while true:
 		var info := _basic_cast_ray(start_pos, end_pos)

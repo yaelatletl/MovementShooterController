@@ -1,8 +1,8 @@
 extends Component
 
-@export var jump_height: float : float = 15
-@export var jumps_before_floor: int : int = 1 #Times you can jump without touching the floor
-@export var walls_add_jumps: bool : bool = false
+@export var jump_height: float = 15
+@export var jumps_before_floor: int  = 1 #Times you can jump without touching the floor
+@export var walls_add_jumps: bool = false
 
 var triggerable : bool = true
 var jump_timer = null

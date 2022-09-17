@@ -13,14 +13,13 @@ var direction    : = Vector3() # Direction Vector
 var acceleration : = Vector3() # Acceleration Vector
 var head_basis : Basis
 # All character inputs
-
-remotesync var input : Dictionary = {}
+var input : Dictionary = {}
 signal died()
 signal health_changed(health, shields)
 
 #Wall running and shared variables
-remotesync var health = 100
-remotesync var shields = 100
+var health = 100
+var shields = 100
 var wall_direction : Vector3 = Vector3.ZERO
 var wall_normal 
 var run_speed : float = 0.0
@@ -83,7 +82,7 @@ func is_far_from_floor() -> bool:
 	Gamestate.call_on_all_clients(self, "die", null)
 	_get_component("input").enabled = false
 	emit_signal("died")
-	print("Player "+name+" died")
+	#print("Player "+name+" died")
 
 func request_interact(interactable : Node3D, message : String, time : float = 0.0):
 	#We need to pass the message to the HUD

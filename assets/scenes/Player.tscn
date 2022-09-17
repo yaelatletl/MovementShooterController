@@ -29,7 +29,7 @@ current = true
 [node name="ForwardRay" type="RayCast3D" parent="Body/Head"]
 transform = Transform3D( -2.18557e-07, 0, 1, 0, 1, 0, -5, 0, -4.37114e-08, 0, 0, 0 )
 enabled = true
-cast_to = Vector3( 1, 0, 0 )
+target_position = Vector3( 1, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="ObjectHolder" type="Area3D" parent="Body/Head"]
@@ -50,5 +50,5 @@ material/0 = SubResource( 4 )
 [node name="DownRay" type="RayCast3D" parent="."]
 transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0 )
 enabled = true
-cast_to = Vector3( 0, -0.1, 0 )
+target_position = Vector3( 0, -0.1, 0 )
 script = ExtResource( 2 )

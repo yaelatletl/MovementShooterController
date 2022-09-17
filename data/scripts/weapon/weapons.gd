@@ -1,39 +1,34 @@
 extends Node3D
 
 # Get character's node path
-@export var character: NodePath
+@onready var character = get_parent()
 
 # Get head's node path
 @export var head: NodePath
+@onready var head_node : RayCast3D = get_node(head)
 
 # Get camera's node path
 @export var neck: NodePath
 
+# Get neck node from path
+@onready var neck_node : Node3D = get_node(neck)
+
 # Get camera's node path
 @export var camera: NodePath
 
+# Get camera node from path
+@onready var camera_node : Camera3D = get_node(camera)
 
 # All weapons
 var arsenal : Dictionary
 
 # Current weapon
-remotesync var current : int = 0
+var current : int = 0
 
 
 func _ready() -> void:
 	set_as_top_level(true)
 	
-	# Get camera node from path
-	camera = get_node(camera)
-	
-	# Get neck node from path
-	neck = get_node(neck)
-	
-	# Get head node from path
-	head = get_node(head)
-	
-	# Get head node from path
-	character = get_node(character)
 	
 	# Class reference : 
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
@@ -101,20 +96,20 @@ func _change() -> void:
 			arsenal.values()[w]._draw()
 
 func _position(_delta) -> void:
-	global_transform.origin = head.global_transform.origin
+	global_transform.origin = head_node.global_transform.origin
 	
 func  _rotation(_delta) -> void:
 	var y_lerp = 40
 	var x_lerp = 80
 	var quat_a = global_transform.basis.get_rotation_quaternion()
-	var quat_b = camera.global_transform.basis.get_rotation_quaternion()
+	var quat_b = camera_node.global_transform.basis.get_rotation_quaternion()
 	var angle_distance = quat_a.angle_to(quat_b)
 	if not character.input["zoom"] and angle_distance < PI/2:
 		
 		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp*angle_distance))
 				
 	else:
-		rotation = camera.global_transform.basis.get_euler()
+		rotation = camera_node.global_transform.basis.get_euler()
 
 @rpc(any_peer, call_local) func _change_weapon(_index) -> void:
 	current = _index

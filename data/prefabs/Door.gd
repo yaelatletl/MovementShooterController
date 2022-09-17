@@ -24,7 +24,7 @@ func interaction_triggered(interactor_body : Node3D):
 	current_vel *= -1
 	triggerable = false
 	
-	if abs(blade.rotation_degrees.y) > 75:
+	if abs(blade.rotation.y) > 75:
 		closing = true
 	else:
 		closing = false
@@ -47,16 +47,16 @@ func interaction_triggered(interactor_body : Node3D):
 func _physics_process(delta):
 	if not triggerable:
 		return
-	#print(blade.rotation_degrees.y, blade.linear_velocity.length())
-	if abs(blade.rotation_degrees.y) < 25:
+	#print(blade.rotation.y, blade.linear_velocity.length())
+	if abs(blade.rotation.y) < 25:
 		if is_zero_approx(abs(blade.linear_velocity.y)): 
 			stiffen_and_sleep()
 		#	print("sleeping")
 		if closing:
 			blade.linear_velocity = lerp(blade.linear_velocity, Vector3.ZERO, delta)
 			blade.angular_velocity = lerp(blade.angular_velocity, Vector3.ZERO, delta)
-			blade.rotation_degrees.y = lerp(blade.rotation_degrees.y, 0, delta)
-			print(rotation_degrees.y)
+			blade.rotation.y = lerp(blade.rotation.y, 0, delta)
+			print(rotation.y)
 		blade.linear_velocity -= 0.1*delta*blade.linear_velocity.normalized()
 		blade.angular_velocity -= 0.1*delta*blade.angular_velocity.normalized()
 

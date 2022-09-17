@@ -1,9 +1,9 @@
 extends RigidBody3D
 
-@export sync var health : int = 100
+@export var health : int = 100
 var remove_decal : bool = false
 
-puppet var on_the_net_transform := Transform3D()
+var on_the_net_transform := Transform3D()
 
 func _ready():
 
@@ -11,9 +11,9 @@ func _ready():
 	$explosion/timer.connect("timeout",Callable(self,"_explode_others"))
 
 func _physics_process(delta: float) -> void:
-	if get_tree().has_multiplayer_peer():
+	if get_tree().get_multiplayer().has_multiplayer_peer():
 		if get_tree().is_server():
-			rset_unreliable("on_the_net_transform", transform)
+			Gamestate.set_in_all_clients(self, "on_the_net_transform", transform)
 		else:
 			transform = on_the_net_transform
 func _damage(damage, type) -> void:
@@ -38,10 +38,8 @@ func _process(_delta) -> void:
 
 	
 	if get_tree().is_server():
-		for players in Gamestate.players:
-			if players != 1:
-				rpc_unreliable_id(players, "_explosion", true)
-	if (not exploded_in_server and get_tree().has_multiplayer_peer()) and not get_tree().is_server():
+		Gamestate.call_on_all_clients(self, "_explosion",[true])
+	if (not exploded_in_server and get_tree().get_multiplayer().has_multiplayer_peer()) and not get_tree().is_server():
 		return
 
 	$collision.disabled = true
@@ -53,7 +51,7 @@ func _process(_delta) -> void:
 	main.add_child(burnt_ground)
 	burnt_ground.position = global_transform.origin
 	
-	mode = FREEZE_MODE_STATIC
+	#mode = FREEZE_MODE_STATIC
 	
 	$mesh.visible = false
 	$effects/ex.emitting = true

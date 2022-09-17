@@ -19,5 +19,5 @@ func _notification(what):
 			rect_vec = rect_vec.rotated(deg_to_rad(spread_anlge))
 			fit_child_in_rect( c, Rect2( rect_vec, (floaters_scale*new_size)/div_size) )
 func set_some_setting():
-    # Some setting changed, ask for children re-sort
-    queue_sort()
+	# Some setting changed, ask for children re-sort
+	queue_sort()

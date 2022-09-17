@@ -10,26 +10,30 @@ enum BAR_LOCATIONS{
 
 
 
-@export var weapon: NodePath
-@export var weapon_hud_ammo: NodePath
-@export var weapon_hud_clip: NodePath
-@export var weapon_hud_text: NodePath
+
+@export var weapon_hud_ammo_path: NodePath
+@export var weapon_hud_clip_path: NodePath
+@export var weapon_hud_text_path: NodePath
+@export var weapon_path: NodePath
+@export var crosshair_path: NodePath
+
+
+@onready var weapon: Node = get_node(weapon_path)
+@onready var crosshair: Node = get_node(crosshair_path)
+@onready var weapon_hud_ammo: Node = get_node(weapon_hud_ammo_path)
+@onready var weapon_hud_clip: Node = get_node(weapon_hud_clip_path)
+@onready var weapon_hud_text: Node = get_node(weapon_hud_text_path)
 
 @export var interact_board_path: NodePath = "Layout/VerticalSections/Top/InteractionBoard"
 @export var message_board_path: NodePath = "Layout/VerticalSections/Mid/MessageBoard"
 
-@export var crosshair: NodePath
 @onready var interact_board = get_node(interact_board_path)
 @onready var message_board = get_node(message_board_path)
 
 
 func _ready():
 	_component_name = "HUD"
-	weapon = get_node(weapon)
-	weapon_hud_ammo = get_node(weapon_hud_ammo)
-	weapon_hud_clip = get_node(weapon_hud_clip)
-	weapon_hud_text = get_node(weapon_hud_text)
-	crosshair = get_node(crosshair)
+	
 
 func _process(_delta) -> void:
 	_weapon_hud()

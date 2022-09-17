@@ -11,7 +11,7 @@ remotesync var local_camera_look : Vector3 = Vector3()
 @onready var shape = actor.get_node("collision")
 
 func _physics_process(delta: float) -> void:
-	if not get_tree().has_multiplayer_peer():
+	if not get_tree().get_multiplayer().has_multiplayer_peer():
 		return
 	
 	if get_tree().is_server():
@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		rset_unreliable_id(1, "local_camera_look", head.rotation)
 		
 func _process(delta: float) -> void:
-	if not get_tree().has_multiplayer_peer():
+	if not get_tree().get_multiplayer().has_multiplayer_peer():
 		return
 	if get_tree().is_server():
 		if local_camera_look != null and get_multiplayer_authority() != 1:

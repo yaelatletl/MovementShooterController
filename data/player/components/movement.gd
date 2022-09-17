@@ -3,17 +3,17 @@ extends Component
 
 const DEFAULT_GRAVITY = 40
 
-@export var n_speed: float : float = 04 # Normal
-@export var s_speed: float : float = 12 # Sprint
-@export var w_speed: float : float = 08 # Walking
-@export var c_speed: float : float = 10 # Crouch
-@export var slide_on_crouch: bool : bool = false
-@export var can_wallrun: bool : bool = false
+@export var n_speed: float = 04 # Normal
+@export var s_speed: float  = 12 # Sprint
+@export var w_speed: float  = 08 # Walking
+@export var c_speed: float  = 10 # Crouch
+@export var slide_on_crouch: bool  = false
+@export var can_wallrun: bool  = false
 # Physics variables
-@export var gravity: float      : float = 40 # Gravity force #45 is okay, don't change it 
-@export var friction: float     : float = 25 # friction
+@export var gravity: float = 40 # Gravity force #45 is okay, don't change it 
+@export var friction: float = 25 # friction
 
-@export var collision: NodePath : NodePath = ""
+@export var collision: NodePath = ""
 @onready var col = get_node(collision)
 
 var _delta

@@ -12,8 +12,8 @@ var projectiles_active = []
 var projectiles_waiting = []
 
 var projectiles = {
-	1: preload("res://data/weapons/PlasmaBolt.tscn"),
-	2: preload("res://data/weapons/Grenade.tscn"),
+	1: load("res://data/weapons/PlasmaBolt.tscn"),
+	2: load("res://data/weapons/Grenade.tscn"),
 }
 
 var projectiles_root 
