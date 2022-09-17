@@ -3,14 +3,14 @@ extends Node
 var inputs : Dictionary = {}
 
 func _ready():
-	Input.connect("joy_connection_changed", self, "_on_joy_changed")
+	Input.connect("joy_connection_changed",Callable(self,"_on_joy_changed"))
 	
 func _on_joy_changed(device : int):
 	inputs[device]["player"]
 
 # Deletes a subdictionary when the corresponding device is disconnected
 func _on_joy_disconnected(device : int):
-	inputs.remove(device)
+	inputs.remove_at(device)
 
 
 

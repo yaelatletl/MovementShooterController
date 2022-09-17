@@ -7,24 +7,24 @@ var player_template = preload("res://data/player/character.tscn")
 signal players_changed()
 #First, let's try to define what do we need our gamestate to do
 #we know that we must manage our incoming connections, check them for all players 
-#and that we must inform disconnections and so on.
+#and that we must inform disconnections and so checked.
 
 #The network model will go like this:
 #A central server is responsible for all the in-game calculations. 
-onready var peer = NetworkedMultiplayerENet.new()
+@onready var peer = ENetMultiplayerPeer.new()
 var players : Dictionary = {}
 var sync_threads = {}
 
 func start_new_sync_process(node, property_name, args):
 	print("DEPRECATED, called from " + node.name + "." + property_name)
 	return
-	if not get_tree().has_network_peer() or not get_tree().is_network_server():
+	if not get_tree().has_multiplayer_peer() or not get_tree().is_server():
 		return
 	var thread = Thread.new()
-	var peer_id = node.multiplayer.get_network_unique_id()
+	var peer_id = node.multiplayer.get_unique_id()
 	sync_threads[peer_id] = {}
 	sync_threads[peer_id][property_name] = thread
-	thread.start(self, "_sync_process", [peer_id, node, property_name, args])
+	thread.start(Callable(self,"_sync_process").bind([peer_id, node, property_name, args]))
 
 #This is a sync process, but it's not working as it should, we will try to limit thread creation to every two players
 func _sync_process(args):
@@ -33,15 +33,15 @@ func _sync_process(args):
 		var property = args[2]
 		var value = args[3]
 		Gamestate.set_in_all_clients(node, property, value)
-		yield(get_tree().create_timer(5), "timeout")
+		await get_tree().create_timer(5).timeout
 		_sync_process(args)
 
 func _ready() -> void:
-	peer.connect("connection_succeeded", self, "_on_NetworkPeer_connection_succeeded")
-	peer.connect("connection_failed", self, "_on_NetworkPeer_connection_failed")
-	peer.connect("peer_connected", self, "_on_NetworkPeer_peer_connected")
-	peer.connect("peer_disconnected", self, "_on_NetworkPeer_peer_disconnected")
-	peer.connect("server_disconnected", self, "_on_NetworkPeer_server_disconnected")
+	peer.connect("connection_succeeded",Callable(self,"_on_NetworkPeer_connection_succeeded"))
+	peer.connect("connection_failed",Callable(self,"_on_NetworkPeer_connection_failed"))
+	peer.connect("peer_connected",Callable(self,"_on_NetworkPeer_peer_connected"))
+	peer.connect("peer_disconnected",Callable(self,"_on_NetworkPeer_peer_disconnected"))
+	peer.connect("server_disconnected",Callable(self,"_on_NetworkPeer_server_disconnected"))
 	for args in OS.get_cmdline_args():
 		if args == "client":
 			client_setup()
@@ -72,7 +72,7 @@ func _on_NetworkPeer_peer_disconnected(peer_id) -> void:
 	emit_signal("players_changed")
 	
 func _on_NetworkPeer_peer_connected(peer_id : int) -> void:
-	if get_tree().is_network_server():
+	if get_tree().is_server():
 		register_player(peer_id)
 		for peers in players:
 			for player in players:
@@ -85,56 +85,56 @@ func _on_NetworkPeer_connection_failed() -> void:
 func _on_NetworkPeer_connection_succeeded() -> void:
 	pass
 
-func create_player(id) -> KinematicBody:
-	var new_player =  player_template.instance()
+func create_player(id) -> CharacterBody3D:
+	var new_player =  player_template.instantiate()
 	new_player.name = str(id)
-	new_player.set_network_master(id)
+	new_player.set_multiplayer_authority(id)
 	return new_player
 
-remote func register_player(peer_id):
+@rpc(any_peer) func register_player(peer_id):
 	if not players.has(peer_id):
 		players[peer_id] = create_player(peer_id)
 	emit_signal("players_changed")
 	
 func call_on_all_clients(object : Node, func_name : String , args) -> void:
-	if not get_tree().has_network_peer():
+	if not get_tree().has_multiplayer_peer():
 		return
 	var exclude = 1
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return
-	if object.is_network_master():
-		exclude = object.multiplayer.get_network_unique_id()
+	if object.is_multiplayer_authority():
+		exclude = object.multiplayer.get_unique_id()
 	
-	if get_tree().is_network_server():
+	if get_tree().is_server():
 		for player in players:
 			if player != 1 and player != exclude:
-				# print("Calling RPC on client " + str(player))
+				# print("Calling RPC checked client " + str(player))
 				if args == null:
 					object.rpc_id(player, func_name)
 				else:
 					object.rpc_id(player, func_name, args)
 
 func set_in_all_clients(object : Node, property_name : String, value) -> void:
-	if not get_tree().has_network_peer():
+	if not get_tree().has_multiplayer_peer():
 		return
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return
-	if get_tree().is_network_server():
+	if get_tree().is_server():
 		for player in players:
 			if player != 1:
-				#print("Setting property on client " + str(player))
+				#print("Setting property checked client " + str(player))
 				object.rset_id(player, property_name, value)
 
 func unreliable_set_in_all_clients(object : Node, property_name : String, value) -> void:
-	if not get_tree().has_network_peer():
+	if not get_tree().has_multiplayer_peer():
 		return
 	if not is_instance_valid(object):
 		print("Invalid object")
 		return
-	if get_tree().is_network_server():
+	if get_tree().is_server():
 		for player in players:
 			if player != 1:
-				#print("Setting property on client " + str(player))
+				#print("Setting property checked client " + str(player))
 				object.rset_unreliable_id(player, property_name, value)

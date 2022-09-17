@@ -1,8 +1,8 @@
-extends Spatial
+extends Node3D
 
 var timer := 0.0
 var opening := false
-onready var orig_transform: Transform = $Door.transform
+@onready var orig_transform: Transform3D = $Door.transform
 
 
 func _physics_process(delta: float) -> void:

@@ -1,6 +1,6 @@
-extends Spatial
-onready var start = $Start
-onready var end = $End
+extends Node3D
+@onready var start = $Start
+@onready var end = $End
 
 const AREA_RADIUS = 2
 
@@ -9,8 +9,8 @@ var zipline_direction = Vector3.ZERO
 
 var current_bodies = []
 var linked_bodies = []
-var area : Area
-export(float) var y_offset = 0.7
+var area : Area3D
+@export var y_offset: float = 0.7
 #little struct here:
 #{
 #	body: body,
@@ -19,18 +19,18 @@ export(float) var y_offset = 0.7
 #}
 
 func _ready():
-	area = Area.new()
-	var collision = CollisionShape.new()
+	area = Area3D.new()
+	var collision = CollisionShape3D.new()
 	var distance = start.global_transform.origin.distance_to(end.global_transform.origin)
 	var angle = start.global_transform.origin.angle_to(end.global_transform.origin)
-	var debug_shape = MeshInstance.new()
+	var debug_shape = MeshInstance3D.new()
 	zipline_direction = start.global_transform.origin.direction_to(end.global_transform.origin)
-	debug_shape.mesh = CubeMesh.new()
+	debug_shape.mesh = BoxMesh.new()
 	area.name = "PickArea"
-	collision.shape = BoxShape.new()
+	collision.shape = BoxShape3D.new()
 	collision.shape.extents = Vector3(AREA_RADIUS, AREA_RADIUS, distance)/2
 	debug_shape.mesh.size = collision.shape.extents*2
-	area.connect("body_exited", self, "_on_body_exited")
+	area.connect("body_exited",Callable(self,"_on_body_exited"))
 	interactable = InteractableInterface.new()
 	interactable.cooldown = 0.5
 	interactable.toggable = true
@@ -41,9 +41,9 @@ func _ready():
 	area.global_transform.origin = start.global_transform.origin
 	area.global_translate(Vector3(0, -y_offset, 0))
 	interactable.message = "Press E to use Zipline"
-	area.translation += zipline_direction*(distance / 2)
+	area.position += zipline_direction*(distance / 2)
 	area.look_at(end.global_transform.origin, Vector3(0, 1, 0))
-	interactable.connect("interacted_successfully", self, "_on_interacted_successfully")
+	interactable.connect("interacted_successfully",Callable(self,"_on_interacted_successfully"))
 
 func _on_interacted_successfully(body):
 	if body in linked_bodies:
@@ -80,7 +80,7 @@ func _on_body_deattached(struct, delta=0.0):
 			if current_bodies[i]["body"] in linked_bodies:
 				linked_bodies.erase(current_bodies[i]["body"])
 				current_bodies[i]["movement"].add_impulse(-body.head_basis.z.normalized() * body.linear_velocity.length())
-			current_bodies.remove(i)
+			current_bodies.remove_at(i)
 			break
 
 func get_point_to_snap(actor_origin : Vector3):

@@ -2,13 +2,13 @@ extends Projectile
 
 var bodies_to_explode : Array = []
 
-export(float) var impulse = 10
+@export var impulse: float = 10
 
 func explode() -> void:
 	for body in bodies_to_explode:
-		if body is RigidBody:
+		if body is RigidBody3D:
 			body.apply_central_impulse((body.global_transform.origin - global_transform.origin).normalized() * impulse)
-		elif body is KinematicBody:
+		elif body is CharacterBody3D:
 			if body.has_method("_get_component"):
 				body._get_component("movement_basic").add_impulse((body.global_transform.origin - global_transform.origin).normalized() * impulse)
 		body._damage(damage)

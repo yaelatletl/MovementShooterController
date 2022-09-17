@@ -1,7 +1,7 @@
-tool
+@tool
 extends EditorPlugin
 
-var _camera: Camera
+var _camera: Camera3D
 
 
 func _enter_tree() -> void:
@@ -16,10 +16,10 @@ func handles(obj: Object) -> bool:
 
 
 # warning-ignore:unused_argument
-func forward_spatial_gui_input(camera: Camera, event: InputEvent) -> bool:
+func _forward_3d_gui_input(camera: Camera3D, event: InputEvent) -> bool:
 	_camera = camera
 	return false
 
 
-func get_camera() -> Camera:
+func get_camera_3d() -> Camera3D:
 	return _camera

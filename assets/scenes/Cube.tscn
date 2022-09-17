@@ -2,10 +2,10 @@
 
 [ext_resource path="res://assets/scripts/Holdable.gd" type="Script" id=1]
 
-[sub_resource type="ConvexPolygonShape" id=1]
-points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
+[sub_resource type="ConvexPolygonShape3D" id=1]
+points = PackedVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
 
-[sub_resource type="CubeMesh" id=2]
+[sub_resource type="BoxMesh" id=2]
 
 [sub_resource type="Shader" id=3]
 code = "shader_type spatial;
@@ -18,7 +18,7 @@ bool portal_culls(vec3 vertex, mat4 cam, mat4 world) {
 }
 
 void fragment() {
-	if (portal_culls(VERTEX, CAMERA_MATRIX, WORLD_MATRIX)) {
+	if (portal_culls(VERTEX, INV_VIEW_MATRIX, MODEL_MATRIX)) {
 		discard;
 	}
 	ALBEDO = vec3(1.0, 0.0, 0.0);
@@ -28,14 +28,14 @@ void fragment() {
 shader = SubResource( 3 )
 shader_param/portal_plane = Plane( 0, 0, 0, 0 )
 
-[node name="Cube" type="RigidBody"]
-contacts_reported = 8
+[node name="Cube" type="RigidBody3D"]
+max_contacts_reported = 8
 contact_monitor = true
 script = ExtResource( 1 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )

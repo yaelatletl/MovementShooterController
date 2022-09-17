@@ -1,6 +1,6 @@
-# This script can be attached to a PhysicsBody to make power feed to its parent
+# This script can be attached to a PhysicsBody3D to make power feed to its parent
 
-extends Spatial
+extends Node3D
 
 
 func recv_power(powered: bool) -> void:

@@ -79,19 +79,19 @@ func update_actor_relatives(actor) -> void:
 func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_name = "") -> void:
 	var separator
 	var parent = ray
-	if ray is RayCast:
+	if ray is RayCast3D:
 		#Setup main range
 		ray.cast_to.z = -max_range
 		original_cast_to = ray.cast_to
 
 	if separator_name != "":
-		separator = Position3D.new()
+		separator = Marker3D.new()
 		separator.name = separator_name
 		ray.add_child(separator)
 		parent = separator
 	
 	for point in spread_pattern:
-		var new_cast = RayCast.new()
+		var new_cast = RayCast3D.new()
 		new_cast.enabled = true
 		new_cast.cast_to.x = point.x * spread_multiplier 
 		new_cast.cast_to.y = point.y * spread_multiplier 
@@ -118,7 +118,7 @@ func _sprint(sprint, _delta) -> void:
 	if not check_relatives():
 		return
 	if sprint and actor.character.direction:
-		mesh.rotation.x = lerp(mesh.rotation.x, -deg2rad(40), 5 * _delta)
+		mesh.rotation.x = lerp(mesh.rotation.x, -deg_to_rad(40), 5 * _delta)
 	else:
 		mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
 
@@ -141,8 +141,8 @@ func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l
 			node_in.set_deferred(bullets_name, l_bullets - 1)
 			Gamestate.set_in_all_clients(node_in, bullets_name, l_bullets)
 			# recoil
-			actor.camera.rotation.x = lerp(actor.camera.rotation.x, rand_range(1, 2), _delta)
-			actor.camera.rotation.y = lerp(actor.camera.rotation.y, rand_range(-1, 1), _delta)
+			actor.camera.rotation.x = lerp(actor.camera.rotation.x, randf_range(1, 2), _delta)
+			actor.camera.rotation.y = lerp(actor.camera.rotation.y, randf_range(-1, 1), _delta)
 			
 			# Shake the camera
 			actor.camera.shake_force = 0.002
@@ -158,7 +158,7 @@ func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l
 			effect.get_node("smoke").emitting = true
 			
 			# Play shoot sound
-			audio.get_node("shoot").pitch_scale = rand_range(0.9, 1.1)
+			audio.get_node("shoot").pitch_scale = randf_range(0.9, 1.1)
 			audio.get_node("shoot").play()
 			
 			var anim_speed = l_firerate
@@ -172,12 +172,12 @@ func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l
 			if not tied_to_animation:
 				shooting_cooldown = true
 				anim_speed = anim.get_animation("Shoot").length / l_firerate
-				yield(get_tree().create_timer(anim_speed), "timeout")
+				await get_tree().create_timer(anim_speed).timeout
 				shooting_cooldown = false
 	else:
 		# Play out sound
 		if not audio.get_node("out").playing:
-			audio.get_node("out").pitch_scale = rand_range(0.9, 1.1)
+			audio.get_node("out").pitch_scale = randf_range(0.9, 1.1)
 			audio.get_node("out").play()
 		if GlobalSettings.auto_reload:
 			_reload(node_in, l_bullets, l_max_bullets, l_ammo, ammo_name, bullets_name, l_reload_speed)
@@ -193,26 +193,26 @@ func shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, ma
 		ray = ray.get_node(relative_node)
 		if not ray.get_children().size()>0:
 			ray = self.ray
-	if ray is Position3D:
+	if ray is Marker3D:
 		#Handle more than one raycast 
 		for child_ray in ray.get_children():
-			if child_ray is RayCast:
+			if child_ray is RayCast3D:
 				# Get raycast range
 				make_ray_shoot(child_ray, uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
 							
 				# Check raycast is colliding
-	elif ray is RayCast:
+	elif ray is RayCast3D:
 		# Get raycast range
 		make_ray_shoot(ray, uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
 
 var original_cast_to = Vector3.FORWARD
-func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_random_spread_y, max_range) -> void:
+func make_ray_shoot(ray : RayCast3D, uses_randomness, max_random_spread_x, max_random_spread_y, max_range) -> void:
 	if not check_relatives():
 		return
 	
 	if uses_randomness:
-		ray.cast_to.x = max_random_spread_x* rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
-		ray.cast_to.y = max_random_spread_y* rand_range(-ray.cast_to.z/2, ray.cast_to.z/2)
+		ray.cast_to.x = max_random_spread_x* randf_range(-ray.cast_to.z/2, ray.cast_to.z/2)
+		ray.cast_to.y = max_random_spread_y* randf_range(-ray.cast_to.z/2, ray.cast_to.z/2)
 		ray.cast_to.z = -max_range
 	if ray.is_colliding():
 		# Get barrel node
@@ -221,7 +221,7 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 		var main = actor.get_tree().get_root().get_child(0)
 				
 		# Create a instance of trail scene
-		var local_trail = trail.instance()
+		var local_trail = trail.instantiate()
 		# Change trail position to out of barrel position
 		main.add_child(local_trail)
 		local_trail.global_transform.origin = barrel.global_transform.origin
@@ -231,15 +231,15 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 		#TODO: Show trails even if the bullet doesn't hit anything
 		local_trail.look_at(ray.get_collision_point(),Vector3(0, 1, 0))
 
-		var local_damage = int(rand_range(damage/1.5, damage))
+		var local_damage = int(randf_range(damage/1.5, damage))
 		
 		# Do damage
-		if ray.get_collider() is RigidBody:
+		if ray.get_collider() is RigidBody3D:
 			ray.get_collider().apply_central_impulse(-ray.get_collision_normal() * (local_damage * 0.3))
 		
 		if ray.get_collider().is_in_group("prop"):
 			if ray.get_collider().is_in_group("metal"):
-				var local_spark = spark.instance()
+				var local_spark = spark.instantiate()
 				
 				# Add spark scene in collider
 				ray.get_collider().add_child(local_spark)
@@ -253,7 +253,7 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 			ray.get_collider()._damage(local_damage, damage_type)
 		
 		# Create a instance of decal scene
-		var local_decal = decal.instance()
+		var local_decal = decal.instantiate()
 		
 		# Add decal scene in collider
 		ray.get_collider().add_child(local_decal)
@@ -299,12 +299,12 @@ func make_zoom(input, _delta) -> void:
 	
 	if input and animc != "Reload" and animc != "Hide" and animc != "Draw":
 		camera.fov = lerp(camera.fov, zoom_fov, lerp_speed * _delta)
-		mesh.translation.y = lerp(mesh.translation.y, 0.001, lerp_speed * _delta)
-		mesh.translation.x = lerp(mesh.translation.x, -0.088, lerp_speed * _delta)
+		mesh.position.y = lerp(mesh.position.y, 0.001, lerp_speed * _delta)
+		mesh.position.x = lerp(mesh.position.x, -0.088, lerp_speed * _delta)
 	else:
 		camera.fov = lerp(camera.fov, default_fov, lerp_speed * _delta)
-		mesh.translation.y = lerp(mesh.translation.y, 0, lerp_speed * _delta)
-		mesh.translation.x = lerp(mesh.translation.x, 0, lerp_speed * _delta)
+		mesh.position.y = lerp(mesh.position.y, 0, lerp_speed * _delta)
+		mesh.position.x = lerp(mesh.position.x, 0, lerp_speed * _delta)
 	
 func _update(_delta) -> void:
 	if not check_relatives():

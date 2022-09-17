@@ -3,14 +3,14 @@ extends Component
 var jump_timer = null
 var can_jump = true
 
-export(float) var jump_height  : float = 15 # Jump height
-export(bool) var jumps_from_wall : bool = false
+@export var jump_height: float  : float = 15 # Jump height
+@export var jumps_from_wall: bool : bool = false
 
 func _toggle_jump():
 	can_jump = false
 	if jump_timer == null:
 		jump_timer = get_tree().create_timer(0.2)
-		jump_timer.connect("timeout", self, "_enable_jump")
+		jump_timer.connect("timeout",Callable(self,"_enable_jump"))
 
 func _physics_process(_delta):
 		# Function for jump
@@ -23,7 +23,7 @@ func _enable_jump():
 	jump_timer = null
 	
 func _jump(_delta) -> void:
-	# Makes the player jump if he is on the ground
+	# Makes the player jump if he is checked the ground
 	if actor.input["jump"] and can_jump:
 		_toggle_jump()
 		#actor.input["jump"] = 0 #Consumes the input

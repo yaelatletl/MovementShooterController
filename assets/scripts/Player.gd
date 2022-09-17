@@ -1,4 +1,4 @@
-extends RigidBody
+extends RigidBody3D
 
 const Holdable = preload("res://assets/scripts/Holdable.gd")
 
@@ -44,7 +44,7 @@ func move_player() -> void:
 		dir += basis.x
 
 	var force: Vector3 = dir.normalized() * WALK_FORCE
-	add_central_force(force)
+	apply_central_force(force)
 
 
 # TODO: rename this
@@ -53,7 +53,7 @@ func move_held_object(delta):
 		return
 
 	# Drop object if the forward ray is no longer in contact with it
-	var collider: PhysicsBody = $Body/Head/ForwardRay.get_collider()
+	var collider: PhysicsBody3D = $Body/Head/ForwardRay.get_collider()
 	if collider != held_obj:
 		drop_object()
 
@@ -84,7 +84,7 @@ func use_action():
 		drop_object()
 
 
-func _integrate_forces(state: PhysicsDirectBodyState) -> void:
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	# Clamp lateral linear_velocity
 	var lin_vel := state.linear_velocity
 	var lateral_velocity := Vector2(lin_vel.x, lin_vel.z)

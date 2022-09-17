@@ -1,8 +1,8 @@
 extends Component
 
-export(float) var jump_height : float = 15
-export(int) var jumps_before_floor : int = 1 #Times you can jump without touching the floor
-export(bool) var walls_add_jumps : bool = false
+@export var jump_height: float : float = 15
+@export var jumps_before_floor: int : int = 1 #Times you can jump without touching the floor
+@export var walls_add_jumps: bool : bool = false
 
 var triggerable : bool = true
 var jump_timer = null
@@ -17,7 +17,7 @@ func _ready():
 func _toggle_jump():
 	if jump_timer == null:
 		jump_timer = get_tree().create_timer(0.5)
-		jump_timer.connect("timeout", self, "_enable_jump")
+		jump_timer.connect("timeout",Callable(self,"_enable_jump"))
 
 func _enable_jump():
 	triggerable = true

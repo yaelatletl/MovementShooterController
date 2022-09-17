@@ -1,16 +1,16 @@
-extends Spatial
+extends Node3D
 
 # Get character's node path
-export(NodePath) var character
+@export var character: NodePath
 
 # Get head's node path
-export(NodePath) var head
+@export var head: NodePath
 
 # Get camera's node path
-export(NodePath) var neck
+@export var neck: NodePath
 
 # Get camera's node path
-export(NodePath) var camera
+@export var camera: NodePath
 
 
 # All weapons
@@ -21,7 +21,7 @@ remotesync var current : int = 0
 
 
 func _ready() -> void:
-	set_as_toplevel(true)
+	set_as_top_level(true)
 	
 	# Get camera node from path
 	camera = get_node(camera)
@@ -65,12 +65,12 @@ func _process(_delta) -> void:
 	_rotation(_delta)
 	_position(_delta)
 
-remote func _shoot(_delta) -> void:
+@rpc(any_peer) func _shoot(_delta) -> void:
 	# Call weapon function
 	arsenal.values()[current].shoot(_delta)
 	Gamestate.call_on_all_clients(self, "_shoot", _delta)
 
-remote func _reload() -> void:
+@rpc(any_peer) func _reload() -> void:
 	arsenal.values()[current].reload()
 	Gamestate.call_on_all_clients(self, "_reload", null)
 
@@ -106,8 +106,8 @@ func _position(_delta) -> void:
 func  _rotation(_delta) -> void:
 	var y_lerp = 40
 	var x_lerp = 80
-	var quat_a = global_transform.basis.get_rotation_quat()
-	var quat_b = camera.global_transform.basis.get_rotation_quat()
+	var quat_a = global_transform.basis.get_rotation_quaternion()
+	var quat_b = camera.global_transform.basis.get_rotation_quaternion()
 	var angle_distance = quat_a.angle_to(quat_b)
 	if not character.input["zoom"] and angle_distance < PI/2:
 		
@@ -116,7 +116,7 @@ func  _rotation(_delta) -> void:
 	else:
 		rotation = camera.global_transform.basis.get_euler()
 
-remotesync func _change_weapon(_index) -> void:
+@rpc(any_peer, call_local) func _change_weapon(_index) -> void:
 	current = _index
 	Gamestate.set_in_all_clients(self, "current", _index)
 

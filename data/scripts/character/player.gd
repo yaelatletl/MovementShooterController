@@ -1,11 +1,11 @@
-extends KinematicBody
+extends CharacterBody3D
 
 const SLIDE_MULT = 3
 const WALLRUN_MULT = 1.7
 
-export(NodePath) var head_path = ""
-export(NodePath) var feet_path = ""
-export(float) var mass = 45
+@export var head_path: NodePath = ""
+@export var feet_path: NodePath = ""
+@export var mass: float = 45
 
 # All vectors
 var linear_velocity : = Vector3() # linear_velocity vector
@@ -29,8 +29,8 @@ var multiplier : float = 1.5
 
 var components : Dictionary = {}
 var angle 
-onready var head = get_node(head_path)
-onready var feet = get_node(feet_path)
+@onready var head = get_node(head_path)
+@onready var feet = get_node(feet_path)
 
 func _get_component(_name:String) -> Node:
 	if components.has(_name):
@@ -49,7 +49,7 @@ func _physics_process(delta):
 	head_basis = head.global_transform.basis
 	if is_on_wall():
 		wall_normal = get_slide_collision(0)
-		#yield(get_tree().create_timer(0.2), "timeout")
+		#await get_tree().create_timer(0.2).timeout
 		wall_direction = wall_normal.normal
 	run_speed = Vector2(linear_velocity.x, linear_velocity.z).length()
 
@@ -67,7 +67,7 @@ func is_far_from_floor() -> bool:
 		return false
 	return true
 
-remotesync func _damage(amount : float, type):
+@rpc(any_peer, call_local) func _damage(amount : float, type):
 	var temp = amount
 	amount = (amount - shields)/10
 	shields -= temp	
@@ -79,13 +79,13 @@ remotesync func _damage(amount : float, type):
 	Gamestate.set_in_all_clients(self, "health", health)
 	Gamestate.set_in_all_clients(self, "shields", shields)
 		
-remotesync func die():
+@rpc(any_peer, call_local) func die():
 	Gamestate.call_on_all_clients(self, "die", null)
 	_get_component("input").enabled = false
 	emit_signal("died")
 	print("Player "+name+" died")
 
-func request_interact(interactable : Spatial, message : String, time : float = 0.0):
+func request_interact(interactable : Node3D, message : String, time : float = 0.0):
 	#We need to pass the message to the HUD
 	if	_get_component("interactor"):
 		_get_component("interactor").request_interact(interactable, message, time)

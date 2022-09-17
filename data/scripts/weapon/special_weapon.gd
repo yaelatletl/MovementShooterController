@@ -37,7 +37,7 @@ var uses_separate_ammo = true
 var switch = false
 
 func _ready() -> void:
-	._ready()
+	super._ready()
 	setup_spread(secondary_spread_pattern, secondary_spread_multiplier, secondary_max_range, "secondary")
 func _physics_process(delta):
 	if character == null:

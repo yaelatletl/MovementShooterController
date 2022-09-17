@@ -1,51 +1,57 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=3 uid="uid://bcvm376xnrhkr"]
 
-[ext_resource path="res://data/textures/grid.png" type="Texture" id=1]
-[ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
-[ext_resource path="res://data/shaders/active_camo.material" type="Material" id=3]
-[ext_resource path="res://data/scenes/fade.tscn" type="PackedScene" id=4]
-[ext_resource path="res://data/scenes/barrel.tscn" type="PackedScene" id=5]
-[ext_resource path="res://data/scenes/scenario.gd" type="Script" id=6]
-[ext_resource path="res://data/models/player/passive_marker_man.tscn" type="PackedScene" id=7]
-[ext_resource path="res://data/prefabs/Door.tscn" type="PackedScene" id=8]
-[ext_resource path="res://data/player/character.tscn" type="PackedScene" id=9]
-[ext_resource path="res://data/pickables/Kriss.tscn" type="PackedScene" id=10]
-[ext_resource path="res://data/prefabs/ZipLine.gd" type="Script" id=11]
-[ext_resource path="res://assets/scenes/PortalPair.tscn" type="PackedScene" id=12]
-[ext_resource path="res://default_env.tres" type="Environment" id=13]
+[ext_resource type="Texture2D" uid="uid://cvqmnkt5mapwu" path="res://data/textures/grid.png" id="1"]
+[ext_resource type="PackedScene" path="res://test_scenario/Test Scene.tscn" id="2"]
+[ext_resource type="Material" path="res://data/shaders/active_camo.material" id="3"]
+[ext_resource type="PackedScene" path="res://data/scenes/fade.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://data/scenes/barrel.tscn" id="5"]
+[ext_resource type="Script" path="res://data/scenes/scenario.gd" id="6"]
+[ext_resource type="PackedScene" uid="uid://dknq42sm7h55j" path="res://data/models/player/passive_marker_man.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://data/prefabs/Door.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://dy5p2vf4pams" path="res://data/player/character.tscn" id="9"]
+[ext_resource type="PackedScene" path="res://data/pickables/Kriss.tscn" id="10"]
+[ext_resource type="Script" path="res://data/prefabs/ZipLine.gd" id="11"]
+[ext_resource type="PackedScene" path="res://assets/scenes/PortalPair.tscn" id="12"]
 
-[sub_resource type="CubeMesh" id=3]
-size = Vector3( 1, 6, 20 )
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_i3pse"]
+rayleigh_color = Color(0.364706, 0.478431, 0.686275, 1)
+mie_eccentricity = 0.94
 
-[sub_resource type="SpatialMaterial" id=4]
-albedo_texture = ExtResource( 1 )
+[sub_resource type="Sky" id="Sky_n15ff"]
+sky_material = SubResource("PhysicalSkyMaterial_i3pse")
+
+[sub_resource type="Environment" id="Environment_35hp7"]
+background_mode = 2
+sky = SubResource("Sky_n15ff")
+
+[sub_resource type="BoxMesh" id="3"]
+size = Vector3(1, 6, 20)
+
+[sub_resource type="ConvexPolygonShape3D" id="5"]
+points = PackedVector3Array(-0.5, 3, 10, 0.5, 3, -10, 0.5, 3, 10, -0.5, 3, -10, -0.5, -3, 10, 0.5, -3, -10, 0.5, -3, 10, -0.5, -3, -10, 0.5, 3, 10, -0.5, 3, -10, 0.5, 3, -10, -0.5, 3, 10, 0.5, -3, 10, -0.5, -3, -10, 0.5, -3, -10, -0.5, -3, 10, 0.5, 3, 10, -0.5, -3, 10, -0.5, 3, 10, 0.5, -3, 10, 0.5, 3, -10, -0.5, -3, -10, -0.5, 3, -10, 0.5, -3, -10)
+
+[sub_resource type="StandardMaterial3D" id="6"]
+albedo_texture = ExtResource("1")
 uv1_triplanar = true
 
-[sub_resource type="ConvexPolygonShape" id=5]
-points = PoolVector3Array( -0.5, 3, 10, 0.5, 3, -10, 0.5, 3, 10, -0.5, 3, -10, -0.5, -3, 10, 0.5, -3, -10, 0.5, -3, 10, -0.5, -3, -10, 0.5, 3, 10, -0.5, 3, -10, 0.5, 3, -10, -0.5, 3, 10, 0.5, -3, 10, -0.5, -3, -10, 0.5, -3, -10, -0.5, -3, 10, 0.5, 3, 10, -0.5, -3, 10, -0.5, 3, 10, 0.5, -3, 10, 0.5, 3, -10, -0.5, -3, -10, -0.5, 3, -10, 0.5, -3, -10 )
+[sub_resource type="BoxMesh" id="7"]
+material = SubResource("6")
+size = Vector3(500, 2, 500)
 
-[sub_resource type="SpatialMaterial" id=6]
-albedo_texture = ExtResource( 1 )
-uv1_triplanar = true
+[sub_resource type="BoxShape3D" id="8"]
+size = Vector3(500, 2, 500)
 
-[sub_resource type="CubeMesh" id=7]
-material = SubResource( 6 )
-size = Vector3( 500, 2, 500 )
+[sub_resource type="BoxShape3D" id="11"]
+size = Vector3(0.40653, 2, 0.4243)
 
-[sub_resource type="BoxShape" id=8]
-extents = Vector3( 250, 1, 250 )
+[sub_resource type="BoxMesh" id="12"]
+size = Vector3(0.451, 2.005, 0.633)
 
-[sub_resource type="BoxShape" id=11]
-extents = Vector3( 0.203265, 1, 0.21215 )
-
-[sub_resource type="CubeMesh" id=12]
-size = Vector3( 0.451, 2.005, 0.633 )
-
-[sub_resource type="Shader" id=13]
+[sub_resource type="Shader" id="13"]
 resource_local_to_scene = true
 code = "shader_type spatial;
 render_mode unshaded;
-uniform sampler2D texture_albedo : hint_albedo;
+uniform sampler2D texture_albedo : source_color;
 
 void vertex() {
 }
@@ -57,15 +63,16 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id=14]
+[sub_resource type="ShaderMaterial" id="14"]
 resource_local_to_scene = true
-shader = SubResource( 13 )
+render_priority = 0
+shader = SubResource("13")
 
-[sub_resource type="Shader" id=15]
+[sub_resource type="Shader" id="15"]
 resource_local_to_scene = true
 code = "shader_type spatial;
 render_mode unshaded;
-uniform sampler2D texture_albedo : hint_albedo;
+uniform sampler2D texture_albedo : source_color;
 
 void vertex() {
 }
@@ -77,288 +84,290 @@ void fragment() {
 }
 "
 
-[sub_resource type="ShaderMaterial" id=16]
+[sub_resource type="ShaderMaterial" id="16"]
 resource_local_to_scene = true
-shader = SubResource( 15 )
+render_priority = 0
+shader = SubResource("15")
 
-[node name="main" type="Spatial"]
+[sub_resource type="Animation" id="Animation_lgsef"]
+resource_name = "mixamo.com"
+length = 0.0333333
 
-[node name="post_processing" type="Spatial" parent="."]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_puh7c"]
+_data = {
+"mixamo.com": SubResource("Animation_lgsef")
+}
 
-[node name="sun" type="DirectionalLight" parent="post_processing"]
-transform = Transform( 0.707107, 0.612372, -0.353553, 0, 0.5, 0.866025, 0.707107, -0.612373, 0.353553, 0, 0, 0 )
-portal_mode = 4
+[node name="main" type="Node3D"]
+
+[node name="post_processing" type="Node3D" parent="."]
+
+[node name="sun" type="DirectionalLight3D" parent="post_processing"]
+transform = Transform3D(0.707107, 0.612372, -0.353553, 0, 0.5, 0.866025, 0.707107, -0.612373, 0.353553, 0, 0, 0)
 layers = 7
-light_color = Color( 0.976471, 0.959804, 0.85098, 1 )
+light_color = Color(0.976471, 0.959804, 0.85098, 1)
 shadow_enabled = true
 directional_shadow_blend_splits = true
 
 [node name="environment" type="WorldEnvironment" parent="post_processing"]
-environment = ExtResource( 13 )
+environment = SubResource("Environment_35hp7")
 
-[node name="fade" parent="." instance=ExtResource( 4 )]
+[node name="fade" parent="." instance=ExtResource("4")]
+anchors_preset = 15
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="scenario" type="Spatial" parent="."]
-script = ExtResource( 6 )
+[node name="scenario" type="Node3D" parent="."]
+script = ExtResource("6")
 spawn_points_parent_path = NodePath("spawnpoints")
 
-[node name="players" type="Spatial" parent="scenario"]
+[node name="players" type="Node3D" parent="scenario"]
 
-[node name="props" type="Spatial" parent="scenario"]
+[node name="props" type="Node3D" parent="scenario"]
 
-[node name="barrel_0" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -29.5943, 2.65163, -3.42753 )
+[node name="barrel_0" parent="scenario/props" instance=ExtResource("5")]
+transform = Transform3D(0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -29.5943, 2.65163, -3.42753)
 
-[node name="barrel_1" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2841, 2.25325, 8.92728 )
+[node name="barrel_1" parent="scenario/props" instance=ExtResource("5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2841, 2.25325, 8.92728)
 
-[node name="barrel_2" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2974, 4.7109, 9.93897 )
+[node name="barrel_2" parent="scenario/props" instance=ExtResource("5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2974, 4.7109, 9.93897)
 
-[node name="barrel_3" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 0.363365, -0.931647, 0, 0.931647, 0.363365, 0, 0, 0, 1, -8.23876, 2.67564, 17.051 )
+[node name="barrel_3" parent="scenario/props" instance=ExtResource("5")]
+transform = Transform3D(0.363365, -0.931647, 0, 0.931647, 0.363365, 0, 0, 0, 1, -8.23876, 2.67564, 17.051)
 
-[node name="barrel_4" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2444, 2.26095, 10.2583 )
+[node name="barrel_4" parent="scenario/props" instance=ExtResource("5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2444, 2.26095, 10.2583)
 
-[node name="objects" type="Spatial" parent="scenario"]
+[node name="objects" type="Node3D" parent="scenario"]
 
-[node name="wall" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 2.01321, 8.02284 )
+[node name="wall" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 2.01321, 8.02284)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 layers = 3
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall7" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 7.9677, 0, 0, 0, 1, 0, 0, 0, 0.368961, 1.82181, 3.93382, 2.17341 )
+[node name="wall7" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(7.9677, 0, 0, 0, 1, 0, 0, 0, 0.368961, 1.82181, 3.93382, 2.17341)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall7"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall7"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall5" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 3.77909, 28.0547 )
+[node name="wall5" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(9.52193, 0, 0, 0, 1, 0, 0, 0, 1, 1.82181, 3.77909, 28.0547)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 layers = 3
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall5"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall6" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( -0.237304, 1.86938, 0, 0.411023, 1.07929, 0, 0, 0, 1, 1.26171, 2.90546, 28.0547 )
+[node name="wall6" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(-0.237304, 1.86938, 0, 0.411023, 1.07929, 0, 0, 0, 1, 1.26171, 2.90546, 28.0547)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall6"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall6"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall4" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 0.700685, 0.713471, 0, -0.713471, 0.700685, 0, 0, 0, 1, 4.15242, 3.2297, 8.02284 )
+[node name="wall4" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(0.700685, 0.713471, 0, -0.713471, 0.700685, 0, 0, 0, 1, 4.15242, 3.2297, 8.02284)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall4"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall2" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.14766, 5.9187, -13.4699 )
+[node name="wall2" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.14766, 5.9187, -13.4699)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall3" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.47245, 9.17323, -13.4699 )
+[node name="wall3" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.47245, 9.17323, -13.4699)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall3"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall8" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -25.7436 )
+[node name="wall8" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -25.7436)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall8"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall8"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall9" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -45.7488 )
+[node name="wall9" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -45.7488)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall9"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall9"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="wall10" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -65.7488 )
+[node name="wall10" type="StaticBody3D" parent="scenario/objects" groups=["wallk"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.73459, 13.7277, -65.7488)
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/wall10"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/wall10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+mesh = SubResource("3")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/wall10"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
-shape = SubResource( 5 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/wall10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+shape = SubResource("5")
 
-[node name="terrain" type="StaticBody" parent="scenario/objects" groups=["concrete"]]
+[node name="terrain" type="StaticBody3D" parent="scenario/objects" groups=["concrete"]]
 collision_layer = 3
 
-[node name="mesh" type="MeshInstance" parent="scenario/objects/terrain"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0358462, -0.01824, 0.0206671 )
-mesh = SubResource( 7 )
+[node name="mesh" type="MeshInstance3D" parent="scenario/objects/terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0358462, -0.01824, 0.0206671)
+mesh = SubResource("7")
 
-[node name="collision" type="CollisionShape" parent="scenario/objects/terrain"]
-shape = SubResource( 8 )
+[node name="collision" type="CollisionShape3D" parent="scenario/objects/terrain"]
+shape = SubResource("8")
 
-[node name="spawnpoints" type="Spatial" parent="scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0265, 12.8912, -21.9867 )
+[node name="spawnpoints" type="Node3D" parent="scenario"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0265, 12.8912, -21.9867)
 
-[node name="Position3D" type="Position3D" parent="scenario/spawnpoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39191, 22.0571 )
+[node name="Marker3D" type="Marker3D" parent="scenario/spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39191, 22.0571)
 
-[node name="Position3D2" type="Position3D" parent="scenario/spawnpoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6443, 5.57732, 10.524 )
+[node name="Position3D2" type="Marker3D" parent="scenario/spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6443, 5.57732, 10.524)
 
-[node name="Position3D3" type="Position3D" parent="scenario/spawnpoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6443, 7.56124, 26.258 )
+[node name="Position3D3" type="Marker3D" parent="scenario/spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6443, 7.56124, 26.258)
 
-[node name="Position3D4" type="Position3D" parent="scenario/spawnpoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2966, 2.5739, 28.9469 )
+[node name="Position3D4" type="Marker3D" parent="scenario/spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2966, 2.5739, 28.9469)
 
-[node name="Position3D5" type="Position3D" parent="scenario/spawnpoints"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2966, 2.5739, 10.9689 )
+[node name="Position3D5" type="Marker3D" parent="scenario/spawnpoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2966, 2.5739, 10.9689)
 
-[node name="Spatial" parent="scenario" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.50586, 0.642089, 0 )
+[node name="Node3D" parent="scenario" instance=ExtResource("2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.50586, 0.642089, 0)
 
-[node name="ZipLine" type="Spatial" parent="scenario"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.0403, 2.12947, 29.7072 )
-script = ExtResource( 11 )
+[node name="ZipLine" type="Node3D" parent="scenario"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.0403, 2.12947, 29.7072)
+script = ExtResource("11")
 
-[node name="Start" type="StaticBody" parent="scenario/ZipLine"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08687, 0 )
+[node name="Start" type="StaticBody3D" parent="scenario/ZipLine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08687, 0)
 
-[node name="CollisionShape" type="CollisionShape" parent="scenario/ZipLine/Start"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20824, 0 )
-shape = SubResource( 11 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="scenario/ZipLine/Start"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20824, 0)
+shape = SubResource("11")
 disabled = true
 
-[node name="MeshInstance" type="MeshInstance" parent="scenario/ZipLine/Start"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20824, 0 )
-mesh = SubResource( 12 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="scenario/ZipLine/Start"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20824, 0)
+mesh = SubResource("12")
 
-[node name="End" type="StaticBody" parent="scenario/ZipLine"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1135, 36.7943, -1.99012 )
+[node name="End" type="StaticBody3D" parent="scenario/ZipLine"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1135, 36.7943, -1.99012)
 
-[node name="MeshInstance2" type="MeshInstance" parent="scenario/ZipLine/End"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.851204, 0 )
-mesh = SubResource( 12 )
+[node name="MeshInstance2" type="MeshInstance3D" parent="scenario/ZipLine/End"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.851204, 0)
+mesh = SubResource("12")
 skeleton = NodePath("../../Start")
 
-[node name="CollisionShape" type="CollisionShape" parent="scenario/ZipLine/End"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.851204, 0 )
-shape = SubResource( 11 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="scenario/ZipLine/End"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.851204, 0)
+shape = SubResource("11")
 disabled = true
 
-[node name="PortalPair" parent="scenario" instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.11115, 3.00473, 0 )
+[node name="PortalPair" parent="scenario" instance=ExtResource("12")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.11115, 3.00473, 0)
 
 [node name="PortalA" parent="scenario/PortalPair" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.038, 17.6227, -4.2254 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.038, 17.6227, -4.2254)
 
 [node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
-material_override = SubResource( 14 )
+material_override = SubResource("14")
 
 [node name="Left" parent="scenario/PortalPair/PortalA/Screen" index="1"]
-material_override = SubResource( 14 )
+material_override = SubResource("14")
 
 [node name="Right" parent="scenario/PortalPair/PortalA/Screen" index="2"]
-material_override = SubResource( 14 )
+material_override = SubResource("14")
 
 [node name="Bottom" parent="scenario/PortalPair/PortalA/Screen" index="3"]
-material_override = SubResource( 14 )
+material_override = SubResource("14")
 
 [node name="Top" parent="scenario/PortalPair/PortalA/Screen" index="4"]
-material_override = SubResource( 14 )
+material_override = SubResource("14")
 
 [node name="PortalB" parent="scenario/PortalPair" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.917, 0, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.917, 0, 0)
 
 [node name="Back" parent="scenario/PortalPair/PortalB/Screen" index="0"]
-material_override = SubResource( 16 )
+material_override = SubResource("16")
 
 [node name="Left" parent="scenario/PortalPair/PortalB/Screen" index="1"]
-material_override = SubResource( 16 )
+material_override = SubResource("16")
 
 [node name="Right" parent="scenario/PortalPair/PortalB/Screen" index="2"]
-material_override = SubResource( 16 )
+material_override = SubResource("16")
 
 [node name="Bottom" parent="scenario/PortalPair/PortalB/Screen" index="3"]
-material_override = SubResource( 16 )
+material_override = SubResource("16")
 
 [node name="Top" parent="scenario/PortalPair/PortalB/Screen" index="4"]
-material_override = SubResource( 16 )
+material_override = SubResource("16")
 
-[node name="passive_marker_man" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.84292, 1.00202, 4.04818 )
+[node name="passive_marker_man" parent="." instance=ExtResource("7")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.84292, 1.00202, 4.04818)
 
 [node name="MocapGuy_Eyes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="0"]
-material_override = ExtResource( 3 )
+material_override = ExtResource("3")
 script = null
 
 [node name="MocapGuy_EyesSpec" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="1"]
@@ -377,18 +386,21 @@ script = null
 script = null
 
 [node name="MocapGuy_Body" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="6"]
-material/0 = ExtResource( 3 )
-material/1 = ExtResource( 3 )
 script = null
 
-[node name="Kriss" parent="." instance=ExtResource( 10 )]
-transform = Transform( 0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.23478, 1.00195, 7.72478 )
+[node name="AnimationPlayer" parent="passive_marker_man/RootNode" index="3"]
+libraries = {
+"": SubResource("AnimationLibrary_puh7c")
+}
 
-[node name="Spatial" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878 )
+[node name="Kriss" parent="." instance=ExtResource("10")]
+transform = Transform3D(0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.23478, 1.00195, 7.72478)
 
-[node name="character" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.1338, 5.03176, -7.40396 )
+[node name="Node3D" parent="." instance=ExtResource("8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878)
+
+[node name="character" parent="." instance=ExtResource("9")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.1338, 5.03176, -7.40396)
 
 [editable path="scenario/PortalPair"]
 [editable path="scenario/PortalPair/PortalA"]

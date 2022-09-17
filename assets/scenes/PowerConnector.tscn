@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape3D" id=1]
 extents = Vector3( 0.1, 0.1, 0.1 )
 
-[node name="PowerConnector" type="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 0 )
+[node name="PowerConnector" type="Area3D"]
+transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 0 )
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource( 1 )
