@@ -83,7 +83,7 @@ func _movement(input : Dictionary, _delta : float) -> void:
 	for index in actor.get_slide_count():
 		var collision = actor.get_slide_collision(index)
 		if collision.collider is RigidBody:
-				collision.collider.apply_central_impulse(-collision.normal * actor.run_speed/collision.collider.mass)
+				collision.collider.apply_central_impulse((-collision.normal * actor.run_speed/collision.collider.mass)*_delta)
 	
 func _crouch(input : Dictionary, _delta :float) -> void:
 	# Inputs
