@@ -20,6 +20,8 @@ func shoot_projectile(separator_name = "")->void:
 		for child_ray in active.get_children():
 			if child_ray is RayCast:
 				make_projectile_shoot(child_ray.global_transform.origin, child_ray.cast_to)
+		if active.get_children().size() == 0:
+			make_projectile_shoot(barrel.global_transform.origin, Vector3.ZERO)	
 	if active is RayCast:
 		# Shoot form main barrel 
 		make_projectile_shoot(barrel.global_transform.origin, ray.cast_to)

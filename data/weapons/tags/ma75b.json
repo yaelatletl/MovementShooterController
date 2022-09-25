@@ -16,7 +16,7 @@
 	"range" : 250,
 	"primaryFireMode" : 1,
 	"specialType" : 2,
-	"secondaryFireMode" : 1,
+	"secondaryFireMode" : 2,
 	"secondaryFireRate" : 1.2,
 	"secondaryDamage" : 25,
 	"secondaryBullets" : 7,

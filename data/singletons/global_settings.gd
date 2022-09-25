@@ -1,3 +1,3 @@
 extends Node
 
-var auto_reload = false
+var auto_reload = true
