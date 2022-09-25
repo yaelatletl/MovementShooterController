@@ -11,7 +11,7 @@ enum CHARGE_TYPE{
 export(bool) var enabled : bool = true
 export(String) var _component_name = ""
 export(PackedScene) var ui_scene = null
-export(NodePath) var ui_container = ""
+export(NodePath) var ui_container : NodePath  = ""
 
 onready var actor : Node = get_parent()
 onready var ui_root : Node = get_node_or_null(ui_container)

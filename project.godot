@@ -19,10 +19,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/player/component.gd"
 }, {
+"base": "Node2D",
+"class": "DrawLine3D",
+"language": "GDScript",
+"path": "res://addons/godot_rl_agents/sensors/sensors_3d/DrawLine3D.gd"
+}, {
 "base": "Node",
 "class": "FormatParser",
 "language": "GDScript",
 "path": "res://data/singletons/format_parser.gd"
+}, {
+"base": "Node2D",
+"class": "ISensor2D",
+"language": "GDScript",
+"path": "res://addons/godot_rl_agents/sensors/sensors_2d/ISensor2D.gd"
+}, {
+"base": "Spatial",
+"class": "ISensor3D",
+"language": "GDScript",
+"path": "res://addons/godot_rl_agents/sensors/sensors_3d/ISensor3D.gd"
 }, {
 "base": "Spatial",
 "class": "InteractableGeneric",
@@ -49,6 +64,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/scripts/weapon/projectile_weapon.gd"
 }, {
+"base": "Spatial",
+"class": "RGBCameraSensor3D",
+"language": "GDScript",
+"path": "res://addons/godot_rl_agents/sensors/sensors_3d/RGBCameraSensor3D.gd"
+}, {
+"base": "ISensor3D",
+"class": "RayCastSensor3D",
+"language": "GDScript",
+"path": "res://addons/godot_rl_agents/sensors/sensors_3d/RaycastSensor3D.gd"
+}, {
+"base": "ISensor2D",
+"class": "RaycastSensor2D",
+"language": "GDScript",
+"path": "res://addons/godot_rl_agents/sensors/sensors_2d/RaycastSensor2D.gd"
+}, {
 "base": "ProjectileWeapon",
 "class": "SpecialWeapon",
 "language": "GDScript",
@@ -62,12 +92,18 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "CircularContainer": "",
 "Component": "",
+"DrawLine3D": "",
 "FormatParser": "",
+"ISensor2D": "",
+"ISensor3D": "",
 "InteractableGeneric": "",
 "InteractableInterface": "",
 "PortalRayCast": "",
 "Projectile": "",
 "ProjectileWeapon": "",
+"RGBCameraSensor3D": "",
+"RayCastSensor3D": "",
+"RaycastSensor2D": "",
 "SpecialWeapon": "",
 "Weapon": ""
 }
@@ -97,10 +133,11 @@ multirun/other_window_args="client"
 
 window/size/width=1280
 window/size/height=720
+window/vsync/vsync_via_compositor=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/multirun/plugin.cfg", "res://addons/sade/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/godot_rl_agents/plugin.cfg", "res://addons/multirun/plugin.cfg", "res://addons/sade/plugin.cfg" )
 
 [global]
 
