@@ -35,8 +35,10 @@ radius = 0.1
 [node name="Portal" type="Spatial"]
 
 [node name="CameraHolder" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.23316 )
 
 [node name="Screen" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.669177 )
 
 [node name="Back" type="MeshInstance" parent="Screen"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0.5 )
@@ -45,21 +47,25 @@ mesh = SubResource( 3 )
 
 [node name="Left" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, 0, -1, 0, 1, 0, 0.125, 0, -4.37114e-08, 2, 0, 0.25 )
+visible = false
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
 
 [node name="Right" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, 0, 1, 0, 1, 0, -0.125, 0, -4.37114e-08, -2, 0, 0.25 )
+visible = false
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
 
 [node name="Bottom" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, -1, -4.37114e-08, 0, -4.37114e-08, 1, -0.125, 4.37114e-08, 1.91069e-15, 0, -2, 0.25 )
+visible = false
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
 
 [node name="Top" type="MeshInstance" parent="Screen"]
 transform = Transform( -5.46392e-09, 1, -4.37114e-08, 0, -4.37114e-08, -1, -0.125, -4.37114e-08, 1.91069e-15, 0, 2, 0.25 )
+visible = false
 material_override = SubResource( 2 )
 mesh = SubResource( 3 )
 
@@ -68,14 +74,18 @@ keep_3d_linear = true
 shadow_atlas_size = 256
 
 [node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.18113 )
 current = true
 
 [node name="Area" type="Area" parent="." groups=["portal_area"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.04925 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.358624 )
 shape = SubResource( 4 )
 
 [node name="Border" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.669177 )
 
 [node name="CollisionShapeLowFront" type="CollisionShape" parent="Border"]
 transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -2.1, 0 )
