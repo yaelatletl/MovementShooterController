@@ -107,10 +107,10 @@ spawn_points_parent_path = NodePath("spawnpoints")
 [node name="props" type="Spatial" parent="scenario"]
 
 [node name="barrel_0" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -29.5943, 2.65163, -3.42753 )
+transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -30.4608, 3.27414, -5.6635 )
 
 [node name="barrel_1" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2841, 2.25325, 8.92728 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.694, 20.6661, -1.15525 )
 
 [node name="barrel_2" parent="scenario/props" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2974, 4.7109, 9.93897 )
@@ -319,7 +319,7 @@ disabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.11115, 3.00473, 0 )
 
 [node name="PortalA" parent="scenario/PortalPair" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.038, 17.6227, -4.2254 )
+transform = Transform( -1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 24.038, 17.6227, -4.2254 )
 
 [node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 14 )
