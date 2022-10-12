@@ -858,7 +858,7 @@ script = ExtResource("4")
 [node name="RootNode" type="Node3D" parent="."]
 visible = false
 
-[node name="Skeleton" type="Skeleton3D" parent="RootNode"]
+[node name="Skeleton3D" type="Skeleton3D" parent="RootNode"]
 bones/0/name = "LeftShoulder"
 bones/0/parent = 47
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.061442, 0.10187, -0.037932)
@@ -1892,49 +1892,49 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.001833, -0.121931, 0.08282
 layers = 2
 mesh = SubResource("1")
 skin = SubResource("2")
-skeleton = NodePath("../../Skeleton")
+skeleton = NodePath("../../Skeleton3D")
 script = ExtResource("4")
 
 [node name="MocapGuy_EyesSpec" type="MeshInstance3D" parent="RootNode/MocapGuy_HiRes_Meshes"]
 layers = 2
 mesh = SubResource("3")
 skin = SubResource("4")
-skeleton = NodePath("../../Skeleton")
+skeleton = NodePath("../../Skeleton3D")
 script = ExtResource("4")
 
 [node name="MocapGuy_Caruncula" type="MeshInstance3D" parent="RootNode/MocapGuy_HiRes_Meshes"]
 layers = 2
 mesh = SubResource("5")
 skin = SubResource("6")
-skeleton = NodePath("../../Skeleton")
+skeleton = NodePath("../../Skeleton3D")
 script = ExtResource("4")
 
 [node name="MocapGuy_BrowsLashes" type="MeshInstance3D" parent="RootNode/MocapGuy_HiRes_Meshes"]
 layers = 2
 mesh = SubResource("7")
 skin = SubResource("8")
-skeleton = NodePath("../../Skeleton")
+skeleton = NodePath("../../Skeleton3D")
 script = ExtResource("4")
 
 [node name="MocapGuy_Teeth" type="MeshInstance3D" parent="RootNode/MocapGuy_HiRes_Meshes"]
 layers = 2
 mesh = SubResource("9")
 skin = SubResource("10")
-skeleton = NodePath("../../Skeleton")
+skeleton = NodePath("../../Skeleton3D")
 script = ExtResource("4")
 
 [node name="MocapGuy_Hat" type="MeshInstance3D" parent="RootNode/MocapGuy_HiRes_Meshes"]
 layers = 2
 mesh = SubResource("11")
 skin = SubResource("12")
-skeleton = NodePath("../../Skeleton")
+skeleton = NodePath("../../Skeleton3D")
 script = ExtResource("4")
 
 [node name="MocapGuy_Body" type="MeshInstance3D" parent="RootNode/MocapGuy_HiRes_Meshes"]
 layers = 2
 mesh = SubResource("13")
 skin = SubResource("14")
-skeleton = NodePath("../../Skeleton")
+skeleton = NodePath("../../Skeleton3D")
 script = ExtResource("4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RootNode"]

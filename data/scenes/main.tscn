@@ -18,6 +18,7 @@ sky_material = SubResource("PhysicalSkyMaterial_i3pse")
 [sub_resource type="Environment" id="Environment_35hp7"]
 background_mode = 2
 sky = SubResource("Sky_n15ff")
+sdfgi_enabled = true
 
 [sub_resource type="Animation" id="Animation_lgsef"]
 resource_name = "mixamo.com"
@@ -51,6 +52,45 @@ grow_vertical = 2
 
 [node name="passive_marker_man" parent="." instance=ExtResource("7")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.84292, 1.00202, 4.04818)
+
+[node name="BoneAttachment3D" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1.56958e-07, -1, 0, 1, 1.56958e-07, 2.96676e-08, 1.5774, -0.0244957)
+
+[node name="BoneAttachment3D2" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="1"]
+transform = Transform3D(1.10081e-14, 1, 9.44645e-10, 1, -1.12803e-14, 2.88092e-07, 2.88092e-07, 9.44645e-10, -1, 0.83953, 1.38841, 0.0125994)
+
+[node name="BoneAttachment3D3" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="2"]
+transform = Transform3D(-1.59524e-21, 1, -7.10543e-15, 1, 1.55995e-21, 2.88092e-07, 2.88092e-07, -7.10543e-15, -1, 0.940201, 1.4457, -0.0546747)
+
+[node name="BoneAttachment3D4" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="3"]
+transform = Transform3D(-1.02485e-13, 1, 2.1971e-07, 1, 8.29379e-15, 4.28707e-07, 4.28707e-07, 2.1971e-07, -1, 0.934793, 1.4434, -0.0320257)
+
+[node name="BoneAttachment3D5" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="4"]
+transform = Transform3D(-2.03288e-20, 1, -1.42109e-14, 1, 1.35525e-20, 2.88092e-07, 2.88092e-07, -2.84217e-14, -1, 0.934233, 1.44524, -0.0778161)
+
+[node name="BoneAttachment3D6" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="5"]
+transform = Transform3D(-8.47033e-22, 1, -7.10543e-15, 1, 3.38813e-21, 2.88092e-07, 2.88092e-07, -7.10543e-15, -1, 0.90332, 1.44359, -0.0988589)
+
+[node name="BoneAttachment3D7" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="6"]
+transform = Transform3D(-7.42186e-15, -1, 1.08633e-09, 1, -7.63985e-15, -2.0067e-07, 2.0067e-07, 1.08633e-09, 1, -0.840585, 1.39016, 0.0116111)
+
+[node name="BoneAttachment3D8" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="7"]
+transform = Transform3D(4.17332e-14, -1, 1.10037e-07, 1, 4.15376e-15, -3.41517e-07, 3.41517e-07, 1.10037e-07, 1, -0.933637, 1.44395, -0.031801)
+
+[node name="BoneAttachment3D9" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="8"]
+transform = Transform3D(-1.48231e-21, -1, -3.55271e-15, 1, -4.23516e-22, -2.0067e-07, 2.0067e-07, -3.55271e-15, 1, -0.941565, 1.4457, -0.0546747)
+
+[node name="BoneAttachment3D10" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="9"]
+transform = Transform3D(-8.47033e-22, -1, 0, 1, -5.12632e-22, -2.0067e-07, 2.0067e-07, 0, 1, -0.932089, 1.44675, -0.0781738)
+
+[node name="BoneAttachment3D11" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="10"]
+transform = Transform3D(-8.47033e-22, -1, 0, 1, 0, -2.0067e-07, 2.0067e-07, 0, 1, -0.902499, 1.44357, -0.0984579)
+
+[node name="BoneAttachment3D12" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="11"]
+transform = Transform3D(1, -4.23923e-15, 8.74228e-08, -1.74676e-14, -1, 1.51315e-07, 8.74228e-08, -1.51315e-07, -1, 0.094505, 3.27826e-07, 0.057059)
+
+[node name="BoneAttachment3D13" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="12"]
+transform = Transform3D(1, 1.79353e-16, 8.74228e-08, -1.74676e-14, -1, 2.01857e-07, 8.74228e-08, -2.01857e-07, -1, -0.098171, -2.6077e-07, 0.0570583)
 
 [node name="MocapGuy_Body" parent="passive_marker_man/passive_marker_man/Armature/Skeleton3D" index="13"]
 material_override = ExtResource("3")
