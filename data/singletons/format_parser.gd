@@ -11,8 +11,7 @@ static func parse_spread_pattern(pattern) -> Array:
 
 static func weapon_from_json( path : String, actor : Node ) -> Weapon: 
 	var result = null
-	var file : File = File.new()
-	var temp = file.open(path, File.READ)
+	var file = DirAccess.open(path)
 	var test_json_conv = JSON.new()
 	test_json_conv.parse(file.get_as_text())
 	var json = test_json_conv.get_data()
