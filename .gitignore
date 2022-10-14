@@ -200,3 +200,5 @@ data/models/player/walk right.fbx
 data/models/player/walk right.fbx.import
 
 .mono/
+
+.godot/
