@@ -90,12 +90,6 @@ func sync_input():
 			Gamestate.set_in_all_clients(actor, "input", actor.input)
 
 
-
-func _jump():
-	actor.input["jump"] = true
-	yield(get_tree().create_timer(0.01), "timeout")
-	actor.input["jump"] = false
-
 func mouse_move(event):
 	Input.get_last_mouse_speed()
 	if event is InputEventMouseMotion:
@@ -119,8 +113,7 @@ func unhandled(event):
 	# Calls function to switch between locked and unlocked mouse
 	_mouse_toggle()
 	
-	if int(Input.is_action_just_pressed("KEY_SPACE")):
-		_jump()
+	actor.input["jump"] = int(Input.is_action_just_pressed("KEY_SPACE"))
 	mouse_move(event)
 	
 

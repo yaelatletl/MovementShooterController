@@ -23,12 +23,13 @@ func _enable_jump():
 	jump_timer = null
 	
 func _jump(_delta) -> void:
+	var check_jump = (not actor.is_far_from_floor()) or (jumps_from_wall and actor.is_on_wall())
 	# Makes the player jump if he is on the ground
-	if actor.input["jump"] and can_jump:
+	if actor.input["jump"] and can_jump and check_jump:
 		_toggle_jump()
-		#actor.input["jump"] = 0 #Consumes the input
 		actor.reset_wall_multi()
+		actor.input["jump"] = 0 #Consumes the input
 		if not actor.is_far_from_floor():
 			actor.linear_velocity.y += jump_height
-		if actor.is_on_wall() and jumps_from_wall:
+		elif actor.is_on_wall() and jumps_from_wall:
 			actor.linear_velocity += (-actor.input["left"] + actor.input["right"]) * actor.head_basis.x * jump_height*1.2
