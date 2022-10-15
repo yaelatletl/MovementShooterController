@@ -12,17 +12,13 @@ var remaining_jumps = 1
 var movement = null
 
 func _ready():
-	movement = actor._get_component("movement")
+	movement = actor._get_component("basic_movement")
 
-func _toggle_jump():
-	if jump_timer == null:
-		jump_timer = get_tree().create_timer(0.5)
-		yield(jump_timer, "timeout")
-		triggerable = true
+
 
 func _physics_process(delta):
 
-	var should_check = actor.is_far_from_floor() and not actor.is_on_wall() and triggerable
+	var should_check = actor.is_far_from_floor() and (not actor.is_on_wall()) and triggerable
 
 	if movement != null:
 		if actor.is_on_floor() or actor.is_on_wall():
@@ -39,11 +35,6 @@ func _physics_process(delta):
 	if not actor.is_far_from_floor() or (walls_add_jumps and actor.is_on_wall()):
 		remaining_jumps = jumps_before_floor 
 
-
-	if (not actor.is_far_from_floor()) or actor.is_on_wall():
-		_toggle_jump()
-
-
 	if (actor.input["jump"]) and should_check and (remaining_jumps>0 or jumps_before_floor == -1):
 		if actor.is_far_from_floor() and not actor.is_on_wall():
 			actor.input["jump"] = 0 #Consumes input
@@ -53,3 +44,5 @@ func _physics_process(delta):
 			actor.linear_velocity.y += jump_height
 			actor.linear_velocity *= 1.2 #Adds a little bit of horizontal velocity
 			triggerable = false
+			yield(get_tree().create_timer(0.5), "timeout")
+			triggerable = true

@@ -119,7 +119,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2974, 4.7109, 9.93897 )
 transform = Transform( 0.363365, -0.931647, 0, 0.931647, 0.363365, 0, 0, 0, 1, -8.23876, 2.67564, 17.051 )
 
 [node name="barrel_4" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2444, 2.26095, 10.2583 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0626, 2.26095, 10.2583 )
 
 [node name="objects" type="Spatial" parent="scenario"]
 
