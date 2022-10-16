@@ -61,7 +61,7 @@ func move_camera(portal: Node) -> void:
 	var trans: Transform = linked.global_transform.inverse() * get_camera().global_transform
 	trans = trans.rotated(Vector3.UP, angle)
 	portal.get_node("CameraHolder").transform = trans
-	portal.get_node("CameraHolder").global_transform.origin += linked_direction.normalized() * 0.5
+	#portal.get_node("CameraHolder").global_transform.origin += linked_direction.normalized() * 0.5
 	var cam_pos: Transform = portal.get_node("CameraHolder").global_transform
 	portal.get_node("Viewport/Camera").global_transform = cam_pos
 
@@ -132,7 +132,7 @@ func swap_body_clone(body: PhysicsBody, clone: PhysicsBody, angle : float, linke
 		clone.linear_velocity = body_vel
 
 
-	body.global_transform.origin -= linked_z_basis.normalized() * 0.00001
+	#body.global_transform.origin -= linked_z_basis.normalized() * 0.00001
 	if (body.has_method("_get_component") and body is KinematicBody) or body is RigidBody:
 		body.linear_velocity = clone_vel
 #		print("Velocity of body after no swap: ", body.linear_velocity, " rotation: ", body.global_rotation)
@@ -173,7 +173,7 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	#var angle =  portal.global_rotration.y linked.global_rotation.y 	
 
 	# Position of body relative to portal
-	var rel_pos = portal.to_local(body_pos.origin) * Vector3(-1, 1, 1)
+	var rel_pos = portal.to_local(body_pos.origin) * Vector3(-1, 1, -1)
 	var rel_rot = body_pos.basis.rotated(Vector3.UP, PI-angle)
 	var clone: PhysicsBody
 	
@@ -191,19 +191,20 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 		clones[body] = clone
 		add_child(clone)
 	if clone is RigidBody:
+		#rel_pos *= Vector3(1, 1, -1)
 		clone.linear_velocity = body.linear_velocity.rotated(Vector3.UP, PI-angle) 
 	elif clone is KinematicBody and body.has_method("_get_component"):
 		clone.set_meta("linear_velocity", body.linear_velocity.rotated(Vector3.UP, PI-angle))
 	clone_duplicate_material(clone)
-	#remove_cameras(clone) #Ew, recursive!
+	remove_cameras(clone) #Ew, recursive!
+	
+	clone.global_transform.origin = linked.to_global(rel_pos)
+	clone.global_transform.basis = rel_rot
 	
 	# Swap clone and actual if the actual object is more than halfway through 
 	# the portal
 	if not in_front_of_portal(portal, body_pos):
 		swap_body_clone(body, clone, angle, linked_direction)
-	
-	clone.global_transform.origin = linked.to_global(rel_pos)
-	clone.global_transform.basis = rel_rot
 	
 	
 

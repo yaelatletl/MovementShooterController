@@ -319,7 +319,7 @@ disabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.11115, 3.00473, 0 )
 
 [node name="PortalA" parent="scenario/PortalPair" index="0"]
-transform = Transform( -1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 24.038, 17.6227, -4.2254 )
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -4, 0, -12.829 )
 
 [node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 14 )
@@ -337,7 +337,7 @@ material_override = SubResource( 14 )
 material_override = SubResource( 14 )
 
 [node name="PortalB" parent="scenario/PortalPair" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.917, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.90739, 6.50506, 0 )
 
 [node name="Back" parent="scenario/PortalPair/PortalB/Screen" index="0"]
 material_override = SubResource( 16 )
