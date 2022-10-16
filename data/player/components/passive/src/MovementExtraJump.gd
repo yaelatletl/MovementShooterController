@@ -12,7 +12,7 @@ var remaining_jumps = 1
 var movement = null
 
 func _ready():
-	movement = actor._get_component("basic_movement")
+	movement = actor._get_component("movement_basic")
 
 
 

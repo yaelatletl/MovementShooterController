@@ -8,7 +8,7 @@ export(bool) var jumps_from_wall : bool = false
 
 var movement = null
 func _ready():
-	movement = actor._get_component("basic_movement")
+	movement = actor._get_component("movement_basic")
 
 
 func _toggle_jump():

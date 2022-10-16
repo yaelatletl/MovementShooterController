@@ -1,7 +1,6 @@
 extends Component
 # All speed variables
 
-const DEFAULT_GRAVITY = 40
 
 export(float) var n_speed : float = 04 # Normal
 export(float) var s_speed : float = 12 # Sprint
@@ -12,6 +11,8 @@ export(bool) var can_wallrun : bool = false
 # Physics variables
 export(float) var gravity      : float = 40 # Gravity force #45 is okay, don't change it 
 export(float) var friction     : float = 25 # friction
+
+var DEFAULT_GRAVITY = gravity
 
 export(NodePath) var collision : NodePath = ""
 onready var col = get_node(collision)

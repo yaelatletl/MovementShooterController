@@ -237,7 +237,7 @@ func add_clip_plane(portal: Spatial, body: PhysicsBody) -> void:
 
 func handle_body_overlap_portal(portal: Spatial, body: PhysicsBody) -> void:
 	handle_clones(portal, body)
-	add_clip_plane(portal, body)
+	add_clip_plane(portal, body) #This is O(n)
 
 
 # warning-ignore:unused_argument
@@ -248,7 +248,7 @@ func _physics_process(delta: float) -> void:
 
 	# Check for bodies overlapping portals
 	for portal in portals:
-		for body in bodies[portal]:
+		for body in bodies[portal]: #O(n^2)
 			handle_body_overlap_portal(portal, body)
 
 
