@@ -13,7 +13,7 @@ func _ready():
 
 func _toggle_jump():
 	can_jump = false
-	yield(get_tree().create_timer(0.2), "timeout")
+	yield(get_tree().create_timer(0.05), "timeout")
 	can_jump = true
 
 func _physics_process(_delta):
