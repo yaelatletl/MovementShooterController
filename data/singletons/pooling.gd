@@ -8,13 +8,15 @@ enum DAMAGE_TYPE {
 	EXPLOSIVE 
 } 
 
-var projectiles_active = []
-var projectiles_waiting = []
+var projectiles_active : Array = []
+var projectiles_waiting : Array = []
 
-var projectiles = {
+var projectiles : Dictionary = {
 	1: preload("res://data/weapons/PlasmaBolt.tscn"),
 	2: preload("res://data/weapons/Grenade.tscn"),
 }
+
+var actor_pool : Dictionary = {}
 
 var projectiles_root 
 
@@ -51,3 +53,27 @@ func _on_projectile_request_destroy(projectile):
 		projectiles_root.remove_child(projectile)
 		projectiles_waiting.append(projectile)
 
+#Creates a dummy actor to be used for portal physics
+func duplicate_actor(actor):
+	if not actor is KinematicBody:
+		printerr("Passed node is not a KinematicBody")
+		return null
+	if not actor in actor_pool:
+		actor_pool[actor] = actor.duplicate(1)
+		remove_cameras(actor_pool[actor]) #remove cameras from the duplicate
+	return actor_pool[actor]
+
+func free_actor_duplicate(actor):
+	if not actor is KinematicBody:
+		printerr("Passed node is not a KinematicBody")
+		return 
+	if actor in actor_pool:
+		printerr("Passed node is not a duplicate")
+		return
+	actor.get_parent().remove_child(actor)
+
+# Remove all cameras that are children of the passed node, for Actors only
+func remove_cameras(node: Node) -> void:
+	var cam_or_null = node.get_node_or_null("head/neck/camera")
+	if  cam_or_null != null:
+		cam_or_null.queue_free()

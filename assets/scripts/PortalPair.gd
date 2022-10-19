@@ -117,7 +117,7 @@ func swap_body_clone(body: PhysicsBody, clone: PhysicsBody, angle : float, linke
 	elif clone is RigidBody:
 		clone_vel = clone.linear_velocity
 	if (body.has_method("_get_component") and body is KinematicBody) or body is RigidBody:
-		print("Initial velocity of body: ", body.linear_velocity, " rotation: ", body.global_rotation)
+		#print("Initial velocity of body: ", body.linear_velocity, " rotation: ", body.global_rotation)
 		body_vel = body.linear_velocity
 
 	if body is RigidBody:
@@ -136,7 +136,7 @@ func swap_body_clone(body: PhysicsBody, clone: PhysicsBody, angle : float, linke
 	if (body.has_method("_get_component") and body is KinematicBody) or body is RigidBody:
 		body.linear_velocity = clone_vel
 #		print("Velocity of body after no swap: ", body.linear_velocity, " rotation: ", body.global_rotation)
-	print("Position of body after swap: ", body.global_transform.origin, " rotation: ", body.global_rotation)
+	#print("Position of body after swap: ", body.global_transform.origin, " rotation: ", body.global_rotation)
 
 func clone_duplicate_material(clone: PhysicsBody) -> void:
 	for child in clone.get_children():
@@ -145,15 +145,6 @@ func clone_duplicate_material(clone: PhysicsBody) -> void:
 			var material: Material = child.get_surface_material(0)
 			material = material.duplicate(false)
 			child.set_surface_material(0, material)
-
-
-# Remove all cameras that are children of `node`
-# TODO: Make this more flexible
-func remove_cameras(node: Node) -> void:
-	for child in node.get_children():
-		remove_cameras(child)
-		if child is Camera:
-			child.free()
 
 
 func handle_clones(portal: Node, body: PhysicsBody) -> void:
@@ -182,21 +173,22 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	elif body in clones.values():
 		return	
 	else:
-		clone = body.duplicate(0)
+		if body is RigidBody:
+			clone = body.duplicate(1)
+		elif body is KinematicBody:
+			clone = Pooling.duplicate_actor(body)
 		if clone is KinematicBody:
 			clone.get_node("passive_marker_man").visible = false
-			#clone.collision_layer = 0
-			#clone.collision_mask = 0
+			clone.collision_layer = 0
+			clone.collision_mask = 0
 			
 		clones[body] = clone
 		add_child(clone)
 	if clone is RigidBody:
-		#rel_pos *= Vector3(1, 1, -1)
 		clone.linear_velocity = body.linear_velocity.rotated(Vector3.UP, PI-angle) 
 	elif clone is KinematicBody and body.has_method("_get_component"):
 		clone.set_meta("linear_velocity", body.linear_velocity.rotated(Vector3.UP, PI-angle))
 	clone_duplicate_material(clone)
-	remove_cameras(clone) #Ew, recursive!
 	
 	clone.global_transform.origin = linked.to_global(rel_pos)
 	clone.global_transform.basis = rel_rot
@@ -236,7 +228,7 @@ func add_clip_plane(portal: Spatial, body: PhysicsBody) -> void:
 
 
 func handle_body_overlap_portal(portal: Spatial, body: PhysicsBody) -> void:
-	handle_clones(portal, body)
+	handle_clones(portal, body) # 45 ms for 1 KinematicBody, yikes
 	add_clip_plane(portal, body) #This is O(n)
 
 
@@ -259,7 +251,10 @@ func handle_body_exit_portal(portal: Node, body: PhysicsBody) -> void:
 	var clone: Node = clones[body]
 	if is_instance_valid(clone):
 		clones.erase(body)
-		clone.queue_free()
+		if clone is RigidBody:
+			clone.queue_free()
+		elif clone is KinematicBody:
+			Pooling.free_actor_duplicate(clone)
 
 func _on_portal_a_body_entered(body: PhysicsBody) -> void:
 	bodies[$PortalA].append(body)

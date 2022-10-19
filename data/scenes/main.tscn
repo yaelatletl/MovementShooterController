@@ -316,10 +316,10 @@ shape = SubResource( 11 )
 disabled = true
 
 [node name="PortalPair" parent="scenario" instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.11115, 3.00473, 0 )
+transform = Transform( -0.999945, 0, 0.0104544, 0, 1, 0, -0.0104544, 0, -0.999945, -2.0826, 3.00473, 4.25369 )
 
 [node name="PortalA" parent="scenario/PortalPair" index="0"]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -4, 0, -12.829 )
+transform = Transform( -1, 0, -1.50874e-07, 0, 1, 0, 1.50874e-07, 0, -1, -2.5396, 0, -6.66577 )
 
 [node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 14 )
@@ -337,7 +337,7 @@ material_override = SubResource( 14 )
 material_override = SubResource( 14 )
 
 [node name="PortalB" parent="scenario/PortalPair" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.90739, 6.50506, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.02253, 6.505, 26.0298 )
 
 [node name="Back" parent="scenario/PortalPair/PortalB/Screen" index="0"]
 material_override = SubResource( 16 )
