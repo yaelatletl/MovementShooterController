@@ -34,5 +34,6 @@ func _physics_process(delta):
 		on_ledge = false
 		character.linear_velocity = character.wall_direction*2
 	elif character.input["jump"] and on_ledge:
+		character.input["jump"] = 0
 		jump_over = true
 
