@@ -68,7 +68,6 @@ func _physics_process(delta):
 		switch = false
 	primary_pressed = character.input["shoot"]
 	secondary_pressed = character.input["zoom"]
-	print(primary_pressed)
 
 	if not primary_pressed:
 		if primary_modifier_type != MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED and primary_modifier_type != MODIFIER_TYPE.NONE:

@@ -47,7 +47,6 @@ func _on_body_entered(body) -> void:
 	if body.has_method("is_projectile"):
 		if body.type == type:
 			return
-	print("Projectile hit:", body)
 	if body.has_method("_damage"):
 		body._damage(damage, damage_type)
 	stop()
