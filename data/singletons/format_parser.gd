@@ -3,11 +3,39 @@
 extends Node
 class_name FormatParser
 
+enum MODIFIER_TYPE{
+	NONE, 
+	ON_RELEASE,
+	ON_RELEASE_IF_LOADED,
+	ON_RELEASE_OR_AUTO,
+	AUTO_RELEASE_IF_LOADED,
+}
+
 static func parse_spread_pattern(pattern) -> Array:
 	var result = []
 	for pair in pattern:
 		result.append(Vector2(pair[0], pair[1]))
 	return result
+
+static func to_modifier(input) -> int:
+	if input is String:
+		match input:
+			"None":
+				return MODIFIER_TYPE.NONE
+			"OnRelease":
+				return MODIFIER_TYPE.ON_RELEASE
+			"OnReleaseIfLoaded":
+				return MODIFIER_TYPE.ON_RELEASE_IF_LOADED
+			"OnReleaseOrAuto":
+				return MODIFIER_TYPE.ON_RELEASE_OR_AUTO
+			"AutoReleaseIfLoaded":
+				return MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED
+			_:
+				return MODIFIER_TYPE.NONE
+	elif input is int:
+		return input
+	else:
+		return MODIFIER_TYPE.NONE
 
 static func weapon_from_json( path : String, actor : Node ) -> Weapon: 
 	var result = null
