@@ -73,6 +73,8 @@ func update_actor_relatives(actor) -> void:
 	animc = anim.current_animation
 	
 	ray = actor.get_node("{}/ray".format([gun_name], "{}"))
+	if ray is RayCast:
+		ray.set_meta("original_cast_to", ray.cast_to)
 	audio = actor.get_node("{}/audio".format([gun_name], "{}"))
 	if spread_pattern.size() > 0:
 		setup_spread(spread_pattern, spread_multiplier, max_range)
@@ -266,6 +268,7 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 		# decal spins to collider normal
 		local_decal.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
 	if not uses_randomness:
+		if ray.get_meta("original_cast_to") != null:
 			ray.cast_to = ray.get_meta("original_cast_to")
 
 
