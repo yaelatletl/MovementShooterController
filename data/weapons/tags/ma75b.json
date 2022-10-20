@@ -30,6 +30,10 @@
 	"secondaryRange" : 250,
 	"randomSpread" : [0.5,0.8],
 	"usesSecondaryAmmo" : true,
-	"secondaryRandomSpread" : [0.0,0.0]
+	"secondaryRandomSpread" : [0.0,0.0],
+	"primaryModifierType" : "None",
+	"secondaryModifierType" : "None",
+	"primaryModifierTimer" : 0,
+	"secondaryModifierTimer" : 0
 
 }

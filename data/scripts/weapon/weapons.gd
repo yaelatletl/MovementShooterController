@@ -37,6 +37,7 @@ func _ready() -> void:
 	
 	# Class reference : 
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
+	arsenal["zeus"] = FormatParser.weapon_from_json("res://data/weapons/tags/zeus.json", self)
 	arsenal["plasma"] = FormatParser.weapon_from_json("res://data/weapons/tags/alien_gun.json", self)
 	arsenal["ma75b"] = FormatParser.weapon_from_json("res://data/weapons/tags/ma75b.json", self)
 	# Create mk 23 using weapon classs

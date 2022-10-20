@@ -110,7 +110,7 @@ spawn_points_parent_path = NodePath("spawnpoints")
 transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -30.4608, 3.27414, -5.6635 )
 
 [node name="barrel_1" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.694, 20.6661, -1.15525 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8309, 7.79427, 10.2866 )
 
 [node name="barrel_2" parent="scenario/props" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2974, 4.7109, 9.93897 )
@@ -161,6 +161,34 @@ mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="collision" type="CollisionShape" parent="scenario/objects/wall5"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall11" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
+transform = Transform( 9.52193, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 11.5042, 3.77909, 9.18322 )
+collision_layer = 3
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+layers = 3
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall11"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="wall12" type="StaticBody" parent="scenario/objects" groups=["wallk"]]
+transform = Transform( 9.52193, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 15.7901, 3.77909, 3.8468 )
+collision_layer = 3
+
+[node name="mesh" type="MeshInstance" parent="scenario/objects/wall12"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
+layers = 3
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="collision" type="CollisionShape" parent="scenario/objects/wall12"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 shape = SubResource( 5 )
 
@@ -316,10 +344,10 @@ shape = SubResource( 11 )
 disabled = true
 
 [node name="PortalPair" parent="scenario" instance=ExtResource( 12 )]
-transform = Transform( -0.999945, 0, 0.0104544, 0, 1, 0, -0.0104544, 0, -0.999945, -2.0826, 3.00473, 4.25369 )
+transform = Transform( 1.91068e-15, 4.37114e-08, 1, 1, -4.37114e-08, 0, 4.37114e-08, 1, -4.37114e-08, -6.80876, 3.26741, -2.29635 )
 
 [node name="PortalA" parent="scenario/PortalPair" index="0"]
-transform = Transform( -1, 0, -1.50874e-07, 0, 1, 0, 1.50874e-07, 0, -1, -2.5396, 0, -6.66577 )
+transform = Transform( -1, 1.50874e-07, 4.65661e-09, 4.65661e-09, -4.37114e-08, 1, 1.50874e-07, 1, 4.37114e-08, 0, 8.497, 0 )
 
 [node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 14 )
@@ -337,7 +365,7 @@ material_override = SubResource( 14 )
 material_override = SubResource( 14 )
 
 [node name="PortalB" parent="scenario/PortalPair" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.02253, 6.505, 26.0298 )
+transform = Transform( 1, -1.51806e-07, -9.31323e-10, -9.31323e-10, -4.37114e-08, -1, 1.51806e-07, 1, -4.37114e-08, 0, 0.723, 0 )
 
 [node name="Back" parent="scenario/PortalPair/PortalB/Screen" index="0"]
 material_override = SubResource( 16 )

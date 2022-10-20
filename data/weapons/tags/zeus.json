@@ -1,6 +1,6 @@
 {
 	"type": 3,
-	"name": "Zeus Fusion Pistol",
+	"name": "zeus",
 	"fireRate" : 2.0,
 	"bullets" : 12,
 	"ammo" : 999,
@@ -34,6 +34,5 @@
 	"primaryModifierType" : "None",
 	"secondaryModifierType" : "OnReleaseOrAuto",
 	"primaryModifierTimer" : 0,
-	"secondaryModifierTimer" : 10,
-
+	"secondaryModifierTimer" : 10
 }

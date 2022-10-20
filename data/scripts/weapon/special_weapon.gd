@@ -70,10 +70,10 @@ func _physics_process(delta):
 	secondary_pressed = character.input["zoom"]
 
 	if not primary_pressed:
-		if primary_modifier_type != MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED and primary_modifier_type != MODIFIER_TYPE.NONE:
+		if primary_modifier_type != MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED and primary_modifier_type != MODIFIER_TYPE.NONE and primary_modifier_type != MODIFIER_TYPE.ON_RELEASE_OR_AUTO:
 			_shoot_cast("", 0)
 	if not secondary_pressed:	
-		if secondary_modifier_type != MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED and secondary_modifier_type != MODIFIER_TYPE.NONE:
+		if secondary_modifier_type != MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED and secondary_modifier_type != MODIFIER_TYPE.NONE and secondary_modifier_type != MODIFIER_TYPE.ON_RELEASE_OR_AUTO:
 			_shoot_cast("secondary", 0)
 		
 
@@ -193,7 +193,6 @@ func _shoot_cast(relative_node = "", delta=0)-> void:
 						current_secondary_modifier_time = 0
 
 	if not should_trigger:
-		print("should not trigger")
 		return
 
 	if relative_node == "secondary" or (right_click_mode != FUNCTION_MODE.TOGGLE_SPREAD and switch):

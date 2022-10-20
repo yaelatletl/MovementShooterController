@@ -84,10 +84,10 @@ static func weapon_from_json( path : String, actor : Node ) -> Weapon:
 				result.secondary_max_random_spread_x = data.secondaryRandomSpread[0]
 				result.secondary_max_random_spread_y = data.secondaryRandomSpread[1]
 				result.uses_separate_ammo = bool(data.usesSecondaryAmmo)
+				result.primary_modifier_type = to_modifier(data.primaryModifierType)
+				result.secondary_modifier_type = to_modifier(data.secondaryModifierType)
 				safe_assign(result, data, "primary_modifier_timer", "primaryModifierTimer")
 				safe_assign(result, data, "secondary_modifier_timer", "secondaryModifierTimer")
-				safe_assign(result, data, "primary_modifier_type", "primaryModifierType")
-				safe_assign(result, data, "secondary_modifier_type", "secondaryModifierType")
 
 		result.actor = actor
 		result.gun_name = data.name
