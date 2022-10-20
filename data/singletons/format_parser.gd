@@ -37,6 +37,15 @@ static func to_modifier(input) -> int:
 	else:
 		return MODIFIER_TYPE.NONE
 
+static func safe_assign(target, dict, property, key, array_index = -1) -> void:
+	if key in dict and array_index == -1:
+		target.set(property, dict[key])
+		return
+	elif array_index != -1 and key in dict:
+		target.set(property, dict[key][array_index])
+		return
+	printerr("Error: Could not assign property ", str(property), " to ", str(target), " from dict ", dict, " with key ", key, " and array index ", str(array_index))
+		
 static func weapon_from_json( path : String, actor : Node ) -> Weapon: 
 	var result = null
 	var file : File = File.new()
@@ -75,6 +84,10 @@ static func weapon_from_json( path : String, actor : Node ) -> Weapon:
 				result.secondary_max_random_spread_x = data.secondaryRandomSpread[0]
 				result.secondary_max_random_spread_y = data.secondaryRandomSpread[1]
 				result.uses_separate_ammo = bool(data.usesSecondaryAmmo)
+				safe_assign(result, data, "primary_modifier_timer", "primaryModifierTimer")
+				safe_assign(result, data, "secondary_modifier_timer", "secondaryModifierTimer")
+				safe_assign(result, data, "primary_modifier_type", "primaryModifierType")
+				safe_assign(result, data, "secondary_modifier_type", "secondaryModifierType")
 
 		result.actor = actor
 		result.gun_name = data.name
