@@ -11,7 +11,7 @@ func explode() -> void:
 		elif body is KinematicBody:
 			if body.has_method("_get_component"):
 				body._get_component("movement_basic").add_impulse((body.global_transform.origin - global_transform.origin).normalized() * impulse)
-		body._damage(damage)
+		body._damage(damage, Pooling.DAMAGE_TYPE.EXPLOSIVE)
 
 func stop() -> void:
 	sleeping = true
