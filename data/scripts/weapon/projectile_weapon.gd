@@ -7,7 +7,7 @@ var character = null
 func set_projectile(type):
 	projectile_type = type
 
-func _shoot_cast(relative_node = "")->void:
+func _shoot_cast(relative_node = "", delta=0)->void:
 	shoot_projectile(relative_node)
 	
 func shoot_projectile(separator_name = "")->void:

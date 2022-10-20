@@ -14,6 +14,14 @@ enum FUNCTION_MODE{
 	ZOOM_TOGGLE_SETTINGS
 }
 
+enum MODIFIER_TYPE{
+	NONE, 
+	ON_RELEASE,
+	ON_RELEASE_IF_LOADED,
+	ON_RELEASE_OR_AUTO,
+	AUTO_RELEASE_IF_LOADED,
+}
+
 var right_click_mode = FUNCTION_MODE.ZOOM
 
 var primary_fire_mode = FIRE_MODE.RAYCAST
@@ -36,6 +44,18 @@ var secondary_max_random_spread_y = 0
 var uses_separate_ammo = true
 var switch = false
 
+var primary_modifier_timer = 0
+var current_primary_modifier_time = 0
+var secondary_modifier_timer = 0
+var current_secondary_modifier_time = 0
+var primary_modifier_type = MODIFIER_TYPE.NONE
+var secondary_modifier_type = MODIFIER_TYPE.NONE
+
+var primary_pressed = false
+var secondary_pressed = false
+
+signal trigger_released
+
 func _ready() -> void:
 	._ready()
 	setup_spread(secondary_spread_pattern, secondary_spread_multiplier, secondary_max_range, "secondary")
@@ -46,6 +66,17 @@ func _physics_process(delta):
 		switch = true
 	elif right_click_mode == FUNCTION_MODE.ZOOM_TOGGLE_SETTINGS:
 		switch = false
+	primary_pressed = character.input["shoot"]
+	secondary_pressed = character.input["zoom"]
+	print(primary_pressed)
+
+	if not primary_pressed:
+		if primary_modifier_type != MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED and primary_modifier_type != MODIFIER_TYPE.NONE:
+			_shoot_cast("", 0)
+	if not secondary_pressed:	
+		if secondary_modifier_type != MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED and secondary_modifier_type != MODIFIER_TYPE.NONE:
+			_shoot_cast("secondary", 0)
+		
 
 func setup_secondary_fire(mode, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier, projectile) -> void:
 	projectile_type = projectile
@@ -83,8 +114,88 @@ func secondary_fire(delta) -> void:
 	else:
 		_shoot(self, delta, bullets, max_bullets, ammo, secondary_reload_speed, secondary_firerate, "secondary", "ammo", "bullets", false)
 
-func _shoot_cast(relative_node = "")-> void:
+func _shoot_cast(relative_node = "", delta=0)-> void:
+	var should_trigger = false
 
+	if primary_modifier_type != MODIFIER_TYPE.NONE:
+		if current_primary_modifier_time < primary_modifier_timer:
+			current_primary_modifier_time += delta
+
+	if secondary_modifier_type != MODIFIER_TYPE.NONE:
+		if current_secondary_modifier_time < secondary_modifier_timer:
+			current_secondary_modifier_time += delta
+		
+	match relative_node:
+		"":
+			match primary_modifier_type:
+				MODIFIER_TYPE.NONE:
+					should_trigger = true
+				MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED:
+					if current_primary_modifier_time >= primary_modifier_timer:
+						should_trigger = true
+						current_primary_modifier_time = 0
+					else:
+						return
+				MODIFIER_TYPE.ON_RELEASE:
+					if current_primary_modifier_time > 0:
+						return
+					elif not primary_pressed:
+						should_trigger = true
+						current_primary_modifier_time = 0
+				MODIFIER_TYPE.ON_RELEASE_IF_LOADED:
+					if current_primary_modifier_time > 0 and current_primary_modifier_time < primary_modifier_timer:
+						return
+					elif current_primary_modifier_time >= primary_modifier_timer and not primary_pressed:
+						should_trigger = true
+						current_primary_modifier_time = 0
+					else:
+						return
+				MODIFIER_TYPE.ON_RELEASE_OR_AUTO:
+					if current_primary_modifier_time < primary_modifier_timer and primary_pressed:
+						return
+					elif current_primary_modifier_time >= primary_modifier_timer:
+						should_trigger = true
+						current_primary_modifier_time = 0
+					elif not primary_pressed:
+						should_trigger = true
+						current_primary_modifier_time = 0
+		"secondary":
+			match secondary_modifier_type:
+				MODIFIER_TYPE.NONE:
+					should_trigger = true
+				MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED:
+					if current_secondary_modifier_time >= secondary_modifier_timer:
+						should_trigger = true
+						current_secondary_modifier_time = 0
+					else:
+						return
+				MODIFIER_TYPE.ON_RELEASE:
+					if current_secondary_modifier_time > 0:
+						return
+					elif not secondary_pressed:
+						should_trigger = true
+						current_secondary_modifier_time = 0
+				MODIFIER_TYPE.ON_RELEASE_IF_LOADED:
+					if current_secondary_modifier_time > 0 and current_secondary_modifier_time < secondary_modifier_timer:
+						return
+					elif current_secondary_modifier_time >= secondary_modifier_timer and not secondary_pressed:
+						should_trigger = true
+						current_secondary_modifier_time = 0
+					else:
+						return
+				MODIFIER_TYPE.ON_RELEASE_OR_AUTO:
+					if current_secondary_modifier_time < secondary_modifier_timer and secondary_pressed:
+						return
+					elif current_secondary_modifier_time >= secondary_modifier_timer:
+						should_trigger = true
+						current_secondary_modifier_time = 0
+					elif not secondary_pressed:
+						should_trigger = true
+						current_secondary_modifier_time = 0
+
+	if not should_trigger:
+		print("should not trigger")
+		return
 
 	if relative_node == "secondary" or (right_click_mode != FUNCTION_MODE.TOGGLE_SPREAD and switch):
 		match secondary_fire_mode:
@@ -101,7 +212,7 @@ func _shoot_cast(relative_node = "")-> void:
 			FIRE_MODE.RAYCAST:
 				shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range, relative_node)
 			FIRE_MODE.PROJECTILE:
-				shoot_projectile()
+				shoot_projectile(relative_node)
 			FIRE_MODE.AREA:
 				pass
 
