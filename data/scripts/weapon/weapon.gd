@@ -33,6 +33,8 @@ var mesh = null
 var ray = null
 var audio = null
 
+var original_cast_to = Vector3.FORWARD
+var shooting_cooldown = false
 
 
 
@@ -82,6 +84,7 @@ func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_
 	if ray is RayCast:
 		#Setup main range
 		ray.cast_to.z = -max_range
+		ray.set_meta("original_cast_to", ray.cast_to)
 		original_cast_to = ray.cast_to
 
 	if separator_name != "":
@@ -96,6 +99,7 @@ func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_
 		new_cast.cast_to.x = point.x * spread_multiplier 
 		new_cast.cast_to.y = point.y * spread_multiplier 
 		new_cast.cast_to.z = -max_range
+		new_cast.set_meta("original_cast_to", new_cast.cast_to)
 		parent.add_child(new_cast)
 
 func _draw() -> void:
@@ -125,7 +129,6 @@ func _sprint(sprint, _delta) -> void:
 func shoot(delta) -> void: #Implemented as a virtual method, so that it can be overriden by child classes
 	_shoot(self, delta, bullets, max_bullets, ammo, reload_speed, firerate, "", "ammo", "bullets", true)
 
-var shooting_cooldown = false
 
 func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate, relative_node = "", ammo_name ="ammo", bullets_name = "bullets",tied_to_animation = true) -> void:
 	if not check_relatives():
@@ -168,7 +171,7 @@ func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l
 				anim.play("Shoot", 0, anim_speed)
 			
 			# Get raycast weapon range
-			_shoot_cast(relative_node)
+			_shoot_cast(relative_node, _delta)
 			if not tied_to_animation:
 				shooting_cooldown = true
 				anim_speed = anim.get_animation("Shoot").length / l_firerate
@@ -182,30 +185,29 @@ func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l
 		if GlobalSettings.auto_reload:
 			_reload(node_in, l_bullets, l_max_bullets, l_ammo, ammo_name, bullets_name, l_reload_speed)
 
-func _shoot_cast(relative_node) -> void: 
+func _shoot_cast(relative_node="", delta=0) -> void: 
 	shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range, relative_node)
 
 func shoot_raycast(uses_randomness, max_random_spread_x, max_random_spread_y, max_range, relative_node = "") -> void:
 	if not check_relatives():
 		return
-	var ray = self.ray
+	var local_ray = self.ray
 	if relative_node != "":
-		ray = ray.get_node(relative_node)
-		if not ray.get_children().size()>0:
-			ray = self.ray
-	if ray is Position3D:
+		local_ray = ray.get_node(relative_node)
+		if local_ray.get_children().size() <= 0:
+			local_ray = self.ray
+	if local_ray is Position3D:
 		#Handle more than one raycast 
-		for child_ray in ray.get_children():
+		for child_ray in local_ray.get_children():
 			if child_ray is RayCast:
 				# Get raycast range
 				make_ray_shoot(child_ray, uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
 							
 				# Check raycast is colliding
-	elif ray is RayCast:
+	elif local_ray is RayCast:
 		# Get raycast range
-		make_ray_shoot(ray, uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
+		make_ray_shoot(local_ray, uses_randomness, max_random_spread_x, max_random_spread_y, max_range)
 
-var original_cast_to = Vector3.FORWARD
 func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_random_spread_y, max_range) -> void:
 	if not check_relatives():
 		return
@@ -264,7 +266,7 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 		# decal spins to collider normal
 		local_decal.look_at(ray.get_collision_point() + ray.get_collision_normal(), Vector3(1, 1, 0))
 	if not uses_randomness:
-			ray.cast_to = original_cast_to
+			ray.cast_to = ray.get_meta("original_cast_to")
 
 
 func reload() -> void:
