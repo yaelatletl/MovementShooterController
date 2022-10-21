@@ -32,7 +32,7 @@
 	"usesSecondaryAmmo" : false,
 	"secondaryRandomSpread" : [0.0,0.0],
 	"primaryModifierType" : "None",
-	"secondaryModifierType" : "OnReleaseOrAuto",
+	"secondaryModifierType" : "OnRelease",
 	"primaryModifierTimer" : 0,
-	"secondaryModifierTimer" : 10
+	"secondaryModifierTimer" : 2
 }
