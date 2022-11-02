@@ -36,6 +36,7 @@ var audio = null
 var original_cast_to = Vector3.FORWARD
 var shooting_cooldown = false
 
+var character = null
 
 
 func _ready():
@@ -78,6 +79,7 @@ func update_actor_relatives(actor) -> void:
 	audio = actor.get_node("{}/audio".format([gun_name], "{}"))
 	if spread_pattern.size() > 0:
 		setup_spread(spread_pattern, spread_multiplier, max_range)
+	character = actor.get_parent()
 
 
 func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_name = "") -> void:
@@ -134,6 +136,8 @@ func shoot(delta) -> void: #Implemented as a virtual method, so that it can be o
 
 func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate, relative_node = "", ammo_name ="ammo", bullets_name = "bullets",tied_to_animation = true) -> void:
 	if not check_relatives():
+		if actor!= null:
+			update_actor_relatives(actor)
 		return
 	var can_shoot = true
 	if tied_to_animation:
@@ -273,12 +277,14 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 
 
 func reload() -> void:
+	if not check_relatives():
+		if actor!= null:
+			update_actor_relatives(actor)
+		return
 	_reload(self, bullets, max_bullets, ammo, "ammo", "bullets", reload_speed)
 
 
 func _reload(node_in, bullets, max_bullets, ammo, ammo_variable_name, bullets_variable_name, reload_speed) -> void:
-	if not check_relatives():
-		return
 	if bullets < max_bullets and ammo > 0:
 		if animc != "Reload" and animc != "Shoot" and animc != "Draw" and animc != "Hide":
 			# Play reload animation
@@ -294,11 +300,13 @@ func _reload(node_in, bullets, max_bullets, ammo, ammo_variable_name, bullets_va
 			Gamestate.set_in_all_clients(node_in, ammo_variable_name, ammo)
 
 func _zoom(input, _delta) -> void:
+	if not check_relatives():
+		if actor!= null:
+			update_actor_relatives(actor)
+		return
 	make_zoom(input, _delta)
 
 func make_zoom(input, _delta) -> void:
-	if not check_relatives():
-		return
 	var lerp_speed : int = 30
 	var camera = actor.camera
 	
@@ -313,6 +321,8 @@ func make_zoom(input, _delta) -> void:
 	
 func _update(_delta) -> void:
 	if not check_relatives():
+		if actor!= null:
+			update_actor_relatives(actor)
 		return
 	if animc != "Shoot":
 		if actor.arsenal.values()[actor.current] == self:

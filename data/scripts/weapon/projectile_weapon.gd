@@ -2,7 +2,6 @@ extends Weapon
 class_name ProjectileWeapon
 var projectile_type
 var camera = null
-var character = null
 
 func set_projectile(type):
 	projectile_type = type
