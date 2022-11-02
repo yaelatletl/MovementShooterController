@@ -57,6 +57,9 @@ var secondary_pressed = false
 var primary_waiting_for_release = false
 var secondary_waiting_for_release = false
 
+var primary_just_auto_triggered = false
+var secondary_just_auto_triggered = false
+
 signal trigger_released
 
 func _ready() -> void:
@@ -76,7 +79,29 @@ func _physics_process(delta):
 		_shoot_cast("", 0)
 	if not secondary_pressed and secondary_waiting_for_release:	
 		_shoot_cast("secondary", 0)
-		
+	
+	if not primary_pressed and primary_just_auto_triggered:
+		primary_just_auto_triggered = false
+	if not secondary_pressed and secondary_just_auto_triggered:
+		secondary_just_auto_triggered = false
+
+	if primary_modifier_type != MODIFIER_TYPE.NONE and primary_pressed:
+		if current_primary_modifier_time < primary_modifier_timer:
+			current_primary_modifier_time += delta
+	else:
+		current_primary_modifier_time = 0
+
+	if secondary_modifier_type != MODIFIER_TYPE.NONE and secondary_pressed:
+		if current_secondary_modifier_time < secondary_modifier_timer:
+			current_secondary_modifier_time += delta
+	else:
+		current_secondary_modifier_time = 0
+
+func shoot(delta) -> void: #Implemented as a virtual method, so that it can be overriden by child classes
+	if primary_just_auto_triggered:
+		return
+	_shoot(self, delta, bullets, max_bullets, ammo, reload_speed, firerate, "", "ammo", "bullets", true)
+
 
 func setup_secondary_fire(mode, firerate, bullets, ammo, max_bullets, damage, reload_speed, use_randomness, spread_pattern, spread_multiplier, projectile) -> void:
 	projectile_type = projectile
@@ -104,6 +129,8 @@ func _zoom(input, _delta) -> void:
 			FUNCTION_MODE.TOGGLE_SPREAD:
 				pass
 			FUNCTION_MODE.SECONDARY_FIRE:
+				if secondary_just_auto_triggered:
+					return
 				secondary_fire(_delta)
 			FUNCTION_MODE.TOGGLE_SETTINGS:
 				switch = not switch
@@ -124,14 +151,6 @@ func _shoot_cast(relative_node = "", delta=0)-> void:
 			update_actor_relatives(actor)
 		return
 	var should_trigger = false
-
-	if primary_modifier_type != MODIFIER_TYPE.NONE:
-		if current_primary_modifier_time < primary_modifier_timer:
-			current_primary_modifier_time += delta
-
-	if secondary_modifier_type != MODIFIER_TYPE.NONE:
-		if current_secondary_modifier_time < secondary_modifier_timer:
-			current_secondary_modifier_time += delta
 		
 	match relative_node:
 		"":
@@ -141,7 +160,7 @@ func _shoot_cast(relative_node = "", delta=0)-> void:
 				MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED:
 					if current_primary_modifier_time >= primary_modifier_timer:
 						should_trigger = true
-						current_primary_modifier_time = 0
+						primary_just_auto_triggered = true
 					else:
 						return
 				MODIFIER_TYPE.ON_RELEASE:
@@ -152,33 +171,31 @@ func _shoot_cast(relative_node = "", delta=0)-> void:
 						if primary_waiting_for_release and current_primary_modifier_time > 0:
 							should_trigger = true
 				MODIFIER_TYPE.ON_RELEASE_IF_LOADED:
-					if current_primary_modifier_time > 0 and current_primary_modifier_time < primary_modifier_timer:
+					if current_primary_modifier_time < primary_modifier_timer:
 						return
-					elif current_primary_modifier_time >= primary_modifier_timer and not primary_pressed:
-						should_trigger = true
-						current_primary_modifier_time = 0
-					elif primary_pressed:
-						primary_waiting_for_release = true
-						return
+					elif current_primary_modifier_time >= primary_modifier_timer:
+						if primary_pressed:
+							primary_waiting_for_release = true
+							return
+						elif not primary_pressed and primary_waiting_for_release:
+							should_trigger = true
 				MODIFIER_TYPE.ON_RELEASE_OR_AUTO:
 					if current_primary_modifier_time < primary_modifier_timer and primary_pressed:
 						primary_waiting_for_release = true
 						return
 					elif current_primary_modifier_time >= primary_modifier_timer:
 						should_trigger = true
-						current_primary_modifier_time = 0
-					elif not primary_pressed:
+						primary_just_auto_triggered = true
+					elif not primary_pressed and primary_waiting_for_release:
 						should_trigger = true
-						current_primary_modifier_time = 0
 		"secondary":
 			match secondary_modifier_type:
 				MODIFIER_TYPE.NONE:
 					should_trigger = true
 				MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED:
-					
 					if current_secondary_modifier_time >= secondary_modifier_timer:
 						should_trigger = true
-						current_secondary_modifier_time = 0
+						secondary_just_auto_triggered = true
 					else:
 						return
 				MODIFIER_TYPE.ON_RELEASE:
@@ -188,7 +205,6 @@ func _shoot_cast(relative_node = "", delta=0)-> void:
 					elif not secondary_pressed:
 						if secondary_waiting_for_release and current_secondary_modifier_time > 0:
 							should_trigger = true
-							current_secondary_modifier_time = 0
 				MODIFIER_TYPE.ON_RELEASE_IF_LOADED:
 					if current_secondary_modifier_time < secondary_modifier_timer:
 						return
@@ -204,11 +220,9 @@ func _shoot_cast(relative_node = "", delta=0)-> void:
 						return
 					elif current_secondary_modifier_time >= secondary_modifier_timer:
 						should_trigger = true
-						current_secondary_modifier_time = 0
-					elif not secondary_pressed:
+						secondary_just_auto_triggered = true
+					elif not secondary_pressed and secondary_waiting_for_release:
 						should_trigger = true
-						current_secondary_modifier_time = 0
-
 	if not should_trigger:
 		return
 	else:
