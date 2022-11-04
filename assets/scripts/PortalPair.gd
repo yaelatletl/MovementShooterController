@@ -197,6 +197,7 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 	# the portal
 	if not in_front_of_portal(portal, body_pos):
 		swap_body_clone(body, clone, angle, linked_direction)
+		handle_body_exit_portal(portal, body)
 	
 	
 
@@ -246,6 +247,8 @@ func _physics_process(delta: float) -> void:
 
 
 func handle_body_exit_portal(portal: Node, body: PhysicsBody) -> void:
+	if not is_instance_valid(body):
+		return
 	if not body in clones:
 		return
 	var clone: Node = clones[body]
@@ -255,6 +258,7 @@ func handle_body_exit_portal(portal: Node, body: PhysicsBody) -> void:
 			clone.queue_free()
 		elif clone is KinematicBody:
 			Pooling.free_actor_duplicate(clone)
+	bodies[portal].erase(body)
 
 func _on_portal_a_body_entered(body: PhysicsBody) -> void:
 	bodies[$PortalA].append(body)
@@ -263,10 +267,10 @@ func _on_portal_b_body_entered(body: PhysicsBody) -> void:
 	bodies[$PortalB].append(body)
 
 func _on_portal_a_body_exited(body: PhysicsBody) -> void:
-	handle_body_exit_portal($PortalA, body)
+	#handle_body_exit_portal($PortalA, body)
 	bodies[$PortalA].erase(body)
 
 
 func _on_portal_b_body_exited(body: PhysicsBody) -> void:
-	handle_body_exit_portal($PortalB, body)
+	#handle_body_exit_portal($PortalB, body)
 	bodies[$PortalB].erase(body)
