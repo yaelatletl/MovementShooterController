@@ -62,10 +62,10 @@ skeleton = NodePath("../..")
 shape = SubResource( 1 )
 
 [node name="PortalPair" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.898958, 2.09325, 4.02064 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.898958, 1.96298, 4.02064 )
 
 [node name="PortalA" parent="PortalPair" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.211, -1.6336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.101, -1.5 )
 
 [node name="Back" parent="PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 3 )
@@ -101,10 +101,10 @@ material_override = SubResource( 5 )
 material_override = SubResource( 5 )
 
 [node name="PortalPair5" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3631, 2.09325, -7.19298 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3631, 1.96298, -7.19298 )
 
 [node name="PortalA" parent="PortalPair5" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.211, -1.6336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.1008, -1.5 )
 
 [node name="Back" parent="PortalPair5/PortalA/Screen" index="0"]
 material_override = SubResource( 3 )
@@ -140,10 +140,10 @@ material_override = SubResource( 5 )
 material_override = SubResource( 5 )
 
 [node name="PortalPair2" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 8.86452, 2.09325, -2.33827 )
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 8.86452, 1.96298, -2.33827 )
 
 [node name="PortalA" parent="PortalPair2" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.211, -1.6336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.1008, -1.5 )
 
 [node name="Back" parent="PortalPair2/PortalA/Screen" index="0"]
 material_override = SubResource( 3 )
@@ -179,10 +179,10 @@ material_override = SubResource( 5 )
 material_override = SubResource( 5 )
 
 [node name="PortalPair6" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 8.86453, 2.09325, 8.86416 )
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 8.86453, 1.96298, 8.86416 )
 
 [node name="PortalA" parent="PortalPair6" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.211, -1.6336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.1008, -1.5 )
 
 [node name="Back" parent="PortalPair6/PortalA/Screen" index="0"]
 material_override = SubResource( 3 )
@@ -218,10 +218,10 @@ material_override = SubResource( 5 )
 material_override = SubResource( 5 )
 
 [node name="PortalPair3" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -2.4062, 2.09325, -2.33827 )
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -2.4062, 1.96298, -2.33827 )
 
 [node name="PortalA" parent="PortalPair3" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.211, -1.6336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.1008, -1.5 )
 
 [node name="Back" parent="PortalPair3/PortalA/Screen" index="0"]
 material_override = SubResource( 3 )
@@ -257,10 +257,10 @@ material_override = SubResource( 5 )
 material_override = SubResource( 5 )
 
 [node name="PortalPair4" parent="." instance=ExtResource( 1 )]
-transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -2.4062, 2.09325, 8.87881 )
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, -2.4062, 1.96298, 8.87881 )
 
 [node name="PortalA" parent="PortalPair4" index="0"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.211, -1.6336 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, -9.1008, -1.5 )
 
 [node name="Back" parent="PortalPair4/PortalA/Screen" index="0"]
 material_override = SubResource( 3 )
