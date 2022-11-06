@@ -67,14 +67,14 @@ func _ready() -> void:
 	setup_spread(secondary_spread_pattern, secondary_spread_multiplier, secondary_max_range, "secondary")
 
 func _physics_process(delta):
-	if character == null:
+	if actor == null:
 		return
-	if character.input["zoom"] and right_click_mode == FUNCTION_MODE.ZOOM_TOGGLE_SETTINGS:
+	if actor.input["zoom"] and right_click_mode == FUNCTION_MODE.ZOOM_TOGGLE_SETTINGS:
 		switch = true
 	elif right_click_mode == FUNCTION_MODE.ZOOM_TOGGLE_SETTINGS:
 		switch = false
-	primary_pressed = character.input["shoot"]
-	secondary_pressed = character.input["zoom"]
+	primary_pressed = actor.input["shoot"]
+	secondary_pressed = actor.input["zoom"]
 	if not primary_pressed and primary_waiting_for_release:
 		_shoot_cast("", 0)
 	if not secondary_pressed and secondary_waiting_for_release:	
@@ -119,8 +119,8 @@ func setup_secondary_fire(mode, firerate, bullets, ammo, max_bullets, damage, re
 
 func _zoom(input, _delta) -> void:
 	if not check_relatives():
-		if actor!= null:
-			update_actor_relatives(actor)		
+		if spatial_parent!= null:
+			update_spatial_parent_relatives(spatial_parent)		
 		return
 	if input:
 		match right_click_mode:
@@ -147,8 +147,8 @@ func secondary_fire(delta) -> void:
 
 func _shoot_cast(relative_node = "", delta=0)-> void:
 	if not check_relatives():
-		if actor!= null:
-			update_actor_relatives(actor)
+		if spatial_parent!= null:
+			update_spatial_parent_relatives(spatial_parent)
 		return
 	var should_trigger = false
 		

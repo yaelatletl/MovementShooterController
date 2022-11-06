@@ -8,7 +8,7 @@ var decal = preload("res://data/scenes/decal.tscn")
 
 var damage_type : int = Pooling.DAMAGE_TYPE.KINECTIC
 var firerate : float
-var actor : Node = null
+var spatial_parent : Node = null
 var gun_name : String
 remote var bullets : int
 remote var ammo : int
@@ -36,19 +36,19 @@ var audio = null
 var original_cast_to = Vector3.FORWARD
 var shooting_cooldown = false
 
-var character = null
+var actor = null
 
 
 func _ready():
 	if uses_randomness:
 		randomize()
-	if actor == null:
-		printerr("actor must be set before adding to scene")
+	if spatial_parent == null:
+		printerr("spatial_parent must be set before adding to scene")
 		return
-	update_actor_relatives(actor)
+	update_spatial_parent_relatives(spatial_parent)
 
 func check_relatives() -> bool:
-	if actor == null:
+	if spatial_parent == null:
 		return false
 	if anim == null:
 		return false
@@ -64,22 +64,22 @@ func check_relatives() -> bool:
 		return false
 	return true
 
-func update_actor_relatives(actor) -> void:
+func update_spatial_parent_relatives(spatial_parent) -> void:
 	# Get animation node
-	anim = actor.get_node("{}/mesh/anim".format([gun_name], "{}"))
-	mesh = actor.get_node("{}".format([gun_name], "{}"))
-	effect = actor.get_node("{}/effect".format([gun_name], "{}"))
+	anim = spatial_parent.get_node("{}/mesh/anim".format([gun_name], "{}"))
+	mesh = spatial_parent.get_node("{}".format([gun_name], "{}"))
+	effect = spatial_parent.get_node("{}/effect".format([gun_name], "{}"))
 	
 	# Get current animation
 	animc = anim.current_animation
 	
-	ray = actor.get_node("{}/ray".format([gun_name], "{}"))
+	ray = spatial_parent.get_node("{}/ray".format([gun_name], "{}"))
 	if ray is RayCast:
 		ray.set_meta("original_cast_to", ray.cast_to)
-	audio = actor.get_node("{}/audio".format([gun_name], "{}"))
+	audio = spatial_parent.get_node("{}/audio".format([gun_name], "{}"))
 	if spread_pattern.size() > 0:
 		setup_spread(spread_pattern, spread_multiplier, max_range)
-	character = actor.get_parent()
+	actor = spatial_parent.get_parent()
 
 
 func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_name = "") -> void:
@@ -125,7 +125,7 @@ func _hide() -> void:
 func _sprint(sprint, _delta) -> void:
 	if not check_relatives():
 		return
-	if sprint and actor.character.direction:
+	if sprint and spatial_parent.actor.direction:
 		mesh.rotation.x = lerp(mesh.rotation.x, -deg2rad(40), 5 * _delta)
 	else:
 		mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
@@ -136,8 +136,8 @@ func shoot(delta) -> void: #Implemented as a virtual method, so that it can be o
 
 func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l_firerate, relative_node = "", ammo_name ="ammo", bullets_name = "bullets",tied_to_animation = true) -> void:
 	if not check_relatives():
-		if actor!= null:
-			update_actor_relatives(actor)
+		if spatial_parent!= null:
+			update_spatial_parent_relatives(spatial_parent)
 		return
 	var can_shoot = true
 	if tied_to_animation:
@@ -150,12 +150,12 @@ func _shoot(node_in, _delta, l_bullets, l_max_bullets, l_ammo, l_reload_speed, l
 			node_in.set_deferred(bullets_name, l_bullets - 1)
 			Gamestate.set_in_all_clients(node_in, bullets_name, l_bullets)
 			# recoil
-			actor.camera.rotation.x = lerp(actor.camera.rotation.x, rand_range(1, 2), _delta)
-			actor.camera.rotation.y = lerp(actor.camera.rotation.y, rand_range(-1, 1), _delta)
+			spatial_parent.camera.rotation.x = lerp(spatial_parent.camera.rotation.x, rand_range(1, 2), _delta)
+			spatial_parent.camera.rotation.y = lerp(spatial_parent.camera.rotation.y, rand_range(-1, 1), _delta)
 			
 			# Shake the camera
-			actor.camera.shake_force = 0.002
-			actor.camera.shake_time = 0.2
+			spatial_parent.camera.shake_force = 0.002
+			spatial_parent.camera.shake_time = 0.2
 			
 			# Change light energy
 			effect.get_node("shoot").light_energy = 2
@@ -224,9 +224,9 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 		ray.cast_to.z = -max_range
 	if ray.is_colliding():
 		# Get barrel node
-		var barrel = actor.get_node("{}/barrel".format([gun_name], "{}"))
+		var barrel = spatial_parent.get_node("{}/barrel".format([gun_name], "{}"))
 		# Get main scene
-		var main = actor.get_tree().get_root().get_child(0)
+		var main = spatial_parent.get_tree().get_root().get_child(0)
 				
 		# Create a instance of trail scene
 		var local_trail = trail.instance()
@@ -278,8 +278,8 @@ func make_ray_shoot(ray : RayCast, uses_randomness, max_random_spread_x, max_ran
 
 func reload() -> void:
 	if not check_relatives():
-		if actor!= null:
-			update_actor_relatives(actor)
+		if spatial_parent!= null:
+			update_spatial_parent_relatives(spatial_parent)
 		return
 	_reload(self, bullets, max_bullets, ammo, "ammo", "bullets", reload_speed)
 
@@ -301,14 +301,14 @@ func _reload(node_in, bullets, max_bullets, ammo, ammo_variable_name, bullets_va
 
 func _zoom(input, _delta) -> void:
 	if not check_relatives():
-		if actor!= null:
-			update_actor_relatives(actor)
+		if spatial_parent!= null:
+			update_spatial_parent_relatives(spatial_parent)
 		return
 	make_zoom(input, _delta)
 
 func make_zoom(input, _delta) -> void:
 	var lerp_speed : int = 30
-	var camera = actor.camera
+	var camera = spatial_parent.camera
 	
 	if input and animc != "Reload" and animc != "Hide" and animc != "Draw":
 		camera.fov = lerp(camera.fov, zoom_fov, lerp_speed * _delta)
@@ -321,13 +321,13 @@ func make_zoom(input, _delta) -> void:
 	
 func _update(_delta) -> void:
 	if not check_relatives():
-		if actor!= null:
-			update_actor_relatives(actor)
+		if spatial_parent!= null:
+			update_spatial_parent_relatives(spatial_parent)
 		return
 	if animc != "Shoot":
-		if actor.arsenal.values()[actor.current] == self:
-			actor.camera.rotation.x = lerp(actor.camera.rotation.x, 0, 10 * _delta)
-			actor.camera.rotation.y = lerp(actor.camera.rotation.y, 0, 10 * _delta)
+		if spatial_parent.arsenal.values()[spatial_parent.current] == self:
+			spatial_parent.camera.rotation.x = lerp(spatial_parent.camera.rotation.x, 0, 10 * _delta)
+			spatial_parent.camera.rotation.y = lerp(spatial_parent.camera.rotation.y, 0, 10 * _delta)
 	
 	# Get current animation
 	animc = anim.current_animation

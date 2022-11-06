@@ -1,7 +1,7 @@
 extends Spatial
 
-# Get character's node path
-export(NodePath) var character
+# Get actor's node path
+onready var actor = get_parent()
 
 # Get head's node path
 export(NodePath) var head
@@ -21,7 +21,9 @@ remotesync var current : int = 0
 
 
 func _ready() -> void:
+
 	set_as_toplevel(true)
+	actor._register_component("weapon", self)
 	
 	# Get camera node from path
 	camera = get_node(camera)
@@ -31,10 +33,7 @@ func _ready() -> void:
 	
 	# Get head node from path
 	head = get_node(head)
-	
-	# Get head node from path
-	character = get_node(character)
-	
+		
 	# Class reference : 
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
 	arsenal["zeus"] = FormatParser.weapon_from_json("res://data/weapons/tags/zeus.json", self)
@@ -77,16 +76,16 @@ remote func _reload() -> void:
 
 func _weapon(_delta) -> void:
 	
-	arsenal.values()[current]._sprint(character.input["sprint"] or character.input["jump"], _delta)
+	arsenal.values()[current]._sprint(actor.input["sprint"] or actor.input["jump"], _delta)
 	
-	if not character.input["sprint"] or not character.direction:
-		if character.input["shoot"]:
+	if not actor.input["sprint"] or not actor.direction:
+		if actor.input["shoot"]:
 			_shoot(_delta)
 
 		
-		arsenal.values()[current]._zoom(character.input["zoom"], _delta)
+		arsenal.values()[current]._zoom(actor.input["zoom"], _delta)
 	
-	if character.input["reload"]:
+	if actor.input["reload"]:
 		_reload()
 	
 	# Update arsenal
@@ -110,7 +109,7 @@ func  _rotation(_delta) -> void:
 	var quat_a = global_transform.basis.get_rotation_quat()
 	var quat_b = camera.global_transform.basis.get_rotation_quat()
 	var angle_distance = quat_a.angle_to(quat_b)
-	if not character.input["zoom"] and angle_distance < PI/2:
+	if not actor.input["zoom"] and angle_distance < PI/2:
 		
 		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp*angle_distance))
 				
@@ -122,7 +121,7 @@ remotesync func _change_weapon(_index) -> void:
 	Gamestate.set_in_all_clients(self, "current", _index)
 
 func _handle_guns():
-	if character.input["next_weapon"]:
+	if actor.input["next_weapon"]:
 		var anim = arsenal.values()[current].anim
 		if not anim.is_playing():
 			if current + 1 < arsenal.size():

@@ -46,7 +46,7 @@ static func safe_assign(target, dict, property, key, array_index = -1) -> void:
 		return
 	printerr("Error: Could not assign property ", str(property), " to ", str(target), " from dict ", dict, " with key ", key, " and array index ", str(array_index))
 		
-static func weapon_from_json( path : String, actor : Node ) -> Weapon: 
+static func weapon_from_json( path : String, weapon_parent : Node ) -> Weapon: 
 	var result = null
 	var file : File = File.new()
 	var temp = file.open(path, File.READ)
@@ -89,7 +89,7 @@ static func weapon_from_json( path : String, actor : Node ) -> Weapon:
 				safe_assign(result, data, "primary_modifier_timer", "primaryModifierTimer")
 				safe_assign(result, data, "secondary_modifier_timer", "secondaryModifierTimer")
 
-		result.actor = actor
+		result.spatial_parent = weapon_parent
 		result.gun_name = data.name
 		result.firerate = data.fireRate
 		result.bullets = data.bullets
