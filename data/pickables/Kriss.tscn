@@ -13,6 +13,7 @@ extents = Vector3( 0.0390255, 0.17127, 0.414518 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 2 )
+weapon_archetype = "res://data/weapons/tags/pistol.json"
 
 [node name="scene" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.130053, -1.27442, 0 )

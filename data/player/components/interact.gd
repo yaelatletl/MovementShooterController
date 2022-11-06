@@ -56,3 +56,6 @@ func _physics_process(delta):
 					waiting_for_interaction.interaction_triggered(actor)
 	elif interaction_time > 0.0:
 		stop_interact()
+
+func request_actor():
+	return actor

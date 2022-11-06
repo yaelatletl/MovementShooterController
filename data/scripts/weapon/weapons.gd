@@ -23,7 +23,7 @@ remotesync var current : int = 0
 func _ready() -> void:
 
 	set_as_toplevel(true)
-	actor._register_component("weapon", self)
+	actor._register_component("weapons", self)
 	
 	# Get camera node from path
 	camera = get_node(camera)
@@ -64,6 +64,12 @@ func _physics_process(_delta) -> void:
 func _process(_delta) -> void:
 	_rotation(_delta)
 	_position(_delta)
+
+remote func add_weapon(name : String, path : String) -> void:
+	arsenal[name] = FormatParser.weapon_from_json(path, self)
+	print("Added weapon: " + name)
+	add_child(arsenal[name])
+	arsenal.values()[current]._hide()
 
 remote func _shoot(_delta) -> void:
 	# Call weapon function
