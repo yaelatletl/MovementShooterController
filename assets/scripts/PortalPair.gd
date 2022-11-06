@@ -267,10 +267,10 @@ func _on_portal_b_body_entered(body: PhysicsBody) -> void:
 	bodies[$PortalB].append(body)
 
 func _on_portal_a_body_exited(body: PhysicsBody) -> void:
-	#handle_body_exit_portal($PortalA, body)
+	handle_body_exit_portal($PortalA, body)
 	bodies[$PortalA].erase(body)
 
 
 func _on_portal_b_body_exited(body: PhysicsBody) -> void:
-	#handle_body_exit_portal($PortalB, body)
+	handle_body_exit_portal($PortalB, body)
 	bodies[$PortalB].erase(body)
