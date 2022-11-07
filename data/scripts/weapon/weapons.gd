@@ -71,6 +71,7 @@ remote func add_weapon(name : String, path : String, view_model : PackedScene) -
 	model.name = arsenal[name].gun_name
 	print("Added weapon: " + name)
 	add_child(arsenal[name])
+	add_child(model)
 	arsenal.values()[current]._hide()
 
 remote func _shoot(_delta) -> void:
@@ -130,9 +131,14 @@ remotesync func _change_weapon(_index) -> void:
 
 func _handle_guns():
 	if actor.input["next_weapon"]:
-		var anim = arsenal.values()[current].anim
-		if not anim.is_playing():
-			if current + 1 < arsenal.size():
-				_change_weapon(current + 1)
-			else:
-				_change_weapon(0)
+		var next = arsenal.values()[current]
+		if not next.check_relatives():
+			next.update_spatial_parent_relatives(self)
+			_handle_guns()
+		else:
+			var anim = arsenal.values()[current].anim
+			if not anim.is_playing():
+				if current + 1 < arsenal.size():
+					_change_weapon(current + 1)
+				else:
+					_change_weapon(0)

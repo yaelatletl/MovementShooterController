@@ -66,11 +66,13 @@ func check_relatives() -> bool:
 
 func update_spatial_parent_relatives(spatial_parent) -> void:
 	# Get animation node
-	anim = spatial_parent.get_node("{}/mesh/anim".format([gun_name], "{}"))
-	mesh = spatial_parent.get_node("{}".format([gun_name], "{}"))
-	effect = spatial_parent.get_node("{}/effect".format([gun_name], "{}"))
+	anim = spatial_parent.get_node_or_null("{}/mesh/anim".format([gun_name], "{}"))
+	mesh = spatial_parent.get_node_or_null("{}".format([gun_name], "{}"))
+	effect = spatial_parent.get_node_or_null("{}/effect".format([gun_name], "{}"))
 	
 	# Get current animation
+	if anim == null:
+		return
 	animc = anim.current_animation
 	
 	ray = spatial_parent.get_node("{}/ray".format([gun_name], "{}"))
