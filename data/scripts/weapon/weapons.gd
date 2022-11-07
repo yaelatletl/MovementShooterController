@@ -65,8 +65,10 @@ func _process(_delta) -> void:
 	_rotation(_delta)
 	_position(_delta)
 
-remote func add_weapon(name : String, path : String) -> void:
+remote func add_weapon(name : String, path : String, view_model : PackedScene) -> void:
+	var model = view_model.instance()
 	arsenal[name] = FormatParser.weapon_from_json(path, self)
+	model.name = arsenal[name].gun_name
 	print("Added weapon: " + name)
 	add_child(arsenal[name])
 	arsenal.values()[current]._hide()
