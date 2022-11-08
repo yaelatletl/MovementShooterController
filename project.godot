@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "RayCast",
 "class": "PortalRayCast",
 "language": "GDScript",
-"path": "res://assets/scripts/PortalRayCast.gd"
+"path": "res://addons/portals/scripts/PortalRayCast.gd"
 }, {
 "base": "RigidBody",
 "class": "Projectile",

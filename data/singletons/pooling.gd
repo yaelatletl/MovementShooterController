@@ -12,8 +12,8 @@ var projectiles_active : Array = []
 var projectiles_waiting : Array = []
 
 var projectiles : Dictionary = {
-	1: preload("res://data/weapons/PlasmaBolt.tscn"),
-	2: preload("res://data/weapons/Grenade.tscn"),
+	1: preload("res://assets/weapons/projectiles/PlasmaBolt.tscn"),
+	2: preload("res://assets/weapons/projectiles/Grenade.tscn"),
 }
 
 var actor_pool : Dictionary = {}

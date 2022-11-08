@@ -1,10 +1,11 @@
 [gd_scene load_steps=26 format=2]
 
-[ext_resource path="res://data/models/barrel/material.material" type="Material" id=1]
+[ext_resource path="res://assets/models/barrel/material.material" type="Material" id=1]
 [ext_resource path="res://data/scripts/barrel/barrel.gd" type="Script" id=2]
-[ext_resource path="res://data/audios/barrel/explosion.ogg" type="AudioStream" id=3]
-[ext_resource path="res://data/textures/explosion.png" type="Texture" id=4]
-[ext_resource path="res://data/audios/barrel/impact.ogg" type="AudioStream" id=5]
+[ext_resource path="res://assets/audio/sfx/barrel/explosion.ogg" type="AudioStream" id=3]
+[ext_resource path="res://assets/placeholders/textures/explosion.png" type="Texture" id=4]
+[ext_resource path="res://assets/audio/sfx/barrel/impact.ogg" type="AudioStream" id=5]
+
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Mesh"
