@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "AmmoPickup",
+"language": "GDScript",
+"path": "res://data/pickables/ammo_pickup.gd"
+}, {
 "base": "Container",
 "class": "CircularContainer",
 "language": "GDScript",
@@ -60,6 +65,7 @@ _global_script_classes=[ {
 "path": "res://data/scripts/weapon/weapon.gd"
 } ]
 _global_script_class_icons={
+"AmmoPickup": "",
 "CircularContainer": "",
 "Component": "",
 "FormatParser": "",
@@ -217,6 +223,10 @@ sync_debug={
 3d_render/layer_1="Global"
 3d_render/layer_2="ThirdPerson Only"
 3d_render/layer_3="FirstPerson Only"
+
+[mono]
+
+project/assembly_name="Godot Engine FPS"
 
 [physics]
 

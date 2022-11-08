@@ -339,3 +339,7 @@ func _update(_delta) -> void:
 	
 	# Remove recoil
 	mesh.rotation.x = lerp(mesh.rotation.x, 0, 5 * _delta)
+
+func add_ammo(ammo_in):
+	ammo += ammo_in
+	Gamestate.set_in_all_clients(self, "ammo", ammo)

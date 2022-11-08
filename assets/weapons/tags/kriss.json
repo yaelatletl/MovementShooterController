@@ -3,7 +3,7 @@
 	"name": "kriss",
 	"fireRate" : 6.0,
 	"bullets" : 32,
-	"ammo" : 999,
+	"ammo" : 0,
 	"maxBullets" : 32,
 	"damage" : 25,
 	"reloadSpeed" : 1.5,

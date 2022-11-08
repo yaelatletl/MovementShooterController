@@ -3,7 +3,7 @@
 	"name": "glock_lock",
 	"fireRate" : 3.0,
 	"bullets" : 12,
-	"ammo" : 999,
+	"ammo" : 0,
 	"maxBullets" : 12,
 	"randomness" : 0,
 	"damage" : 35,

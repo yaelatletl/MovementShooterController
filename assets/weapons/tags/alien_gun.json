@@ -3,7 +3,7 @@
 	"name": "plasma",
 	"fireRate" : 2.0,
 	"bullets" : 52,
-	"ammo" : 999,
+	"ammo" : 0,
 	"maxBullets" : 52,
 	"damage" : 25,
 	"reloadSpeed" : 1.5,

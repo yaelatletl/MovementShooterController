@@ -142,3 +142,7 @@ func _handle_guns():
 					_change_weapon(current + 1)
 				else:
 					_change_weapon(0)
+
+func add_ammo(name, ammo) -> void:
+	arsenal[name].add_ammo(ammo)
+	pass
