@@ -1,7 +1,5 @@
 extends RigidBody
 
-var Util = preload("res://assets/scripts/Util.gd")
-
 # Amount of seconds to hold an object
 const TIME_HOLD_OBJ = 0.5
 # The maximum linear_velocity the object can have on release; this exists to prevent
@@ -12,6 +10,12 @@ const MAX_RELEASE_VELOCITY = 10.0
 var _holder: Spatial = null
 # Amount of seconds since object was held
 var _time_since_held := 0.0
+
+func dampen_vector(vec: Vector3, max_len: float) -> Vector3:
+	if vec.length() > max_len:
+		return vec.normalized() * max_len
+	else:
+		return vec
 
 
 func drop() -> void:
@@ -24,8 +28,8 @@ func drop() -> void:
 	var ang_vel := angular_velocity
 
 	# Dampen linear_velocity to prevent glitchy cube flailing
-	lin_vel = Util.dampen_vector(lin_vel, MAX_RELEASE_VELOCITY)
-	ang_vel = Util.dampen_vector(ang_vel, MAX_RELEASE_VELOCITY)
+	lin_vel = dampen_vector(lin_vel, MAX_RELEASE_VELOCITY)
+	ang_vel = dampen_vector(ang_vel, MAX_RELEASE_VELOCITY)
 	linear_velocity = lin_vel
 	angular_velocity = ang_vel
 
