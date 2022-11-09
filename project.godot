@@ -29,6 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/singletons/format_parser.gd"
 }, {
+"base": "Node",
+"class": "GOAPAction",
+"language": "GDScript",
+"path": "res://addons/goap/goap_action.gd"
+}, {
+"base": "Node",
+"class": "GOAPActionPlanner",
+"language": "GDScript",
+"path": "res://addons/goap/goap_action_planner.gd"
+}, {
 "base": "Spatial",
 "class": "InteractableGeneric",
 "language": "GDScript",
@@ -69,6 +79,8 @@ _global_script_class_icons={
 "CircularContainer": "",
 "Component": "",
 "FormatParser": "",
+"GOAPAction": "",
+"GOAPActionPlanner": "res://addons/goap/goap_action_planner.png",
 "InteractableGeneric": "",
 "InteractableInterface": "",
 "PortalRayCast": "",
