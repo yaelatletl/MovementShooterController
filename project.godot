@@ -224,10 +224,6 @@ sync_debug={
 3d_render/layer_2="ThirdPerson Only"
 3d_render/layer_3="FirstPerson Only"
 
-[mono]
-
-project/assembly_name="Godot Engine FPS"
-
 [physics]
 
 3d/smooth_trimesh_collision=true

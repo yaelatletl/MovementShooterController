@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://assets/placeholders/textures/grid.png" type="Texture" id=1]
 [ext_resource path="res://test_scenario/Test Scene.tscn" type="PackedScene" id=2]
@@ -9,11 +9,12 @@
 [ext_resource path="res://assets/models/player/passive_marker_man.tscn" type="PackedScene" id=7]
 [ext_resource path="res://data/prefabs/Door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://data/player/character.tscn" type="PackedScene" id=9]
-[ext_resource path="res://assets/picakbles/Kriss.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/picakbles/weapons/Kriss.tscn" type="PackedScene" id=10]
 [ext_resource path="res://data/prefabs/ZipLine.gd" type="Script" id=11]
 [ext_resource path="res://addons/portals/scenes/PortalPair.tscn" type="PackedScene" id=12]
 [ext_resource path="res://default_env.tres" type="Environment" id=13]
 [ext_resource path="res://test_scenario/5DSpace.tscn" type="PackedScene" id=14]
+[ext_resource path="res://assets/picakbles/ammo/ExampleAmmo.tscn" type="PackedScene" id=15]
 
 [sub_resource type="CubeMesh" id=3]
 size = Vector3( 1, 6, 20 )
@@ -420,7 +421,10 @@ transform = Transform( 0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878 )
 
 [node name="character" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1354, 40.1232, -39.5911 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.34924, 6.53228, 5.3109 )
+
+[node name="ExampleAmmo" parent="." instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.392279, 1.46756, 7.04151 )
 
 [editable path="scenario/PortalPair"]
 [editable path="scenario/PortalPair/PortalA"]

@@ -20,6 +20,12 @@ view_model = ExtResource( 3 )
 [node name="scene" parent="." instance=ExtResource( 1 )]
 transform = Transform( 0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.130053, -1.27442, 0 )
 
+[node name="Mesh 2" parent="scene/RootNode gltf orientation matrix/RootNode model correction matrix/e5925612b21a4f1eb6baf1abc1b3ea53fbx/Node 2/RootNode/Node 3 2/Skeleton" index="0"]
+visible = false
+
+[node name="Mesh 3 2" parent="scene/RootNode gltf orientation matrix/RootNode model correction matrix/e5925612b21a4f1eb6baf1abc1b3ea53fbx/Node 2/RootNode/Node 3 2/Skeleton" index="1"]
+visible = false
+
 [node name="PickArea" type="Area" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="PickArea"]
