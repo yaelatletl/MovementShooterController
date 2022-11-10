@@ -15,7 +15,7 @@ onready var peer = NetworkedMultiplayerENet.new()
 var players : Dictionary = {}
 var sync_threads = {}
 
-func start_new_sync_process(node, property_name, args):
+func start_new_sync_process(node, property_name, args) -> void:
 	print("DEPRECATED, called from " + node.name + "." + property_name)
 	return
 	if not get_tree().has_network_peer() or not get_tree().is_network_server():
@@ -27,7 +27,7 @@ func start_new_sync_process(node, property_name, args):
 	thread.start(self, "_sync_process", [peer_id, node, property_name, args])
 
 #This is a sync process, but it's not working as it should, we will try to limit thread creation to every two players
-func _sync_process(args):
+func _sync_process(args) -> void:
 	if sync_threads.has(args[0]):
 		var node = args[1]
 		var property = args[2]
@@ -48,12 +48,13 @@ func _ready() -> void:
 		if args == "server":
 			server_setup()
 	peer.allow_object_decoding = true
-func server_setup():
+
+func server_setup() -> void:
 	peer.create_server(SERVER_PORT, MAX_PLAYERS)
 	get_tree().network_peer = peer
 	register_player(1)
 
-func client_setup():
+func client_setup() -> void:
 	peer.create_client(IP.resolve_hostname(SERVER_IP), SERVER_PORT)
 	get_tree().network_peer = peer
 
@@ -61,7 +62,7 @@ func _on_NetworkPeer_server_disconnected() -> void:
 	get_tree().network_peer = null
 	pass
 
-func _on_NetworkPeer_peer_disconnected(peer_id) -> void:
+func _on_NetworkPeer_peer_disconnected(peer_id : int) -> void:
 #	var temp_threads = {}
 #	for threads in sync_threads[peer_id]:
 #		temp_threads[threads] = sync_threads[peer_id][threads]
@@ -85,7 +86,7 @@ func _on_NetworkPeer_connection_failed() -> void:
 func _on_NetworkPeer_connection_succeeded() -> void:
 	pass
 
-func create_player(id) -> KinematicBody:
+func create_player(id : int) -> KinematicBody:
 	var new_player =  player_template.instance()
 	new_player.name = str(id)
 	new_player.set_network_master(id)

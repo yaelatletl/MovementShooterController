@@ -7,7 +7,9 @@ export(int) var ammo = 0
 export(bool) var oneshot = true
 
 func _ready() -> void:
-	area.connect("body_entered", self, "_on_area_body_entered")
+	var err = area.connect("body_entered", self, "_on_area_body_entered")
+	if err!=OK:
+		printerr("Connection on ammo pickup failed. Error code: ", err)
 
 func _on_area_body_entered(body) -> void:
 	if body.has_method("_get_component"):
@@ -15,4 +17,4 @@ func _on_area_body_entered(body) -> void:
 		if wep:
 			wep.add_ammo(weapon_name, ammo)
 			if oneshot:
-				queue_free() # Must network this
+				Gamestate.remove_node(self)
