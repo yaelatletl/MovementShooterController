@@ -147,7 +147,7 @@ func spawn_instance(parent : Node, scene : PackedScene) -> void:
 		return
 	var instance = scene.instance()
 	if get_tree().is_network_server():
-		call_on_all_clients(self, "spawn_instance", [scene])
+		call_on_all_clients(self, "spawn_instance", scene)
 	parent.add_child(instance)
 
 func remove_node(removed : Node) -> void:
@@ -156,5 +156,5 @@ func remove_node(removed : Node) -> void:
 	if not is_instance_valid(removed):
 		return
 	if get_tree().is_network_server():
-		call_on_all_clients(self, "remove_node", [removed])
+		call_on_all_clients(self, "remove_node", removed)
 	removed.queue_free()
