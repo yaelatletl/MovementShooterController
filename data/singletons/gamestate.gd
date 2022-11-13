@@ -140,18 +140,24 @@ func unreliable_set_in_all_clients(object : Node, property_name : String, value)
 				#print("Setting property on client " + str(player))
 				object.rset_unreliable_id(player, property_name, value)
 
-func spawn_instance(parent : Node, scene : PackedScene) -> void:
+func spawn_instance(parent : Node, scene : PackedScene) -> Node:
+	var ref = scene.instance()
 	if not get_tree().has_network_peer():
-		return
+		if is_instance_valid(parent):
+			parent.add_child(ref)
+			return ref
+		return null
 	if not is_instance_valid(parent):
-		return
-	var instance = scene.instance()
+		return null
 	if get_tree().is_network_server():
 		call_on_all_clients(self, "spawn_instance", scene)
-	parent.add_child(instance)
+	parent.add_child(ref)
+	return ref
 
 func remove_node(removed : Node) -> void:
 	if not get_tree().has_network_peer():
+		if is_instance_valid(removed):
+			removed.queue_free()
 		return
 	if not is_instance_valid(removed):
 		return
