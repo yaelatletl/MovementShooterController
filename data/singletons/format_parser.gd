@@ -11,11 +11,11 @@ static func parse_spread_pattern(pattern) -> Array:
 
 static func weapon_from_json( path : String, actor : Node ) -> Weapon: 
 	var result = null
-	var file = DirAccess.open(path)
+	var file = FileAccess.open(path, FileAccess.READ)
 	var test_json_conv = JSON.new()
 	test_json_conv.parse(file.get_as_text())
 	var json = test_json_conv.get_data()
-	file.close()
+	#file.close()
 	var data = json
 	if data is Dictionary:
 		var type = int(data.type) # 0 = melee, 1 = raycast, 2 = projectile 

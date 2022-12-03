@@ -49,6 +49,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="scenario" parent="." instance=ExtResource("2_6q71j")]
+spawn_points_parent_path = ""
 
 [node name="passive_marker_man" parent="." instance=ExtResource("7")]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.84292, 1.00202, 4.04818)
@@ -133,6 +134,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878)
 
 [node name="character" parent="." instance=ExtResource("9")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.1338, 5.03176, -7.40396)
+head_path = ""
+feet_path = ""
 
 [editable path="passive_marker_man"]
 [editable path="passive_marker_man/passive_marker_man"]

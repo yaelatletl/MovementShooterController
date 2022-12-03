@@ -25,6 +25,8 @@ func _process(delta: float) -> void:
 
 				
 func _physics_process(delta: float) -> void:
+	if actor.head == null:
+		return
 	if is_instance_valid(actor.head.target):
 		view_target.global_transform = actor.head.target.global_transform
 
