@@ -80,10 +80,12 @@ func _movement(input : Dictionary, _delta : float) -> void:
 	
 	# Calls the motion function by passing the linear_velocity vector
 	actor.linear_velocity = actor.move_and_slide(actor.linear_velocity, Vector3(0,1,0), false, 4, PI/4, false)
-	
 	for index in actor.get_slide_count():
 		var collision = actor.get_slide_collision(index)
 		if collision.collider is RigidBody:
+			if collision.collider == actor.feet.get_collider():
+				return
+			else:
 				collision.collider.apply_central_impulse((-collision.normal * actor.run_speed/collision.collider.mass)*_delta)
 	
 func _crouch(input : Dictionary, _delta :float) -> void:

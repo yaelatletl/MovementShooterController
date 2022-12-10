@@ -13,9 +13,9 @@
 [ext_resource path="res://data/prefabs/ZipLine.gd" type="Script" id=11]
 [ext_resource path="res://addons/portals/scenes/PortalPair.tscn" type="PackedScene" id=12]
 [ext_resource path="res://default_env.tres" type="Environment" id=13]
-[ext_resource path="res://test_scenario/5DSpace.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/picakbles/ammo/ExampleAmmo.tscn" type="PackedScene" id=15]
 [ext_resource path="res://data/map/world.gd" type="Script" id=16]
+[ext_resource path="res://assets/placeholders/vehicle/Vehicle.tscn" type="PackedScene" id=17]
 
 [sub_resource type="CubeMesh" id=3]
 size = Vector3( 1, 6, 20 )
@@ -111,7 +111,7 @@ spawn_points_parent_path = NodePath("spawnpoints")
 [node name="props" type="Spatial" parent="scenario"]
 
 [node name="barrel_0" parent="scenario/props" instance=ExtResource( 5 )]
-transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -30.4608, 3.27414, -5.6635 )
+transform = Transform( 0.727593, 0, -0.686009, 0, 1, 0, 0.686009, 0, 0.727593, -38.5673, 10.6771, -72.4369 )
 
 [node name="barrel_1" parent="scenario/props" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8309, 7.79427, 10.2866 )
@@ -288,17 +288,16 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="terrain" type="StaticBody" parent="scenario/objects" groups=["concrete"]]
-collision_layer = 3
+collision_layer = 15
+collision_mask = 15
 
 [node name="mesh" type="MeshInstance" parent="scenario/objects/terrain"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0358462, -0.01824, 0.0206671 )
+layers = 7
 mesh = SubResource( 7 )
 
 [node name="collision" type="CollisionShape" parent="scenario/objects/terrain"]
 shape = SubResource( 8 )
-
-[node name="Spatial" parent="scenario/objects" instance=ExtResource( 14 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.07489, 44.7956, -42.4305 )
 
 [node name="spawnpoints" type="Spatial" parent="scenario"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0265, 12.8912, -21.9867 )
@@ -355,6 +354,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3893, 3.45568, 8.16805 )
 
 [node name="PortalA" parent="scenario/PortalPair" index="0"]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.47252, 2.02736, -11.2676 )
+visible = false
 
 [node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 14 )
@@ -373,6 +373,7 @@ material_override = SubResource( 14 )
 
 [node name="PortalB" parent="scenario/PortalPair" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.28477, -0.46709, 9.53674e-07 )
+visible = false
 
 [node name="Back" parent="scenario/PortalPair/PortalB/Screen" index="0"]
 material_override = SubResource( 16 )
@@ -422,8 +423,13 @@ transform = Transform( 0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.
 [node name="Spatial" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.72739, 2.31437, 2.47878 )
 
+[node name="Vehicle" parent="." instance=ExtResource( 17 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -38.6474, 6.4584, -70.8402 )
+
 [node name="character" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.34924, 6.53228, 5.3109 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -38.6139, 6.53228, -56.6979 )
+collision_layer = 11
+collision_mask = 11
 
 [node name="ExampleAmmo" parent="." instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.392279, 1.46756, 7.04151 )

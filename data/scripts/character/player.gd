@@ -3,8 +3,6 @@ extends KinematicBody
 const SLIDE_MULT = 3
 const WALLRUN_MULT = 1.7
 
-export(NodePath) var head_path = ""
-export(NodePath) var feet_path = ""
 export(float) var mass = 45
 
 # All vectors
@@ -29,8 +27,8 @@ var multiplier : float = 1.5
 
 var components : Dictionary = {}
 var angle 
-onready var head = get_node(head_path)
-onready var feet = get_node(feet_path)
+onready var head = $head
+onready var feet = $feet
 
 func _get_component(_name:String) -> Node:
 	if components.has(_name):

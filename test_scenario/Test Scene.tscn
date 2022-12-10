@@ -137,528 +137,462 @@ points = PoolVector3Array( 2.625, 31.5, -1.125, 1.125, 31.5, -2.625, 2.625, 31.5
 
 [node name="small_buildingA" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -72.6569, 0, -33.0821 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="small_buildingA2" type="MeshInstance" parent="small_buildingA"]
 mesh = ExtResource( 9 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="small_buildingA"]
 shape = SubResource( 1 )
 
 [node name="small_buildingB" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 62.3431, 0, -5.0821 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="small_buildingB2" type="MeshInstance" parent="small_buildingB"]
 mesh = ExtResource( 1 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="small_buildingB"]
 shape = SubResource( 2 )
 
 [node name="small_buildingC" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.3431, 0, -5.0821 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="small_buildingC2" type="MeshInstance" parent="small_buildingC"]
 mesh = ExtResource( 3 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="small_buildingC"]
 shape = SubResource( 3 )
 
 [node name="small_buildingD" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -46.6569, 0, 16.9179 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="small_buildingD2" type="MeshInstance" parent="small_buildingD"]
 mesh = ExtResource( 4 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="small_buildingD"]
 shape = SubResource( 4 )
 
 [node name="small_buildingE" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -117.657, 0, -5.0821 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="small_buildingE2" type="MeshInstance" parent="small_buildingE"]
 mesh = ExtResource( 28 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="small_buildingE"]
 shape = SubResource( 5 )
 
 [node name="small_buildingF" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.65685, 0, -40.0821 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="small_buildingF2" type="MeshInstance" parent="small_buildingF"]
 mesh = ExtResource( 16 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="small_buildingF"]
 shape = SubResource( 6 )
 
 [node name="skyscraperA" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -75.1718, 0, 59.6397 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="skyscraperA2" type="MeshInstance" parent="skyscraperA"]
 mesh = ExtResource( 31 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="skyscraperA"]
 shape = SubResource( 7 )
 
 [node name="skyscraperB" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -75.2435, 0, 18.6397 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="skyscraperB2" type="MeshInstance" parent="skyscraperB"]
 mesh = ExtResource( 33 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="skyscraperB"]
 shape = SubResource( 8 )
 
 [node name="skyscraperC" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0162, 0, 17.6397 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="skyscraperC2" type="MeshInstance" parent="skyscraperC"]
 mesh = ExtResource( 27 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
-material/5 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="skyscraperC"]
 shape = SubResource( 9 )
 
 [node name="skyscraperD" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -108.016, 0, 18.6397 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="skyscraperD2" type="MeshInstance" parent="skyscraperD"]
 mesh = ExtResource( 17 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
-material/5 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="skyscraperD"]
 shape = SubResource( 10 )
 
 [node name="skyscraperE" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9838, 0, 20.6397 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="skyscraperE2" type="MeshInstance" parent="skyscraperE"]
 mesh = ExtResource( 21 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
-material/5 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="skyscraperE"]
 shape = SubResource( 11 )
 
 [node name="skyscraperF" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -47.0162, 0, -37.3603 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="skyscraperF2" type="MeshInstance" parent="skyscraperF"]
 mesh = ExtResource( 11 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="skyscraperF"]
 shape = SubResource( 12 )
 
 [node name="large_buildingA" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9401, 0, 56.5094 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="large_buildingA2" type="MeshInstance" parent="large_buildingA"]
 mesh = ExtResource( 10 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="large_buildingA"]
 shape = SubResource( 13 )
 
 [node name="large_buildingB" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -45.9401, 0, -8.49059 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="large_buildingB2" type="MeshInstance" parent="large_buildingB"]
 mesh = ExtResource( 2 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="large_buildingB"]
 shape = SubResource( 14 )
 
 [node name="large_buildingC" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0599, 0, 90.5094 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="large_buildingC2" type="MeshInstance" parent="large_buildingC"]
 mesh = ExtResource( 5 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="large_buildingC"]
 shape = SubResource( 15 )
 
 [node name="large_buildingD" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.9401, 0, 89.5094 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="large_buildingD2" type="MeshInstance" parent="large_buildingD"]
 mesh = ExtResource( 6 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="large_buildingD"]
 shape = SubResource( 16 )
 
 [node name="large_buildingE" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -108.94, 0, -38.4906 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="large_buildingE2" type="MeshInstance" parent="large_buildingE"]
 mesh = ExtResource( 7 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="large_buildingE"]
 shape = SubResource( 17 )
 
 [node name="large_buildingF" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 56.0599, 0, 56.5094 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="large_buildingF2" type="MeshInstance" parent="large_buildingF"]
 mesh = ExtResource( 8 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
-material/4 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="large_buildingF"]
 shape = SubResource( 18 )
 
 [node name="large_buildingG" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 37.0599, 0, -44.6809 )
-collision_layer = 3
+collision_layer = 7
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="large_buildingG2" type="MeshInstance" parent="large_buildingG"]
 mesh = ExtResource( 32 )
-material/0 = null
-material/1 = null
-material/2 = null
-material/3 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="large_buildingG"]
 shape = SubResource( 19 )
 
 [node name="low_buildingA" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -59.9401, 0, -84.4906 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingA2" type="MeshInstance" parent="low_buildingA"]
 mesh = ExtResource( 15 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingA"]
 shape = SubResource( 20 )
 
 [node name="low_buildingB" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -142.94, 0, 56.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingB2" type="MeshInstance" parent="low_buildingB"]
 mesh = ExtResource( 18 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingB"]
 shape = SubResource( 21 )
 
 [node name="low_buildingC" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.94012, 0, -11.4906 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingC2" type="MeshInstance" parent="low_buildingC"]
 mesh = ExtResource( 12 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingC"]
 shape = SubResource( 22 )
 
 [node name="low_buildingD" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -142.94, 0, -27.4906 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingD2" type="MeshInstance" parent="low_buildingD"]
 mesh = ExtResource( 13 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingD"]
 shape = SubResource( 23 )
 
 [node name="low_buildingE" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -93.9401, 0, -56.4906 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingE2" type="MeshInstance" parent="low_buildingE"]
 mesh = ExtResource( 22 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingE"]
 shape = SubResource( 24 )
 
 [node name="low_buildingF" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -143.94, 0, 18.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingF2" type="MeshInstance" parent="low_buildingF"]
 mesh = ExtResource( 20 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingF"]
 shape = SubResource( 25 )
 
 [node name="low_buildingG" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 43.0599, 0, 74.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingG2" type="MeshInstance" parent="low_buildingG"]
 mesh = ExtResource( 26 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingG"]
 shape = SubResource( 26 )
 
 [node name="low_buildingH" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0599, 0, 58.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingH2" type="MeshInstance" parent="low_buildingH"]
 mesh = ExtResource( 23 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingH"]
 shape = SubResource( 27 )
 
 [node name="low_buildingI" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 91.0599, 0, 42.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingI2" type="MeshInstance" parent="low_buildingI"]
 mesh = ExtResource( 19 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingI"]
 shape = SubResource( 28 )
 
 [node name="low_buildingJ" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0599, 0, -81.4906 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingJ2" type="MeshInstance" parent="low_buildingJ"]
 mesh = ExtResource( 14 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingJ"]
 shape = SubResource( 29 )
 
 [node name="low_buildingK" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 81.0599, 0, -42.4906 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingK2" type="MeshInstance" parent="low_buildingK"]
 mesh = ExtResource( 24 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingK"]
 shape = SubResource( 30 )
 
 [node name="low_buildingL" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 58.0599, 0, 28.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingL2" type="MeshInstance" parent="low_buildingL"]
 mesh = ExtResource( 30 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingL"]
 shape = SubResource( 31 )
 
 [node name="low_buildingM" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -55.9401, 0, 96.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingM2" type="MeshInstance" parent="low_buildingM"]
 mesh = ExtResource( 25 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingM"]
 shape = SubResource( 32 )
 
 [node name="low_buildingN" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -111.94, 0, 56.5094 )
+collision_layer = 5
+collision_mask = 5
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="low_buildingN2" type="MeshInstance" parent="low_buildingN"]
 mesh = ExtResource( 29 )
-material/0 = null
-material/1 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="low_buildingN"]
 shape = SubResource( 33 )
