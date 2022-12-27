@@ -116,7 +116,7 @@ func update_skeleton():
 	
 	# Make a new basis with the, potentially, changed euler angles.
 	
-	rest.basis = Basis(Quaternion(rest_euler))
+	rest.basis = Basis(Quaternion.from_euler(rest_euler))
 	
 	# Apply additional rotation stored in additional_rotation to the bone.
 	if additional_rotation != Vector3.ZERO:

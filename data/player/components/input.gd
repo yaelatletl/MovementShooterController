@@ -86,7 +86,7 @@ func get_input():
 
 func sync_input():
 	if get_tree().get_multiplayer().has_multiplayer_peer():
-		if is_multiplayer_authority() and not get_tree().is_server(): 
+		if is_multiplayer_authority():# and not get_tree().is_server(): 
 			#actor.rset_unreliable_id(1, "input", actor.input)
 			Gamestate.set_in_all_clients(actor, "input", actor.input)
 
