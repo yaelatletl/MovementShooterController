@@ -178,7 +178,7 @@ func handle_clones(portal: Node, body: PhysicsBody) -> void:
 		elif body is KinematicBody:
 			clone = Pooling.duplicate_actor(body)
 		if clone is KinematicBody:
-			clone.get_node("passive_marker_man").visible = false
+			clone.get_node("ThirdPersonModel").visible = false
 			clone.collision_layer = 0
 			clone.collision_mask = 0
 			

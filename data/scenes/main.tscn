@@ -6,7 +6,7 @@
 [ext_resource path="res://data/scenes/fade.tscn" type="PackedScene" id=4]
 [ext_resource path="res://data/scenes/barrel.tscn" type="PackedScene" id=5]
 [ext_resource path="res://data/scenes/scenario.gd" type="Script" id=6]
-[ext_resource path="res://assets/models/player/passive_marker_man.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/models/player/Default_Player_Model.tscn" type="PackedScene" id=7]
 [ext_resource path="res://data/prefabs/Door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://data/player/character.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/picakbles/weapons/Kriss.tscn" type="PackedScene" id=10]
@@ -353,8 +353,7 @@ disabled = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.3893, 3.45568, 8.16805 )
 
 [node name="PortalA" parent="scenario/PortalPair" index="0"]
-transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.47252, 2.02736, -11.2676 )
-visible = false
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.47252, 0.061038, -4.48506 )
 
 [node name="Back" parent="scenario/PortalPair/PortalA/Screen" index="0"]
 material_override = SubResource( 14 )
@@ -373,7 +372,6 @@ material_override = SubResource( 14 )
 
 [node name="PortalB" parent="scenario/PortalPair" index="1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.28477, -0.46709, 9.53674e-07 )
-visible = false
 
 [node name="Back" parent="scenario/PortalPair/PortalB/Screen" index="0"]
 material_override = SubResource( 16 )
@@ -389,33 +387,6 @@ material_override = SubResource( 16 )
 
 [node name="Top" parent="scenario/PortalPair/PortalB/Screen" index="4"]
 material_override = SubResource( 16 )
-
-[node name="passive_marker_man" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.84292, 1.00202, 4.04818 )
-
-[node name="MocapGuy_Eyes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="0"]
-material_override = ExtResource( 3 )
-script = null
-
-[node name="MocapGuy_EyesSpec" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="1"]
-script = null
-
-[node name="MocapGuy_Caruncula" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="2"]
-script = null
-
-[node name="MocapGuy_BrowsLashes" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="3"]
-script = null
-
-[node name="MocapGuy_Teeth" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="4"]
-script = null
-
-[node name="MocapGuy_Hat" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="5"]
-script = null
-
-[node name="MocapGuy_Body" parent="passive_marker_man/RootNode/MocapGuy_HiRes_Meshes" index="6"]
-material/0 = ExtResource( 3 )
-material/1 = ExtResource( 3 )
-script = null
 
 [node name="Kriss" parent="." instance=ExtResource( 10 )]
 transform = Transform( 0.841511, 0.54024, 0, -0.54024, 0.841511, 0, 0, 0, 1, -2.23478, 1.00195, 7.72478 )
@@ -434,7 +405,42 @@ collision_mask = 11
 [node name="ExampleAmmo" parent="." instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.392279, 1.46756, 7.04151 )
 
+[node name="New_default" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.955511, 1.00503, 4.51202 )
+
+[node name="BaseBody003" parent="New_default/Base/Skeleton" index="0"]
+material_override = ExtResource( 3 )
+script = null
+
+[node name="BaseBody004" parent="New_default/Base/Skeleton" index="1"]
+material_override = ExtResource( 3 )
+script = null
+
+[node name="BaseBody006" parent="New_default/Base/Skeleton" index="2"]
+material_override = ExtResource( 3 )
+script = null
+
+[node name="Cube004" parent="New_default/Base/Skeleton" index="3"]
+material_override = ExtResource( 3 )
+script = null
+
+[node name="Cube015" parent="New_default/Base/Skeleton" index="4"]
+material_override = ExtResource( 3 )
+script = null
+
+[node name="Cube016" parent="New_default/Base/Skeleton" index="5"]
+material_override = ExtResource( 3 )
+script = null
+
+[node name="Cube017" parent="New_default/Base/Skeleton" index="6"]
+material_override = ExtResource( 3 )
+script = null
+
+[node name="Cube020" parent="New_default/Base/Skeleton" index="7"]
+material_override = ExtResource( 3 )
+script = null
+
 [editable path="scenario/PortalPair"]
 [editable path="scenario/PortalPair/PortalA"]
 [editable path="scenario/PortalPair/PortalB"]
-[editable path="passive_marker_man"]
+[editable path="New_default"]
