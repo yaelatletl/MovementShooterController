@@ -407,6 +407,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.392279, 1.46756, 7.04151 )
 
 [node name="New_default" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.955511, 1.00503, 4.51202 )
+script = null
 
 [node name="BaseBody003" parent="New_default/Base/Skeleton" index="0"]
 material_override = ExtResource( 3 )
