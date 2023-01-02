@@ -6,9 +6,11 @@ onready var links := {
 	$PortalB: $PortalA,
 }
 var cameras = []
+const epsilon = 0.01
 
 export(NodePath) var environment_path = ""
-
+export (float, 0.1, 2.0) var scale_factor = 1.0 
+export (float, 0.1, 2.0) var render_scale = 1.0 
 onready var environment = get_node(environment_path)
 
 # Dictionary between regular bodies and their clones
@@ -25,14 +27,15 @@ func init_portal(portal: Node) -> void:
 	var portal_camera: Camera = link_viewport.get_node("Camera")
 	var tex := link_viewport.get_texture()
 	var mat = portal.get_node("Screen").get_node("Back").material_override
-	mat.set_shader_param("texture_albedo", tex)
+	mat.set_shader_param("view_resolution",  get_viewport().size*render_scale)
+	mat.set_shader_param("viewport", tex)
 	if environment != null:
 		portal_camera.environment = environment.environment
 	cameras.append(portal_camera)
 	var plane_normal = get_portal_plane(portal).normal
 	print("The normal of the portal plane is: ", plane_normal)
 	print("The normal of the portal is ", portal.transform.basis.z)
-
+	sync_viewport(portal)
 	
 
 
@@ -68,11 +71,11 @@ func move_camera(portal: Node) -> void:
 
 # Sync the viewport size with the window size
 func sync_viewport(portal: Node) -> void:
-	portal.get_node("Viewport").size = get_viewport().size
-
+	#portal.get_node("Viewport").size = get_viewport().size/4
+	portal.get_node("Viewport").size = set_viewport_size()
 
 # warning-ignore:unused_argument
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# TODO: figure out why this is needed
 	if Engine.is_editor_hint():
 		if get_camera() == null:
@@ -85,8 +88,26 @@ func _process(delta: float) -> void:
 			camera.fov = get_camera().fov
 	for portal in portals:
 		move_camera(portal)
-		sync_viewport(portal)
+		#sync_viewport(portal)
 
+func set_viewport_size():
+	var res_float = get_viewport().size * scale_factor
+	#var native_aspect_ratio
+	var viewport_size = Vector2(round(res_float.x), round(res_float.y))
+	#var aspect_setting = get_aspect_setting()
+	#if native_aspect_ratio and original_aspect_ratio and (aspect_setting != "ignore" and aspect_setting != "expand"):
+	var aspect_diff = 1.0
+	#if usage == USAGE_2D:
+	#	if aspect_diff > 1.0 + epsilon and aspect_setting == "keep_width":
+	#		viewport_size = Vector2(round(res_float.y * native_aspect_ratio), round(res_float.y))
+	#	elif aspect_diff < 1.0 - epsilon and aspect_setting == "keep_height":
+	#		viewport_size = Vector2(round(res_float.x), round(res_float.y / native_aspect_ratio))	
+	#elif usage == USAGE_3D:
+	if aspect_diff > 1.0 + epsilon:
+		viewport_size = Vector2(round(res_float.x / aspect_diff), round(res_float.y))
+	elif aspect_diff < 1.0 - epsilon:
+		viewport_size = Vector2(round(res_float.x), round(res_float.y * aspect_diff))
+	return viewport_size
 
 # Return whether the position is in front of a portal
 func in_front_of_portal(portal: Spatial, pos: Transform) -> bool:
