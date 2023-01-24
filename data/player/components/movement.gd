@@ -9,8 +9,8 @@ export(float) var c_speed : float = 10 # Crouch
 export(bool) var slide_on_crouch : bool = false
 export(bool) var can_wallrun : bool = false
 # Physics variables
-export(float) var gravity      : float = 40 # Gravity force #45 is okay, don't change it 
-export(float) var friction     : float = 25 # friction
+export(float) var gravity : float = 40 # Gravity force #45 is okay, don't change it 
+export(float) var friction : float = 25 # friction
 
 var DEFAULT_GRAVITY = gravity
 

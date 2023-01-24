@@ -7,7 +7,7 @@ export(float) var mass = 45
 
 # All vectors
 var linear_velocity : = Vector3() # linear_velocity vector
-var direction    : = Vector3() # Direction Vector
+var direction : = Vector3() # Direction Vector
 var acceleration : = Vector3() # Acceleration Vector
 var head_basis : Basis
 # All character inputs
@@ -50,9 +50,7 @@ func _physics_process(delta):
 		#yield(get_tree().create_timer(0.2), "timeout")
 		wall_direction = wall_normal.normal
 	run_speed = Vector2(linear_velocity.x, linear_velocity.z).length()
-
-
-		
+	
 func reset_wall_multi():
 	wall_multiplier = WALLRUN_MULT
 
