@@ -52,21 +52,25 @@ func get_camera() -> Camera:
 		return get_viewport().get_camera()
 
 
-# Move the camera to a location near the linked portal; this is done by
-# taking the position of the player relative to the linked portal, and
-# rotating it pi radians
+
 func move_camera(portal: Node) -> void:
 	var linked: Node = links[portal]
 	var portal_direction = portal.global_transform.basis.z
 	var linked_direction = linked.global_transform.basis.z
+	var player_camera = get_camera()
+	var portal_camera = portal.get_node("Viewport/Camera")
 	var angle = portal_direction.angle_to(linked_direction)
+	var camera_holder = portal.get_node("CameraHolder")
+	if not portal_camera.is_inside_tree():
+			return
 	#var angle = PI - linked.global_rotation.y 
-	var trans: Transform = linked.global_transform.inverse() * get_camera().global_transform
+	var trans: Transform = linked.global_transform.inverse() * player_camera.global_transform
 	trans = trans.rotated(Vector3.UP, angle)
-	portal.get_node("CameraHolder").transform = trans
+	camera_holder.transform = trans
 	#portal.get_node("CameraHolder").global_transform.origin += linked_direction.normalized() * 0.5
-	var cam_pos: Transform = portal.get_node("CameraHolder").global_transform
-	portal.get_node("Viewport/Camera").global_transform = cam_pos
+	var cam_pos: Transform = camera_holder.global_transform
+	portal_camera.global_transform = cam_pos
+	portal_camera.fov = player_camera.fov
 
 
 # Sync the viewport size with the window size
@@ -81,11 +85,6 @@ func _process(_delta: float) -> void:
 		if get_camera() == null:
 			return
 		_ready()
-	for camera in cameras:
-		if not camera.is_inside_tree():
-			return
-		if get_camera() != null:
-			camera.fov = get_camera().fov
 	for portal in portals:
 		move_camera(portal)
 		#sync_viewport(portal)
@@ -265,8 +264,6 @@ func _physics_process(delta: float) -> void:
 		for body in bodies[portal]: #O(n^2)
 			handle_body_overlap_portal(portal, body)
 
-
-
 func handle_body_exit_portal(portal: Node, body: PhysicsBody) -> void:
 	if not is_instance_valid(body):
 		return
@@ -290,7 +287,6 @@ func _on_portal_b_body_entered(body: PhysicsBody) -> void:
 func _on_portal_a_body_exited(body: PhysicsBody) -> void:
 	handle_body_exit_portal($PortalA, body)
 	bodies[$PortalA].erase(body)
-
 
 func _on_portal_b_body_exited(body: PhysicsBody) -> void:
 	handle_body_exit_portal($PortalB, body)
