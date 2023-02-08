@@ -4,13 +4,14 @@ extends Spatial
 onready var actor = get_parent()
 
 # Get head's node path
-export(NodePath) var head
-
+export(NodePath) var head_path : NodePath = ""
 # Get camera's node path
-export(NodePath) var neck
+export(NodePath) var camera_path : NodePath = "" 
 
-# Get camera's node path
-export(NodePath) var camera
+onready var head = get_node(head_path)
+onready var neck = get_node(str(head_path) + "/neck")
+onready var camera = get_node(camera_path)
+
 
 # All weapons
 var arsenal : Dictionary
@@ -22,15 +23,6 @@ remotesync var current : int = 0
 func _ready() -> void:
 	set_as_toplevel(true)
 	actor._register_component("weapons", self)
-
-	# Get camera node from path
-	camera = get_node(camera)
-
-	# Get neck node from path
-	neck = get_node(neck)
-
-	# Get head node from path
-	head = get_node(head)
 
 	# Class reference : 
 	# owner, name, firerate, bullets, ammo, max_bullets, damage, reload_speed
