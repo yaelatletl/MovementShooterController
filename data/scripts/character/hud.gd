@@ -10,32 +10,36 @@ enum BAR_LOCATIONS{
 
 
 
-export(NodePath) var weapon
-export(NodePath) var weapon_hud_ammo
-export(NodePath) var weapon_hud_clip
-export(NodePath) var weapon_hud_text
+export(NodePath) var weapon_path = ""
+
+export(NodePath) var weapon_hud_ammo_path = ""
+export(NodePath) var weapon_hud_clip_path = ""
+export(NodePath) var weapon_hud_text_path = ""
 
 export(NodePath) var interact_board_path = "Layout/VerticalSections/Top/InteractionBoard"
 export(NodePath) var message_board_path = "Layout/VerticalSections/Mid/MessageBoard"
 
-export(NodePath) var crosshair
+export(NodePath) var crosshair_path = ""
+
+onready var weapon = get_node(weapon_path)
+onready var weapon_hud_text = get_node(weapon_hud_text_path)
+onready var weapon_hud_clip = get_node(weapon_hud_clip_path)
+onready var crosshair = get_node(crosshair_path)
+
+onready var weapon_hud_ammo = get_node(weapon_hud_ammo_path)
 onready var interact_board = get_node(interact_board_path)
 onready var message_board = get_node(message_board_path)
 
 
 func _ready():
 	_component_name = "HUD"
-	weapon = get_node(weapon)
-	weapon_hud_ammo = get_node(weapon_hud_ammo)
-	weapon_hud_clip = get_node(weapon_hud_clip)
-	weapon_hud_text = get_node(weapon_hud_text)
-	crosshair = get_node(crosshair)
 
 func _process(_delta) -> void:
 	_weapon_hud()
 	#_crosshair()
 
 func register_progress_bar(location, name, value, min_value, max_value):
+	#TODO: What's the point of this?
 	pass
 
 func _weapon_hud() -> void:
