@@ -4,7 +4,6 @@ extends Node3D
 @onready var ray_node = get_node(ray)
 var ground : bool = false
 
-	
 func _process(delta):
 	if not ground:
 		if ray_node.is_colliding():

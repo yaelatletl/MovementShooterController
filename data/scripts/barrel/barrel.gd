@@ -1,21 +1,23 @@
 extends RigidBody3D
 
-@export var health : int = 100
+@export var health : float = 100 #sync
 var remove_decal : bool = false
 
-var on_the_net_transform := Transform3D()
+var on_the_net_transform := Transform3D() #sync
+@onready var mpAPI = get_tree().get_multiplayer()
 
 func _ready():
-
 	$timer.connect("timeout",Callable(self,"queue_remove"))
 	$explosion/timer.connect("timeout",Callable(self,"_explode_others"))
 
 func _physics_process(delta: float) -> void:
-	if get_tree().get_multiplayer().has_multiplayer_peer():
-		if get_tree().get_multiplayer().is_server():
-			Gamestate.set_in_all_clients(self, "on_the_net_transform", transform)
+	if mpAPI.has_multiplayer_peer():
+		if mpAPI.is_server():
+			#rset_unreliable("on_the_net_transform", transform)
+			pass
 		else:
-			transform = on_the_net_transform
+			#transform = on_the_net_transform
+			pass
 func _damage(damage, type) -> void:
 	if health > 0:
 		var dam_calc = health - damage
@@ -34,12 +36,15 @@ func _damage(damage, type) -> void:
 func _process(_delta) -> void:
 	_remove_decal()
 
-@rpc(any_peer) func _explosion(exploded_in_server : bool = false) -> void:
+@rpc("any_peer") func _explosion(exploded_in_server : bool = false) -> void:
 
 	
-	if get_tree().get_multiplayer().is_server():
-		Gamestate.call_on_all_clients(self, "_explosion",[true])
-	if (not exploded_in_server and get_tree().get_multiplayer().has_multiplayer_peer()) and not get_tree().get_multiplayer().is_server():
+	if mpAPI.is_server():
+		for players in Gamestate.players:
+			if players != 1:
+				pass
+				#rpc_unreliable_id(players, "_explosion", true)
+	if (not exploded_in_server and mpAPI.has_multiplayer_peer()) and not mpAPI.is_server():
 		return
 
 	$collision.disabled = true
@@ -47,7 +52,7 @@ func _process(_delta) -> void:
 	
 	var main = get_tree().get_root().get_child(0)
 	
-	var burnt_ground = load("res://data/scenes/burnt_ground.tscn").instantiate()
+	var burnt_ground = preload("res://data/scenes/burnt_ground.tscn").instantiate()
 	main.add_child(burnt_ground)
 	burnt_ground.position = global_transform.origin
 	
@@ -62,11 +67,11 @@ func _process(_delta) -> void:
 	
 	remove_decal = true
 
-@rpc(any_peer) func remote_queue_remove() -> void:
+@rpc("any_peer") func remote_queue_remove() -> void:
 	queue_free()
 
 func queue_remove() -> void:
-	if get_tree().get_multiplayer().is_server():
+	if get_tree().is_server():
 		queue_free()
 	Gamestate.call_on_all_clients(self, "remote_queue_remove", null)
 

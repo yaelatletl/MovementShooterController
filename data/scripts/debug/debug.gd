@@ -47,7 +47,7 @@ func _toggle_fullscreen() -> void:
 			if input['alt'] and input['enter']:
 				fullscreen = !fullscreen
 				
-				ProjectSettings.set("display/window/size/fullscreen", fullscreen)
+				get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (fullscreen) else Window.MODE_WINDOWED
 				
 				# Starts the timer again
 				timer.start()

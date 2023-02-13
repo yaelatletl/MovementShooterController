@@ -23,8 +23,10 @@ func _on_health_changed(health_in: float, shields_in: float):
 	health = health_in
 	shields = shields_in
 
-#func _process(delta):
-#	update()
+func _process(delta):
+	#TODO: fix this update()
+	pass
+
 
 func _draw():
 	draw_circle(size/2, min(size.x/3, size.y/3), background)

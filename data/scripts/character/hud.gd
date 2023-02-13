@@ -10,36 +10,36 @@ enum BAR_LOCATIONS{
 
 
 
+@export var weapon_path: NodePath = ""
 
-@export var weapon_hud_ammo_path: NodePath
-@export var weapon_hud_clip_path: NodePath
-@export var weapon_hud_text_path: NodePath
-@export var weapon_path: NodePath
-@export var crosshair_path: NodePath
-
-
-@onready var weapon: Node = get_node(weapon_path)
-@onready var crosshair: Node = get_node(crosshair_path)
-@onready var weapon_hud_ammo: Node = get_node(weapon_hud_ammo_path)
-@onready var weapon_hud_clip: Node = get_node(weapon_hud_clip_path)
-@onready var weapon_hud_text: Node = get_node(weapon_hud_text_path)
+@export var weapon_hud_ammo_path: NodePath = ""
+@export var weapon_hud_clip_path: NodePath = ""
+@export var weapon_hud_text_path: NodePath = ""
 
 @export var interact_board_path: NodePath = "Layout/VerticalSections/Top/InteractionBoard"
 @export var message_board_path: NodePath = "Layout/VerticalSections/Mid/MessageBoard"
 
+@export var crosshair_path: NodePath = ""
+
+@onready var weapon = get_node(weapon_path)
+@onready var weapon_hud_text = get_node(weapon_hud_text_path)
+@onready var weapon_hud_clip = get_node(weapon_hud_clip_path)
+@onready var crosshair = get_node(crosshair_path)
+
+@onready var weapon_hud_ammo = get_node(weapon_hud_ammo_path)
 @onready var interact_board = get_node(interact_board_path)
 @onready var message_board = get_node(message_board_path)
 
 
 func _ready():
 	_component_name = "HUD"
-	
 
 func _process(_delta) -> void:
 	_weapon_hud()
 	#_crosshair()
 
 func register_progress_bar(location, name, value, min_value, max_value):
+	#TODO: What's the point of this?
 	pass
 
 func _weapon_hud() -> void:

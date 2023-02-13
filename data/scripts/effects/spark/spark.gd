@@ -1,7 +1,5 @@
 extends GPUParticles3D
-
-@export var timer_path: NodePath
-@onready var timer = get_node(timer_path)
-
+@export var seconds : float = 0.1
 func _ready() -> void:
+	var timer = get_tree().create_timer(seconds)
 	timer.connect("timeout",Callable(self,"queue_free"))

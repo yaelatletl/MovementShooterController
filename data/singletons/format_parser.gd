@@ -3,20 +3,55 @@
 extends Node
 class_name FormatParser
 
+enum MODIFIER_TYPE{
+	NONE, 
+	ON_RELEASE,
+	ON_RELEASE_IF_LOADED,
+	ON_RELEASE_OR_AUTO,
+	AUTO_RELEASE_IF_LOADED,
+}
+
 static func parse_spread_pattern(pattern) -> Array:
 	var result = []
 	for pair in pattern:
 		result.append(Vector2(pair[0], pair[1]))
 	return result
 
-static func weapon_from_json( path : String, actor : Node ) -> Weapon: 
+static func to_modifier(input) -> int:
+	if input is String:
+		match input:
+			"None":
+				return MODIFIER_TYPE.NONE
+			"OnRelease":
+				return MODIFIER_TYPE.ON_RELEASE
+			"OnReleaseIfLoaded":
+				return MODIFIER_TYPE.ON_RELEASE_IF_LOADED
+			"OnReleaseOrAuto":
+				return MODIFIER_TYPE.ON_RELEASE_OR_AUTO
+			"AutoReleaseIfLoaded":
+				return MODIFIER_TYPE.AUTO_RELEASE_IF_LOADED
+			_:
+				return MODIFIER_TYPE.NONE
+	elif input is int:
+		return input
+	else:
+		return MODIFIER_TYPE.NONE
+
+static func safe_assign(target, dict, property, key, array_index = -1) -> void:
+	if key in dict and array_index == -1:
+		target.set(property, dict[key])
+		return
+	elif array_index != -1 and key in dict:
+		target.set(property, dict[key][array_index])
+		return
+	printerr("Error: Could not assign property ", str(property), " to ", str(target), " from dict ", dict, " with key ", key, " and array index ", str(array_index))
+		
+static func weapon_from_json( path : String, weapon_parent : Node ) -> Weapon: 
 	var result = null
-	var file = FileAccess.open(path, FileAccess.READ)
+	var file : FileAccess = FileAccess.open(path, FileAccess.READ)
 	var test_json_conv = JSON.new()
 	test_json_conv.parse(file.get_as_text())
-	var json = test_json_conv.get_data()
-	#file.close()
-	var data = json
+	var data = test_json_conv.get_data()
 	if data is Dictionary:
 		var type = int(data.type) # 0 = melee, 1 = raycast, 2 = projectile 
 		match type:
@@ -48,8 +83,12 @@ static func weapon_from_json( path : String, actor : Node ) -> Weapon:
 				result.secondary_max_random_spread_x = data.secondaryRandomSpread[0]
 				result.secondary_max_random_spread_y = data.secondaryRandomSpread[1]
 				result.uses_separate_ammo = bool(data.usesSecondaryAmmo)
+				result.primary_modifier_type = to_modifier(data.primaryModifierType)
+				result.secondary_modifier_type = to_modifier(data.secondaryModifierType)
+				safe_assign(result, data, "primary_modifier_timer", "primaryModifierTimer")
+				safe_assign(result, data, "secondary_modifier_timer", "secondaryModifierTimer")
 
-		result.actor = actor
+		result.spatial_parent = weapon_parent
 		result.gun_name = data.name
 		result.firerate = data.fireRate
 		result.bullets = data.bullets

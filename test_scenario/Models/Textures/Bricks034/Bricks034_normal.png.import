@@ -2,25 +2,24 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1rh0tgdd1fc"
+uid="uid://dsmcq1xl3kcgx"
 path.s3tc="res://.godot/imported/Bricks034_normal.png-ff17614763c9f2e16d590c942e31675e.s3tc.ctex"
-path.etc2="res://.godot/imported/Bricks034_normal.png-ff17614763c9f2e16d590c942e31675e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc", "etc2"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://test_scenario/Models/Textures/Bricks034/Bricks034_normal.png"
-dest_files=["res://.godot/imported/Bricks034_normal.png-ff17614763c9f2e16d590c942e31675e.s3tc.ctex", "res://.godot/imported/Bricks034_normal.png-ff17614763c9f2e16d590c942e31675e.etc2.ctex"]
+dest_files=["res://.godot/imported/Bricks034_normal.png-ff17614763c9f2e16d590c942e31675e.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=false

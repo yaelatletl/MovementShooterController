@@ -1,19 +1,20 @@
 extends Component
 # All speed variables
 
-const DEFAULT_GRAVITY = 40
 
-@export var n_speed: float = 04 # Normal
-@export var s_speed: float  = 12 # Sprint
-@export var w_speed: float  = 08 # Walking
-@export var c_speed: float  = 10 # Crouch
-@export var slide_on_crouch: bool  = false
-@export var can_wallrun: bool  = false
+@export var n_speed : float = 04 # Normal
+@export var s_speed : float = 12 # Sprint
+@export var w_speed : float = 08 # Walking
+@export var c_speed : float = 10 # Crouch
+@export var slide_on_crouch : bool = false
+@export var can_wallrun : bool = false
 # Physics variables
-@export var gravity: float = 40 # Gravity force #45 is okay, don't change it 
-@export var friction: float = 25 # friction
+@export var gravity : float = 40 # Gravity force #45 is okay, don't change it 
+@export var friction : float = 25 # friction
 
-@export var collision: NodePath = ""
+var DEFAULT_GRAVITY = gravity
+
+@export var collision : NodePath = ""
 @onready var col = get_node(collision)
 
 var _delta
@@ -86,13 +87,15 @@ func _movement(input : Dictionary, _delta : float) -> void:
 	actor.set_max_slides(4)
 	actor.set_floor_max_angle(PI/4)
 	# TODOConverter40 infinite_inertia were removed in Godot 4.0 - previous value `false`
-	actor.linear_velocity = actor.velocity
 	actor.move_and_slide()
-	
+	actor.linear_velocity = actor.velocity
 	for index in actor.get_slide_collision_count():
 		var collision = actor.get_slide_collision(index)
 		if collision.get_collider(0) is RigidBody3D:
-				collision.get_collider(0).apply_central_impulse(-collision.get_normal(0) * actor.run_speed/collision.get_collider(0).mass)
+			if collision.get_collider(0) == actor.feet.get_collider():
+				return
+			else:
+				collision.get_collider(0).apply_central_impulse((-collision.get_normal() * actor.run_speed/collision.get_collider(0).mass)*_delta)
 	
 func _crouch(input : Dictionary, _delta :float) -> void:
 	# Inputs

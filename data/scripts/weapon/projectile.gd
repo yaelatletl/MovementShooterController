@@ -4,9 +4,9 @@ class_name Projectile
 var damage_type = Pooling.DAMAGE_TYPE.KINECTIC
 
 @export var type : int = 0
-@export var damage: float = 0
-@export var speed: float = 100
-@export var lifetime: float = 5.0
+@export var damage : int = 0
+@export var speed  : int = 100
+@export var lifetime : float = 5.0
 
 signal request_destroy()
 
@@ -47,7 +47,6 @@ func _on_body_entered(body) -> void:
 	if body.has_method("is_projectile"):
 		if body.type == type:
 			return
-	print("Projectile hit:", body)
 	if body.has_method("_damage"):
 		body._damage(damage, damage_type)
 	stop()

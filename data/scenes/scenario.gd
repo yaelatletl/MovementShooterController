@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var spawn_points_parent_path: NodePath = ""
+@export var spawn_points_parent_path : NodePath = ""
 @onready var spawnpoint_parent = get_node(spawn_points_parent_path)
 
 var players_in_local_instance : Dictionary = {}

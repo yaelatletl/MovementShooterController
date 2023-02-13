@@ -3,23 +3,22 @@ extends CharacterBody3D
 const SLIDE_MULT = 3
 const WALLRUN_MULT = 1.7
 
-@export var head_path: NodePath = ""
-@export var feet_path: NodePath = ""
 @export var mass: float = 45
 
 # All vectors
 var linear_velocity : = Vector3() # linear_velocity vector
-var direction    : = Vector3() # Direction Vector
+var direction : = Vector3() # Direction Vector
 var acceleration : = Vector3() # Acceleration Vector
 var head_basis : Basis
 # All character inputs
-var input : Dictionary = {}
+
+var input : Dictionary = {} #sync
 signal died()
 signal health_changed(health, shields)
 
 #Wall running and shared variables
-var health = 100
-var shields = 100
+var health = 100 #sync
+var shields = 100 #sync
 var wall_direction : Vector3 = Vector3.ZERO
 var wall_normal 
 var run_speed : float = 0.0
@@ -28,8 +27,8 @@ var multiplier : float = 1.5
 
 var components : Dictionary = {}
 var angle 
-@onready var head = get_node(head_path)
-@onready var feet = get_node(feet_path)
+@onready var head = $head
+@onready var feet = $feet
 
 func _get_component(_name:String) -> Node:
 	if components.has(_name):
@@ -53,9 +52,7 @@ func _physics_process(delta):
 		#await get_tree().create_timer(0.2).timeout
 		wall_direction = wall_normal.get_normal(0)
 	run_speed = Vector2(linear_velocity.x, linear_velocity.z).length()
-
-
-		
+	
 func reset_wall_multi():
 	wall_multiplier = WALLRUN_MULT
 
@@ -68,7 +65,7 @@ func is_far_from_floor() -> bool:
 		return false
 	return true
 
-@rpc(any_peer, call_local) func _damage(amount : float, type):
+@rpc("any_peer", "call_local") func _damage(amount : float, type):
 	var temp = amount
 	amount = (amount - shields)/10
 	shields -= temp	
@@ -80,7 +77,7 @@ func is_far_from_floor() -> bool:
 	Gamestate.set_in_all_clients(self, "health", health)
 	Gamestate.set_in_all_clients(self, "shields", shields)
 		
-@rpc(any_peer, call_local) func die():
+@rpc("any_peer", "call_local") func die():
 	Gamestate.call_on_all_clients(self, "die", null)
 	_get_component("input").enabled = false
 	emit_signal("died")

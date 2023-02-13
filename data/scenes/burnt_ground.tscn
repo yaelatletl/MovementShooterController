@@ -1,7 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://data/textures/burnt_ground.png" type="Texture2D" id=1]
+[ext_resource path="res://assets/placeholders/textures/burnt_ground.png" type="Texture2D" id=1]
 [ext_resource path="res://data/scripts/burnt_ground/burnt_ground.gd" type="Script" id=2]
+
 
 [sub_resource type="StandardMaterial3D" id=1]
 flags_transparent = true

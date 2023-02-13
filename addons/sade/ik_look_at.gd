@@ -1,13 +1,9 @@
 @tool
 extends Node3D
 
-@export var skeleton_path: NodePath :
-	get:
-		return skeleton_path # TODOConverter40 Non existent get function 
-	set(mod_value):
-		skeleton_path = mod_value  # TODOConverter40 Copy here content of _set_skeleton_path
+@export var skeleton_path: NodePath : set = _set_skeleton_path
 @export var bone_name: String = ""
-@export var update_mode = 0 
+@export var update_mode = 0 #setget _set_update # (int, "_process", "_physics_process", "_notification", "none")
 @export var look_at_axis = 1 # (int, "X-up", "Y-up", "Z-up")
 @export var use_our_rotation_x: bool = false
 @export var use_our_rotation_y: bool = false
@@ -115,6 +111,7 @@ func update_skeleton():
 		rest_euler.z = self_euler.z
 	
 	# Make a new basis with the, potentially, changed euler angles.
+	rest.basis = Basis.from_euler(rest_euler)
 	
 	rest.basis = Basis(Quaternion.from_euler(rest_euler))
 	

@@ -8,12 +8,12 @@ enum CHARGE_TYPE{
 	SPECIAL
 }
 
-@export var enabled: bool  = true
+@export var enabled : bool = true
 @export var _component_name: String = ""
 @export var ui_scene: PackedScene = null
 @export var ui_container: NodePath = ""
 
-@onready var actor : CharacterBody3D = get_parent()
+@onready var actor : Node = get_parent()
 @onready var ui_root : Node = get_node_or_null(ui_container)
 
 var charge_meter : Node = null

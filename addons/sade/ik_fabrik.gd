@@ -8,21 +8,9 @@ const CHAIN_TOLERANCE = 0.01
 # The amount of interations the bone chain will go through in an attempt to get to the target position
 const CHAIN_MAX_ITER = 10
 
-@export var skeleton_path: NodePath :
-	get:
-		return skeleton_path # TODOConverter40 Non existent get function 
-	set(mod_value):
-		mod_value  # TODOConverter40 Copy here content of _set_skeleton_path
-@export var bones_in_chain: PackedStringArray :
-	get:
-		return bones_in_chain # TODOConverter40 Non existent get function 
-	set(mod_value):
-		mod_value  # TODOConverter40 Copy here content of _set_bone_chain_bones
-@export var bones_in_chain_lengths: PackedFloat32Array :
-	get:
-		return bones_in_chain_lengths # TODOConverter40 Non existent get function 
-	set(mod_value):
-		mod_value  # TODOConverter40 Copy here content of _set_bone_chain_lengths
+@export var skeleton_path: NodePath : set = _set_skeleton_path
+@export var bones_in_chain: PackedStringArray : set = _set_bone_chain_bones
+@export var bones_in_chain_lengths: PackedFloat32Array : set = _set_bone_chain_lengths
 
 @export var update_mode = 0 setget _set_update_mode # (int, "_process", "_physics_process", "_notification", "none")
 
@@ -76,7 +64,7 @@ func _ready():
 			target = $Target
 		
 		# If we are in the editor, we want to make a sphere at this node
-		if Engine.is_editor_hint():
+		if Engine.editor_hint:
 			_make_editor_sphere_at_node(target, Color.MAGENTA)
 	
 	if middle_joint_target == null:

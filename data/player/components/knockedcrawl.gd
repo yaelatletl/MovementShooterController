@@ -2,13 +2,13 @@ extends Component
 
 # All speed variables
 
-@export var n_speed: float = 0.1 # Normal
-@export var w_speed: float = 0.2 # Walking
-@export var can_move: bool = false
-@export var knocked_height: float  = 0.1
+@export var n_speed: float  = 0.1 # Normal
+@export var w_speed: float  = 0.2 # Walking
+@export var can_move: bool  = false
+@export var knocked_height : float = 0.1
 # Physics variables
-@export var gravity: float = 45 # Gravity force #45 is okay, don't change it 
-@export var friction: float = 25 # friction
+@export var gravity:  float = 45 # Gravity force #45 is okay, don't change it 
+@export var friction : float = 25 # friction
 @export var disable_exeptions: Array = []
 
 @export var collision: NodePath = ""
