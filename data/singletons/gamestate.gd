@@ -100,7 +100,7 @@ func create_player(id : int) -> CharacterBody3D:
 		players[peer_id] = create_player(peer_id)
 	emit_signal("players_changed")
 	
-@rpc(unreliable) 
+@rpc("unreliable") 
 func call_on_all_clients(object : Node, func_name : String , args) -> void:
 	if not mpAPI.has_multiplayer_peer():
 		return
@@ -129,7 +129,7 @@ func set_in_all_clients(object : Node, property_name : String, value) -> void:
 			if player != 1:
 				#print("Setting property checked client " + str(player))
 				object.rset_id(player, property_name, value)
-
+@rpc("unreliable_ordered")
 func unreliable_set_in_all_clients(object : Node, property_name : String, value) -> void:
 	if not mpAPI.has_multiplayer_peer():
 		return

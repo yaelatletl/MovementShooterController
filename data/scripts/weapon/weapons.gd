@@ -99,7 +99,7 @@ func _change() -> void:
 			arsenal.values()[w]._draw()
 
 func _position(_delta) -> void:
-	global_transform.origin = head_node.global_transform.origin
+	global_transform.origin = head.global_transform.origin
 	
 func _rotation(_delta) -> void:
 	var y_lerp = 40
