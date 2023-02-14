@@ -12,9 +12,6 @@ extends Node3D
 @onready var neck = get_node(str(head_path) + "/neck")
 @onready var camera = get_node(camera_path)
 
-# Get camera node from path
-@onready var camera_node : Camera3D = get_node(camera)
-
 # All weapons
 var arsenal : Dictionary
 
@@ -110,7 +107,7 @@ func _rotation(_delta) -> void:
 	if not actor.input["zoom"] and angle_distance < PI/2:
 		global_transform.basis = Basis(quat_a.slerp(quat_b, _delta*x_lerp*angle_distance))
 	else:
-		rotation = camera_node.global_transform.basis.get_euler()
+		rotation = camera.global_transform.basis.get_euler()
 
 @rpc("any_peer", "call_local") func _change_weapon(_index) -> void:
 	current = _index
