@@ -16,7 +16,8 @@ var DEFAULT_GRAVITY = gravity
 
 @export var collision : NodePath = ""
 @onready var col = get_node(collision)
-
+@export var feet_path : NodePath = ""
+@onready var feet = get_node(feet_path)
 var _delta
 var impulse = Vector3.ZERO
 
@@ -108,7 +109,6 @@ func _crouch(input : Dictionary, _delta :float) -> void:
 	if not actor.head.is_colliding():
 		# Takes the character collision node
 		
-		
 		# Get the character's collision shape
 		var shape = col.shape.height
 		
@@ -118,6 +118,8 @@ func _crouch(input : Dictionary, _delta :float) -> void:
 		# Apply the new character collision shape
 		col.shape.height = shape
 		col.shape.radius = (0.24 - 0.12*get_key(input, "crouch"))
+		feet.target_position.y = -shape
+		
 
 
 
