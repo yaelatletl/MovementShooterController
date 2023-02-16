@@ -32,7 +32,7 @@ _subresources={
 "materials": {
 "VacBob Armor": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/player/VacBob Armor.tres"
+"use_external/path": "res://assets/models/player/VacBob Armor.material"
 },
 "VacSuit.001": {
 "use_external/enabled": true,

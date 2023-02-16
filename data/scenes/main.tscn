@@ -1,7 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://bu4530h0qkrr7"]
 
 [ext_resource type="Texture2D" uid="uid://2fu75m4f4jrh" path="res://assets/placeholders/textures/grid.png" id="1"]
-[ext_resource type="PackedScene" path="res://test_scenario/Test Scene.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://d4h6cqsn4yupm" path="res://test_scenario/Test Scene.tscn" id="2"]
 [ext_resource type="Material" uid="uid://nqvn4qcakmjl" path="res://assets/shaders/active_camo.material" id="3"]
 [ext_resource type="PackedScene" path="res://data/scenes/fade.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://dybu6ytk8o4qd" path="res://data/scenes/barrel.tscn" id="5"]
@@ -593,9 +593,6 @@ script = null
 [node name="Cube020" parent="New_default/Base/Skeleton3D" index="7"]
 material_override = ExtResource("3")
 script = null
-
-[node name="IK_LookAt" parent="New_default/ViewTarget" index="0"]
-additional_bone_length = 1.0
 
 [editable path="scenario/PortalPair"]
 [editable path="scenario/PortalPair/PortalA"]
