@@ -1,23 +1,32 @@
 extends Component
 
-remotesync var on_the_net_transform : Vector3 = Vector3()
-remotesync var on_the_net_velocity : Vector3 = Vector3()
-remotesync var on_the_net_camera_look : Vector3 = Vector3()
-remotesync var on_the_net_height : float = 2.0
-puppet var local_net_transform : Vector3 = Vector3()
-puppet var local_net_velocity : Vector3 = Vector3()
-puppet var local_net_camera_look : Vector3 = Vector3()
-puppet var local_net_height : float = 2.0
+#remotesync 
+var on_the_net_transform : Vector3 = Vector3()
+#remotesync 
+var on_the_net_velocity : Vector3 = Vector3()
+#remotesync 
+var on_the_net_camera_look : Vector3 = Vector3()
+#remotesync 
+var on_the_net_height : float = 2.0
+#puppet 
+var local_net_transform : Vector3 = Vector3()
+#puppet 
+var local_net_velocity : Vector3 = Vector3()
+#puppet
+var local_net_camera_look : Vector3 = Vector3()
+#puppet
+var local_net_height : float = 2.0
 @export var head_path: NodePath
-@export var sync_delta: float : float = 1
-@export var sync_delta_angle: float : float = 15
+@export var collision_path: NodePath
+@export var sync_delta : float = 1
+@export var sync_delta_angle : float = 15
 @onready var head = get_node(head_path)
-@onready var shape = actor.get_node("collision")
+@onready var shape = get_node(collision_path)
 var average_true_transform : Vector3 = 	Vector3()
 var average_true_velocity : Vector3 = Vector3()
 var average_true_view : Vector3 = Vector3()
 var average_true_height : float
-
+@onready var mpAPI = get_tree().get_multiplayer()
 func _ready() -> void:
 	on_the_net_camera_look = head.rotation
 	local_net_transform = head.rotation
@@ -60,7 +69,7 @@ func interpolate_reality_to_expectation(delta):
 func sync_from_server(delta):
 	if on_the_net_transform == null or local_net_transform == null:
 		return
-	if not get_tree().is_server():
+	if not mpAPI.is_server():
 		
 		if actor.global_transform.origin.distance_to(on_the_net_transform) < sync_delta * 2:
 			
@@ -79,7 +88,7 @@ func sync_from_server(delta):
 func sync_rotation(delta : float) -> void:
 	if local_net_camera_look == null or on_the_net_camera_look == null:
 		return	
-	if get_tree().is_server():
+	if mpAPI.is_server():
 		if local_net_camera_look != null and get_multiplayer_authority() != 1:
 			head.rotation =  local_net_camera_look
 	elif not mpAPI.is_server():

@@ -68,7 +68,7 @@ func is_far_from_floor() -> bool:
 @rpc("any_peer", "call_local") func _damage(amount : float, type):
 	var temp = amount
 	amount = (amount - shields)/10
-	shields -= temp	
+	shields -= temp
 	if health > 0:
 		health -= amount
 	if health <= 0:

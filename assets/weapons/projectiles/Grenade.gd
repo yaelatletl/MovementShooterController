@@ -32,4 +32,3 @@ func _on_Area_body_entered(body) -> void:
 func _on_Area_body_exited(body) -> void:
 	if body in bodies_to_explode:
 		bodies_to_explode.erase(body)
-
