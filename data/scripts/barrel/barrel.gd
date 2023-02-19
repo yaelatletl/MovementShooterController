@@ -71,7 +71,7 @@ func _process(_delta) -> void:
 	queue_free()
 
 func queue_remove() -> void:
-	if get_tree().is_server():
+	if mpAPI.is_server():
 		queue_free()
 	Gamestate.call_on_all_clients(self, "remote_queue_remove", null)
 
