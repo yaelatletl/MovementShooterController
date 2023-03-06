@@ -78,8 +78,8 @@ func update_spatial_parent_relatives(spatial_parent) -> void:
 	if ray is RayCast3D:
 		ray.set_meta("original_cast_to", ray.target_position)
 	audio = spatial_parent.get_node("{}/audio".format([gun_name], "{}"))
-	if spread_pattern.size() > 0:
-		setup_spread(spread_pattern, spread_multiplier, max_range)
+	#if spread_pattern.size() > 0:
+	setup_spread(spread_pattern, spread_multiplier, max_range)
 	actor = spatial_parent.get_parent()
 
 
@@ -91,6 +91,7 @@ func setup_spread(spread_pattern, spread_multiplier, max_range = 200, separator_
 		ray.target_position.z = -max_range
 		ray.set_meta("original_cast_to", ray.target_position)
 		original_cast_to = ray.target_position
+		print("set target position to: ", ray.target_position, "from gun: ", gun_name)
 
 	if separator_name != "":
 		separator = Marker3D.new()

@@ -10,4 +10,5 @@ func _ready() -> void:
 	regions = get_tree().get_nodes_in_group("nav_regions")
 	
 func _physics_process(delta):
-	NavigationServer3D.process(delta)
+	#NavigationServer3D.process(delta)
+	pass
