@@ -1,6 +1,12 @@
 @tool
 extends Node3D
 
+enum UPDATE_MODE {
+	_process,
+	_physics_process,
+	_notification,
+	none
+}
 # A FABRIK IK chain with a middle joint helper.
 
 # The delta/tolerance for the bone chain (how do the bones need to be before it is considered satisfactory)
@@ -12,8 +18,8 @@ const CHAIN_MAX_ITER = 10
 @export var bones_in_chain: PackedStringArray : set = _set_bone_chain_bones
 @export var bones_in_chain_lengths: PackedFloat32Array : set = _set_bone_chain_lengths
 
-@export var update_mode = 0 setget _set_update_mode # (int, "_process", "_physics_process", "_notification", "none")
-
+@export_enum("UPDATE_MODE") var update_mode = 0
+	
 var target: Node3D = null
 
 var skeleton: Skeleton3D
@@ -64,7 +70,7 @@ func _ready():
 			target = $Target
 		
 		# If we are in the editor, we want to make a sphere at this node
-		if Engine.editor_hint:
+		if Engine.is_editor_hint():
 			_make_editor_sphere_at_node(target, Color.MAGENTA)
 	
 	if middle_joint_target == null:
