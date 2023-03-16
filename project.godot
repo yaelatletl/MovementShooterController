@@ -24,11 +24,11 @@ GlobalSettings="*res://data/singletons/global_settings.gd"
 [debug]
 
 gdscript/warnings/enable=false
-multirun/number_of_windows=4
 multirun/window_distance=200
 multirun/add_custom_args=true
 multirun/first_window_args="server"
 multirun/other_window_args="client"
+multirun/number_of_windows=2
 
 [display]
 
@@ -42,7 +42,7 @@ project/assembly_name="Godot Engine FPS"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/multirun/plugin.cfg", "res://addons/sade/plugin.cfg", "res://addons/goap/plugin.cfg")
+enabled=PackedStringArray("res://addons/sade/plugin.cfg", "res://addons/goap/plugin.cfg", "res://addons/multirun/plugin.cfg")
 
 [global]
 
