@@ -1,52 +1,22 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://cnux8nwtb7n82"]
 
-[ext_resource path="res://assets/weapons/projectiles/Grenade.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://data/scripts/weapon/projectile.gd" id="1_rxsh7"]
 
-[sub_resource type="SphereMesh" id=2]
-radius = 0.652
-height = 1.312
+[sub_resource type="SphereShape3D" id="SphereShape3D_4wdya"]
+radius = 0.261063
 
-[sub_resource type="StandardMaterial3D" id=3]
+[sub_resource type="SphereMesh" id="SphereMesh_qs3hh"]
+radius = 0.25
+height = 0.5
 
-[sub_resource type="SphereShape3D" id=1]
-radius = 0.133356
-
-[sub_resource type="SphereShape3D" id=4]
-radius = 3.06786
-
-[node name="Grenade" type="RigidBody3D"]
-collision_layer = 0
-collision_mask = 5
-mass = 0.0255102
-gravity_scale = 0.9
-max_contacts_reported = 4
-contact_monitor = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
-script = ExtResource( 1 )
-type = 2.0
-damage = 10.0
-speed = 40.0
-lifetime = 30.0
-impulse = 30.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-<<<<<<< HEAD:data/weapons/Grenade.tscn
-transform = Transform3D( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-=======
-transform = Transform3D( 0.496026, 0, 0, 0, 0.496026, 0, 0, 0, 0.496026, 0, 0, 0 )
->>>>>>> finalport:assets/weapons/projectiles/Grenade.tscn
-mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+[node name="RigidBody3D" type="RigidBody3D"]
+script = ExtResource("1_rxsh7")
+type = 2
+damage = 25
+lifetime = 20.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource("SphereShape3D_4wdya")
 
-[node name="Area3D" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource( 4 )
-
-[connection signal="body_entered" from="Area3D" to="." method="_on_Area_body_entered"]
-[connection signal="body_exited" from="Area3D" to="." method="_on_Area_body_exited"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_qs3hh")
